@@ -4,7 +4,7 @@
 
 <!--  Change when understanding what it does  -->
     <groupId>edu.gu.hajo</groupId>
-    <artifactId>codedark</artifactId>
+    <artifactId>ws_shop_skel</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
