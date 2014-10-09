@@ -6,13 +6,14 @@
 
 package core;
 
-import perstistence.AbstractEntity;
+import javax.persistence.*;
+import persistence.AbstractEntity;
 
 /**
  *
  * @author 
  */
-
+@Entity
 public class Course extends AbstractEntity<String>{
     
     private String cCode;
@@ -30,6 +31,14 @@ public class Course extends AbstractEntity<String>{
 
     public String getCCode(){
         return cCode;
+    }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public String toString(){
+        return "Course{ cCode = " + cCode + ", name = " + name + "}";
     }
     
 }

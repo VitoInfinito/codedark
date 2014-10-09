@@ -6,13 +6,14 @@
 
 package core;
 
-import perstistence.IDAO;
+import java.util.ArrayList;
+import persistence.IDAO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import perstistence.AbstractDAO;
+import persistence.AbstractDAO;
 
 /**
  *
@@ -36,8 +37,14 @@ public class UserList extends AbstractDAO<User, Long> implements IUserList{
     }
 
     @Override
-    public List<User> getByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<User> getBySsnbr(Long ssnbr) {
+       List<User> found = new ArrayList<>();
+        for (User u : findRange(0, count())) {
+            if (u.getSsnbr() == ssnbr) {
+                found.add(u);
+            }
+        }
+        return found;
     }
     
     

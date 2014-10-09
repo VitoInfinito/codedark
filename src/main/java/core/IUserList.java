@@ -7,7 +7,7 @@ package core;
 
 import java.util.List;
 import javax.ejb.Local;
-import perstistence.IDAO;
+import persistence.IDAO;
 
 /**
  *
@@ -16,5 +16,5 @@ import perstistence.IDAO;
 @Local
 public interface IUserList extends IDAO<User, Long> {
     
-    public List<User> getByName(String name);
+    public List<User> getBySsnbr(Long ssnbr);
 }

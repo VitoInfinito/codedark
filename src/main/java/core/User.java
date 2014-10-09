@@ -8,7 +8,7 @@ package core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import perstistence.AbstractEntity;
+import persistence.AbstractEntity;
 
 
 /**
@@ -20,6 +20,9 @@ public class User extends AbstractEntity<Long>{
 
     @Column(nullable = false)
     private long ssnbr;
+    private String fname;
+
+    private String lname;
     private String email;
     @Column(nullable = false)
     private String pwd;
@@ -42,6 +45,14 @@ public class User extends AbstractEntity<Long>{
 
     public String getPwd() {
         return pwd;
+    }
+    
+    public String getFname() {
+        return fname;
+    }
+
+    public String getLname() {
+        return lname;
     }
 
 }

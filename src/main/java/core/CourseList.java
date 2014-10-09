@@ -6,12 +6,11 @@
 
 package core;
 
-import java.util.ArrayList;
-import java.util.List;
-import perstistence.IDAO;
+
+import persistence.IDAO;
 import javax.inject.*;
 import javax.persistence.EntityManager;
-import perstistence.AbstractDAO;
+import persistence.AbstractDAO;
 
 /**
  *
