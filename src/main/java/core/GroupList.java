@@ -8,7 +8,7 @@ package core;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import perstistence.AbstractDAO;
+import persistence.AbstractDAO;
 
 /**
  *
