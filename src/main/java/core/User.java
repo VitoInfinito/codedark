@@ -8,7 +8,7 @@ package core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import util.AbstractEntity;
+import perstistence.AbstractEntity;
 
 
 /**

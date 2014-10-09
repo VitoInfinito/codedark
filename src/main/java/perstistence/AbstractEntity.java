@@ -1,4 +1,4 @@
-package util;
+package perstistence;
 
 import java.io.Serializable;
 import java.util.Objects;
