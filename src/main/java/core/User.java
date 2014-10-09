@@ -8,14 +8,15 @@ package core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import util.IEntity;
+import util.AbstractEntity;
+
 
 /**
  *
  * @author
  */
 @Entity
-public class User implements IEntity<Long>{
+public class User extends AbstractEntity<Long>{
 
     @Column(nullable = false)
     private long ssnbr;

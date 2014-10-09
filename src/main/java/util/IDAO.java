@@ -1,7 +1,7 @@
     
 package util;
 
-import util.IEntity;
+import util.AbstractEntity;
 import java.util.List;
 
 /**

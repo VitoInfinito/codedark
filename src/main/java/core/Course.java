@@ -6,18 +6,14 @@
 
 package core;
 
-import util.IEntity;
+import util.AbstractEntity;
 
 /**
  *
  * @author 
  */
-public class Course implements IEntity<String>{
+public class Course extends AbstractEntity<String>{
 
-    //kurskod
-    @Override
-    public String getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
     
 }
