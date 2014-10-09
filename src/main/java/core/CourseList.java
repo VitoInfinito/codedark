@@ -10,6 +10,7 @@ package core;
 import javax.ejb.Stateless;
 import javax.inject.*;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import persistence.AbstractDAO;
 
 /**
@@ -21,6 +22,7 @@ public class CourseList extends AbstractDAO<Course, String> implements ICourseLi
 
     
     @Inject
+    @PersistenceContext
     private EntityManager em; 
     
     public static ICourseList newInstance() {
