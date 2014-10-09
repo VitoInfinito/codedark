@@ -5,9 +5,12 @@
  */
 package core;
 
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import persistence.AbstractDAO;
 
 /**
@@ -17,17 +20,27 @@ import persistence.AbstractDAO;
 @Stateless
 public class GroupList extends AbstractDAO<Group, Long> implements IGroupList {
 
-   
+    @Inject
+    @PersistenceContext
+    private EntityManager em;
+    
+    public GroupList() {
+        super(Group.class);
+    }
     
     @Override
     protected EntityManager getEntityManager() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return em;
     }
 
     @Override
-    public List<Group> getByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+    public Group getByName(String name) {
+        Iterator<Group> it = findAll().iterator();
+        while(it.hasNext()){
+            Group g = it.next();
+            if(g.getgName().equals(name))
+                return g;
+        }
+        return null;
+    }  
 }

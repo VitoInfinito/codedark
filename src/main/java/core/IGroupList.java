@@ -15,5 +15,5 @@ import persistence.IDAO;
 //Possibly use and rework
 @Local
 public interface IGroupList extends IDAO<Group, Long> {
-    public List<Group> getByName(String name);
+    public Group getByName(String name);
 }
