@@ -7,9 +7,7 @@
 package core;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import persistence.IDAO;
+import javax.ejb.Stateless;
 import javax.inject.*;
 import javax.persistence.EntityManager;
 import persistence.AbstractDAO;
@@ -18,6 +16,7 @@ import persistence.AbstractDAO;
  *
  * @author codeshark
  */
+@Stateless
 public class CourseList extends AbstractDAO<Course, String> implements ICourseList{
 
     
@@ -39,13 +38,12 @@ public class CourseList extends AbstractDAO<Course, String> implements ICourseLi
     
     @Override
     public Course getByCC(String cc) {
-        Course found = null;
         for(Course c: findAll()){
             if(c.getCCode().equals(cc)){
-                found = c;
+                return c;
             }
         }
-        return found;
+        return null;
     }
 
        
