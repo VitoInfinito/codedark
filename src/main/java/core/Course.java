@@ -6,7 +6,7 @@
 
 package core;
 
-import perstistence.AbstractEntity;
+import persistence.AbstractEntity;
 
 /**
  *

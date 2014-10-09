@@ -6,7 +6,7 @@
 
 package core;
 
-import perstistence.IDAO;
+import persistence.IDAO;
 import java.util.List;
 
 /**

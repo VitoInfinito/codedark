@@ -7,7 +7,7 @@ package core;
 
 import java.util.List;
 import javax.ejb.Local;
-import perstistence.IDAO;
+import persistence.IDAO;
 
 /**
  *
