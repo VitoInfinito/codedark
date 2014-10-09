@@ -16,5 +16,5 @@ import persistence.IDAO;
 @Local
 public interface IUserList extends IDAO<User, Long> {
     
-    public List<User> getBySsnbr(Long ssnbr);
+    public User getBySsnbr(Long ssnbr);
 }
