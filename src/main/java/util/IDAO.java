@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T> type of elements in container
  * @param <K> K is type of id (primary key)
  */
-public interface IEntityContainer<T extends IEntity<K>, K> {
+public interface IDAO<T, K> {
 
     public void create(T t);
 

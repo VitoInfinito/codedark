@@ -6,14 +6,14 @@
 
 package core;
 
-import util.IEntityContainer;
+import util.IDAO;
 import java.util.List;
 
 /**
  *
  * @author 
  */
-public class CourseList implements IEntityContainer<Course, String>{
+public class CourseList implements IDAO<Course, String>{
 
     
 

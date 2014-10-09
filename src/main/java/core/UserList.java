@@ -6,48 +6,40 @@
 
 package core;
 
-import util.IEntityContainer;
+import util.IDAO;
 import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import util.AbstractDAO;
 
 /**
  *
  * @author bjornlexell
  */
-public class UserList implements IEntityContainer<User, Long>{
+@Stateless
+public class UserList extends AbstractDAO<User, Long> implements IUserList{
 
+    @Inject
+    @PersistenceContext
+    private EntityManager em;
+    
+    public UserList() {
+        super(User.class);
+    }
+    
+    
     @Override
-    public void create(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected EntityManager getEntityManager() {
+        return em;
     }
 
     @Override
-    public void delete(Long id) {
+    public List<User> getByName(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void update(User t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public User find(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<User> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<User> findRange(int first, int n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
+    
     
 }

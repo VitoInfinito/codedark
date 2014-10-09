@@ -14,10 +14,34 @@ import util.IEntity;
  */
 public class User implements IEntity<Long>{
 
+    private int ssnbr;
+    private String email;
+    private String pwd;
+    
+    public User(int ssnbr, String email, String pwd) {
+        this.ssnbr = ssnbr;
+        this.email = email;
+        this.pwd = pwd;
+    }
+
+    public int getSsnbr() {
+        return ssnbr;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+    
     //personnummer
     @Override
     public Long getId() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
     
 }
