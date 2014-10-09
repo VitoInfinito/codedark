@@ -17,7 +17,7 @@ import persistence.AbstractDAO;
 
 /**
  *
- * @author bjornlexell
+ * @author
  */
 @Stateless
 public class UserList extends AbstractDAO<User, Long> implements IUserList{
