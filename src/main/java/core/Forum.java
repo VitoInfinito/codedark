@@ -21,6 +21,11 @@ public class Forum implements IForum{
     
     public Forum(){}
     
+     public static IForum newInstance() {
+        return new Forum();
+    }
+
+    
     @Override
     public ICourseList getCourseList() {
         return courseList;
