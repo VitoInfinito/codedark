@@ -29,7 +29,7 @@ public class User extends AbstractEntity<Long>{
     
     public User(){}
     
-    public User(int ssnbr, String email, String pwd) {
+    public User(Long ssnbr, String email, String pwd) {
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
