@@ -37,14 +37,13 @@ public class UserList extends AbstractDAO<User, Long> implements IUserList{
     }
 
     @Override
-    public List<User> getBySsnbr(Long ssnbr) {
-       List<User> found = new ArrayList<>();
+    public User getBySsnbr(Long ssnbr) {
         for (User u : findRange(0, count())) {
             if (u.getSsnbr() == ssnbr) {
-                found.add(u);
+                return u;
             }
         }
-        return found;
+        return null;
     }
     
     
