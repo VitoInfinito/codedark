@@ -6,17 +6,25 @@
 
 package core;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import util.AbstractEntity;
+
 
 /**
  *
  * @author
  */
+@Entity
 public class User extends AbstractEntity<Long>{
 
-    private int ssnbr;
+    @Column(nullable = false)
+    private long ssnbr;
     private String email;
+    @Column(nullable = false)
     private String pwd;
+    
+    public User(){}
     
     public User(int ssnbr, String email, String pwd) {
         this.ssnbr = ssnbr;
@@ -24,7 +32,7 @@ public class User extends AbstractEntity<Long>{
         this.pwd = pwd;
     }
 
-    public int getSsnbr() {
+    public long getSsnbr() {
         return ssnbr;
     }
 
@@ -35,7 +43,5 @@ public class User extends AbstractEntity<Long>{
     public String getPwd() {
         return pwd;
     }
-     
-    
-    
+
 }
