@@ -6,13 +6,13 @@
 
 package core;
 
-import util.IEntity;
+import util.AbstractEntity;
 
 /**
  *
  * @author
  */
-public class User implements IEntity<Long>{
+public class User extends AbstractEntity<Long>{
 
     private int ssnbr;
     private String email;
