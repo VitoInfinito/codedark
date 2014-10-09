@@ -6,13 +6,13 @@
 
 package core;
 
-import util.IDAO;
+import perstistence.IDAO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.AbstractDAO;
+import perstistence.AbstractDAO;
 
 /**
  *

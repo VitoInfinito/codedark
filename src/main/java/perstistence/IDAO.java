@@ -1,7 +1,7 @@
     
-package util;
+package perstistence;
 
-import util.IEntity;
+import perstistence.IEntity;
 import java.util.List;
 
 /**

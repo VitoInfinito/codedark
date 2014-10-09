@@ -6,7 +6,7 @@
 
 package core;
 
-import util.IEntity;
+import perstistence.IEntity;
 
 /**
  *
