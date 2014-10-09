@@ -43,31 +43,5 @@ public class User extends AbstractEntity<Long>{
     public String getPwd() {
         return pwd;
     }
-    //personnummer
-    @Override
-    public Long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + (int) (this.ssnbr ^ (this.ssnbr >>> 32));
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final User other = (User) obj;
-        if (this.ssnbr != other.ssnbr) {
-            return false;
-        }
-        return true;
-    }  
 }
