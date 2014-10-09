@@ -35,8 +35,5 @@ public class Group extends AbstractEntity<Long> implements Serializable {
 
     public String getgName() {
         return gName;
-    }
-
-    
-    
+    }  
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*var shop = angular.module('Shop', [
+var shop = angular.module('Shop', [
     'ngRoute'
      // More here
 ]);
@@ -26,6 +26,6 @@ shop.config(['$routeProvider',
                     redirectTo: '/index.html'
                 });
 
-    }]);*/
+    }]);
 
 
