@@ -19,6 +19,8 @@ public class Forum implements IForum{
     @EJB private IUserList userList;
     @EJB private IGroupList groupList;
     
+    public Forum(){}
+    
     @Override
     public ICourseList getCourseList() {
         return courseList;

@@ -24,7 +24,14 @@ public class Group extends AbstractEntity<Long> implements Serializable {
     @ManyToOne
     private Course course;
     private String gName;
-
+    
+    public Group(){}
+    
+    public Group(Course c, String n){
+        course = c;
+        gName = n;
+    }
+    
     public List<User> getMembers() {
         return members;
     }
