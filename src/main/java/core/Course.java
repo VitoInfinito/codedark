@@ -6,13 +6,14 @@
 
 package core;
 
-import perstistence.IEntity;
+import util.AbstractEntity;
 
 /**
  *
  * @author 
  */
-public class Course implements IEntity<String>{
+
+public class Course extends AbstractEntity<String>{
     
     private String cCode;
     private String name;
@@ -27,12 +28,6 @@ public class Course implements IEntity<String>{
         this.name = name;
     }
 
-    //kurskod
-    @Override
-    public String getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     public String getCCode(){
         return cCode;
     }
