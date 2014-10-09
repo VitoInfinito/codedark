@@ -6,17 +6,24 @@
 
 package core;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import util.IEntity;
 
 /**
  *
  * @author
  */
+@Entity
 public class User implements IEntity<Long>{
 
-    private int ssnbr;
+    @Column(nullable = false)
+    private long ssnbr;
     private String email;
+    @Column(nullable = false)
     private String pwd;
+    
+    public User(){}
     
     public User(int ssnbr, String email, String pwd) {
         this.ssnbr = ssnbr;
@@ -24,7 +31,7 @@ public class User implements IEntity<Long>{
         this.pwd = pwd;
     }
 
-    public int getSsnbr() {
+    public long getSsnbr() {
         return ssnbr;
     }
 
@@ -35,13 +42,31 @@ public class User implements IEntity<Long>{
     public String getPwd() {
         return pwd;
     }
-    
     //personnummer
     @Override
     public Long getId() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
-    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + (int) (this.ssnbr ^ (this.ssnbr >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (this.ssnbr != other.ssnbr) {
+            return false;
+        }
+        return true;
+    }  
 }
