@@ -35,13 +35,7 @@ public class User extends AbstractEntity<Long>{
     public String getPwd() {
         return pwd;
     }
-    
-    //personnummer
-    @Override
-    public Long getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+     
     
     
 }
