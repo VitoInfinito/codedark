@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package core;
 
 import javax.persistence.Column;
@@ -16,7 +10,7 @@ import persistence.AbstractEntity;
  * @author
  */
 @Entity
-public class User extends AbstractEntity<Long>{
+public class User extends AbstractEntity{
 
     @Column(nullable = false)
     private long ssnbr;

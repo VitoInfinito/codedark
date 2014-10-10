@@ -17,7 +17,7 @@ import persistence.AbstractEntity;
  * @author HForsvall
  */
 @Entity
-public class Group extends AbstractEntity<Long> implements Serializable {
+public class Group extends AbstractEntity implements Serializable {
    
     @OneToMany
     private List<User> members;

@@ -14,7 +14,7 @@ import persistence.AbstractEntity;
  * @author 
  */
 @Entity
-public class Course extends AbstractEntity<String>{
+public class Course extends AbstractEntity{
     
     private String cCode;
     private String name;

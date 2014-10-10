@@ -15,6 +15,18 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.1.4.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -47,7 +59,7 @@
             <version>1.1.4.Final</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
