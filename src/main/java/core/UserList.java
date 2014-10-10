@@ -20,7 +20,7 @@ import persistence.AbstractDAO;
 @Stateless
 public class UserList extends AbstractDAO<User, Long> implements IUserList{
 
-    @Inject
+    
     @PersistenceContext
     private EntityManager em;
     

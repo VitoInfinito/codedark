@@ -20,7 +20,7 @@ import persistence.AbstractDAO;
 @Stateless
 public class GroupList extends AbstractDAO<Group, Long> implements IGroupList {
 
-    @Inject
+    
     @PersistenceContext
     private EntityManager em;
     

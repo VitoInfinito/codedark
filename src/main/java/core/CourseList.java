@@ -21,7 +21,7 @@ import persistence.AbstractDAO;
 public class CourseList extends AbstractDAO<Course, String> implements ICourseList{
 
     
-    @Inject
+    
     @PersistenceContext
     private EntityManager em; 
     
