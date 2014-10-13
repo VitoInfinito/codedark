@@ -14,5 +14,12 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-//controllers.controller('GroupController', ['$scope', '$location',
-//    function])
+controllers.controller('GroupController', ['$scope', '$location','DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);
+
+controllers.controller('ForumController', ['$scope', '$location', 'DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);
