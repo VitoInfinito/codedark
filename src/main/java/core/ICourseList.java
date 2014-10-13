@@ -18,4 +18,6 @@ public interface ICourseList extends IDAO<Course, Long>{
     
     public Course getByCC(String cc);
     
+    public List<Course> getByName(String name);
+    
 }

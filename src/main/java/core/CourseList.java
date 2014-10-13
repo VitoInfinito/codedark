@@ -7,6 +7,8 @@
 package core;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.*;
 import javax.persistence.EntityManager;
@@ -46,6 +48,17 @@ public class CourseList extends AbstractDAO<Course, Long> implements ICourseList
             }
         }
         return null;
+    }
+
+    @Override
+    public List<Course> getByName(String name) {
+        List<Course> found = new ArrayList<>();
+        for (Course c : findRange(0, count())) {
+            if (c.getName().equals(name)) {
+                found.add(c);
+            }
+        }
+        return found;
     }
 
        
