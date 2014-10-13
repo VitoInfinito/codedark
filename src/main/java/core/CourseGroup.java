@@ -34,6 +34,12 @@ public class CourseGroup extends AbstractEntity {
         gName = n;
     }
     
+    public CourseGroup(Long id, Course c, String n){
+        super(id);
+        gName = n;
+        course = c;
+    }
+    
     public List<GroupUser> getMembers() {
         return members;
     }

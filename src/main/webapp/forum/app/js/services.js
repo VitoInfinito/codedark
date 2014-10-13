@@ -19,10 +19,10 @@ groupListService.factory('GroupListProxy', ['$http',
             find: function(id) {
 //                return $http.get(url + "/" + id);
             },
-            update: function(id, product) {
+            update: function(id, cc) {
 //                return $http.put(url + "/" + id, product);
             },
-            create: function(product) {
+            create: function(name,cc) {
 //                return $http.post(url, product);
             },
             delete: function(id) {
