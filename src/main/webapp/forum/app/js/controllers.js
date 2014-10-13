@@ -14,5 +14,5 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-controllers.controller('GroupController', ['$scope', '$location',
-    function])
+//controllers.controller('GroupController', ['$scope', '$location',
+//    function])
