@@ -1,12 +1,28 @@
 package cd;
 
+
+import core.Forum;
+import core.*;
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
+import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * REST Web Service
@@ -14,161 +30,107 @@ import javax.ws.rs.core.Response;
  *
  * @author 
  */
-@Path("products") // Leading trailing slash doesn't matter, see web.xml
+@Path("forum") // Leading trailing slash doesn't matter, see web.xml
 public class ForumResource {
       
-//    private final IForum forum = SingletonForum.INSTANCE.getForum();
-    
-//    FROM WS2
-//    private final IShop shop = SingletonShop.INSTANCE.getShop();
-//    private final IProductCatalogue products = shop.getProductCatalogue();
-//    
-//    @POST
-//    @Consumes(value = MediaType.APPLICATION_JSON)
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    public Response create(JsonObject json) {
-//        
-//        String name = json.getString("name");
-//        double price = (double) json.getInt("price");
-//         
-//        try{
-//            Product p = new Product(name, price);    
-//            products.create(p);
-//            ProductWrapper pw = new ProductWrapper(p);
-//            
-//            return Response.ok(pw).build();
-//        } catch (IllegalArgumentException e) {
-//            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-//
-//    @DELETE
-//    @Path(value = "{id}")
-//    public Response delete(@PathParam(value = "id") final Long id) {
-//        
-//        try {
-//            products.delete(id);
-//            return Response.ok().build();
-//        } catch (IllegalArgumentException e) {
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//        }
-//    }
-//
-//    @PUT
-//    @Path(value = "{id}")
-//    @Consumes(value = MediaType.APPLICATION_JSON)
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    public Response update(@PathParam(value = "id") final Long id, JsonObject json) {
-//        
-//        String name = json.getString("name");
-//        double price = (double) json.getInt("price");
-//        Product p = new Product(id, name, price);
-//        products.update(p);
-//        
-//        ProductWrapper pw = new ProductWrapper(p);
-//        return Response.ok(pw).build();
-//        
-//    }
-//
-//    @GET
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    @Path(value = "{id}")
-//    public Response find(@PathParam(value = "id") Long id) {
-//        
-//        Product p = products.find(id);
-//        ProductWrapper pw = new ProductWrapper(p); 
-//        if (pw != null) {
-//            return Response.ok(pw).build();
-//        } else {
-//            return Response.noContent().build();
-//        }
-//    }
-//
-//    @GET
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    public Response findAll() {
-//   
-//        List<Product> old = products.findAll();
-//        
-//        ProductWrapper pw;
-//        List<ProductWrapper> newList = new ArrayList<>();
-//        for(Product p: old){
-//            pw = new ProductWrapper(p);
-//            newList.add(pw);
-//            
-//        }
-//        
-//        GenericEntity<List<ProductWrapper>> geAll = new GenericEntity<List<ProductWrapper>>(newList){};
-//        return Response.ok(geAll).build();
-//    }
-//
-//    @GET
-//    @Path(value = "range")
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    public Response findRange(@QueryParam(value = "first") int first, @QueryParam(value = "n") int n) {
-//       
-//        List<Product> range = products.findRange(first, n);
-//        
-//        ProductWrapper pw;
-//        List<ProductWrapper> newList = new ArrayList<>();
-//        for(Product p: range){
-//            pw = new ProductWrapper(p);
-//            newList.add(pw);
-//        }
-//        
-//        GenericEntity<List<ProductWrapper>> geRange = new GenericEntity<List<ProductWrapper>>(newList) {};
-//        return Response.ok(geRange).build();
-//    }
-//
-//    @GET
-//    @Path(value = "count")
-//    @Produces(value = {MediaType.APPLICATION_JSON})
-//    public Response count() {
-//        
-//        int c = shop.getProductCatalogue().count();
-//        JsonObject value = Json.createObjectBuilder().add("value", c).build();
-//        return Response.ok(value).build();
-//    }
-    
-    //METHODS
-    //Examples from WS2
-    /*
-    public Response create(T t){
-        return null;
-    }
-
-    public Response delete(K id){
-        return null;
-    }
-
-    public Response update(T t){
-        return null;
-    }
-
-    public Response find(K id){
-        return null;
-    }
+   // private final IForum forum = Forum.newInstance();
+    @Inject Forum forum;
+            
+    @Context
+    private UriInfo uriInfo;
     
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
-   
-        Collection<Product> ps = shop.getProductCatalogue().findAll();
+        Collection<CourseGroup> groups = new ArrayList<>();
+        for (CourseGroup g : forum.getGroupList().findAll()) {
+            groups.add(g);
+        }
         
-        
-        GenericEntity<Collection<Product>> ge = new GenericEntity<Collection<Product>>(ps) {
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
+        return Response.ok(ge).build();
+    }
+    
+    @GET
+    @Path(value = "{id}")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response find( @PathParam(value = "id") Long id) {
+        CourseGroup cg = forum.getGroupList().find(id);
+        if (cg != null) {
+            return Response.ok(cg).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
 
+    @GET
+    @Path(value = "count")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response count() {
+        int c = forum.getGroupList().count();
+        
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+
+    @DELETE
+    @Path(value = "{id}")
+    public Response delete(@PathParam(value = "id") final Long id) {
+        try {
+            forum.getGroupList().delete(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PUT
+    @Path(value = "{id}")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
+        try {
+            String name = j.getString("gName");
+            Course c = forum.getGroupList().find(id).getCourse();
+            CourseGroup cg = new CourseGroup(id, c, name);
+            forum.getGroupList().update(cg);
+            // Convert old to HTTP response
+            return Response.ok(cg).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+ 
+    @POST
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    public Response create(JsonObject j, String cc) {
+        
+        Course c = forum.getCourseList().getByCC(cc);
+        CourseGroup cg = new CourseGroup(c, j.getString("name"));
+        try {  
+            forum.getGroupList().create(cg);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cg.getId())).build(cg);
+            return Response.created(uri).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path(value = "range")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+        Collection<CourseGroup> groups = new ArrayList<>();
+        for(CourseGroup g : forum.getGroupList().findRange(fst, count)){
+            groups.add(g);
+        }
+        
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        };
         return Response.ok(ge).build();
     }
 
-    public Response findRange(int first, int n ){
-        return null;
-    }
-
-    public Response count(){
-        return null;
-    }*/
 }
 
     

@@ -5,16 +5,15 @@
  */
 package core;
 
-import java.util.List;
 import javax.ejb.Local;
-import perstistence.IDAO;
+import persistence.IDAO;
 
 /**
  *
  * @author 
  */
 @Local
-public interface IUserList extends IDAO<User, Long> {
+public interface IGroupUserList extends IDAO<GroupUser, Long> {
     
-    public List<User> getByName(String name);
+    public GroupUser getBySsnbr(Long ssnbr);
 }

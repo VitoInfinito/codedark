@@ -1,5 +1,5 @@
     
-package perstistence;
+package persistence;
 
 import java.util.List;
 

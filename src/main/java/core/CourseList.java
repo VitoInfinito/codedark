@@ -6,50 +6,60 @@
 
 package core;
 
-import perstistence.IDAO;
+
+import java.util.ArrayList;
 import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import persistence.AbstractDAO;
 
 /**
  *
- * @author 
+ * @author codeshark
  */
-public class CourseList implements IDAO<Course, String>{
+@Stateless
+public class CourseList extends AbstractDAO<Course, Long> implements ICourseList{
 
     
-
-    @Override
-    public int count() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    @PersistenceContext
+    private EntityManager em; 
+    
+    public static ICourseList newInstance() {
+        return new CourseList();
     }
 
-    @Override
-    public void create(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void update(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Course find(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Course> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Course> findRange(int first, int n) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected CourseList() {
+        super(Course.class);
     }
     
+    @Override
+    protected EntityManager getEntityManager() {
+        return this.em;
+    }
+    
+    @Override
+    public Course getByCC(String cc) {
+        for(Course c: findAll()){
+            if(c.getCCode().equals(cc)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<Course> getByName(String name) {
+        List<Course> found = new ArrayList<>();
+        for (Course c : findRange(0, count())) {
+            if (c.getName().equals(name)) {
+                found.add(c);
+            }
+        }
+        return found;
+    }
+
+       
 }

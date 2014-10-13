@@ -6,27 +6,26 @@
 
 package core;
 
-import perstistence.IDAO;
-import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import perstistence.AbstractDAO;
+import persistence.AbstractDAO;
 
 /**
  *
- * @author bjornlexell
+ * @author
  */
 @Stateless
-public class UserList extends AbstractDAO<User, Long> implements IUserList{
+public class GroupUserList extends AbstractDAO<GroupUser, Long> implements IGroupUserList{
 
-    @Inject
+    
     @PersistenceContext
     private EntityManager em;
     
-    public UserList() {
-        super(User.class);
+    public GroupUserList() {
+        super(GroupUser.class);
     }
     
     
@@ -36,8 +35,13 @@ public class UserList extends AbstractDAO<User, Long> implements IUserList{
     }
 
     @Override
-    public List<User> getByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public GroupUser getBySsnbr(Long ssnbr) {
+       for(GroupUser u : findAll()) {
+            if (u.getSsnbr() == ssnbr) {
+                return u;
+            }
+        }
+        return null;
     }
     
     

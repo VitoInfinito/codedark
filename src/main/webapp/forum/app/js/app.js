@@ -1,7 +1,7 @@
 'use strict';
 
 
-/*var shop = angular.module('Shop', [
+var shop = angular.module('Shop', [
     'ngRoute'
      // More here
 ]);
@@ -10,22 +10,19 @@
 shop.config(['$routeProvider',
     function($routeProvider) {  // Injected object $routeProvider
         $routeProvider.
-                when('/products', {
-                    templateUrl: 'partials/products/products.html'
-                    //controller:
+                when('/forum', {
+                    templateUrl: 'partials/forum/forum.html',
+                    controller: 'ForumController'
                 }).
-                when('/customers', {
-                    templateUrl: 'partials/customers/customers.html'
-                    //controller: Not used
+                when('/group', {
+                    templateUrl: 'partials/group/group.html',
+                    controller: 'GroupController'
                 }).
-                when('/orders', {
-                    templateUrl: 'partials/orders/orders.html'
-                    //controller: Not used
-                }).
+                
                 otherwise({
                     redirectTo: '/index.html'
                 });
 
-    }]);*/
+    }]);
 
 

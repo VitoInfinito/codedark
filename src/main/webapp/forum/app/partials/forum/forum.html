@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div>
+    
+    
+    <table class="table">
+        <thead>
+            <td>Group Number</td><td>Members</td><td>Course</td>
+        </thead>
+    
+        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
+            <td>{{group.id}}</td>
+            <td>{{group.name}}</td>
+            <td>{{group.nbrOfMembers}}/5</td>
+            <td><a href="#/group/{{group.id}}">Edit</a></td>
+            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
+        </tr>
+        
+    </table>
+    
+</div>
