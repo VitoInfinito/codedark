@@ -5,8 +5,6 @@
  */
 package core;
 
-import core.Forum;
-import core.User;
 import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
