@@ -67,6 +67,7 @@ public class TestPersistence {
     
     @Test
     public void testTester() {
+        //Will always fail to check if the testing is working.
         assertTrue(1 == 2);
     }
     
