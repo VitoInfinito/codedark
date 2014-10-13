@@ -4,8 +4,8 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>jdbc/forum</jta-data-source>
     <class>core.Course</class>
-    <class>core.Group</class>
-    <class>core.User</class>
+    <class>core.CourseGroup</class>
+    <class>core.GroupUser</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

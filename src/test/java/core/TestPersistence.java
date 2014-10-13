@@ -58,25 +58,25 @@ public class TestPersistence {
     private void clearAll() throws Exception {  
         utx.begin();  
         em.joinTransaction();
-    //    em.createQuery("delete from Group").executeUpdate();
-    //    em.createQuery("delete from User").executeUpdate();
-    //    em.createQuery("delete from Course").executeUpdate();
+        em.createQuery("delete from CourseGroup").executeUpdate();
+        em.createQuery("delete from GroupUser").executeUpdate();
+        em.createQuery("delete from Course").executeUpdate();
         
         utx.commit();
     }
     
     @Test
     public void testTester() {
-        
+        assertTrue(1 == 2);
     }
     
-    /*
+    
     @InSequence(0)
     @Test
     public void testPersistAUser() throws Exception {
-        User u = new User(1234L, "aaa@a.a", "pwd");
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd");
         forum.getUserList().create(u);
-        List<User> us = forum.getUserList().findAll();
+        List<GroupUser> us = forum.getUserList().findAll();
         assertTrue(us.size() > 0);
         assertTrue(us.get(0).getSsnbr() == u.getSsnbr());
     }
@@ -84,10 +84,10 @@ public class TestPersistence {
     @Test
     public void testUserGetBySsnbr() throws Exception {
         Long ssnbr = 1234L;
-        User u = new User(ssnbr, "aaa@a.a", "pwd");
+        GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd");
         forum.getUserList().create(u);
-        User u2 = forum.getUserList().getBySsnbr(ssnbr);
+        GroupUser u2 = forum.getUserList().getBySsnbr(ssnbr);
         assertTrue(u2.getSsnbr() == u.getSsnbr());
-    }*/
+    }
     
 }
