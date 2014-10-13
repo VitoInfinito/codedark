@@ -12,12 +12,12 @@ and open the template in the editor.
             <td>Group Number</td><td>Members</td><td>Course</td>
         </thead>
     
-        <tr ng-repeat="product in products">
-            <td>{{product.id}}</td>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td><a href="#/products/{{product.id}}">Edit</a></td>
-            <td><a href="#/" ng-click="delete(product.id)">Delete</a></td>
+        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
+            <td>{{group.id}}</td>
+            <td>{{group.name}}</td>
+            <td>{{group.nbrOfMembers}}/5</td>
+            <td><a href="#/group/{{group.id}}">Edit</a></td>
+            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
         </tr>
         
     </table>
