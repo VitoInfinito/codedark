@@ -82,6 +82,35 @@ public class TestPersistence {
         assertTrue(us.get(0).getSsnbr() == u.getSsnbr());
     }
     
+    public void testPersistAGroup(){
+        
+    }
+    
+    public void testPersistACourse(){
+        
+    }
+    
+    
+    public void testUserDelete(){
+        
+    }
+    
+    public void testGroupDelete(){
+        
+    }
+    
+    public void testCourseDelete(){
+        
+    }
+    
+    public void testGroupGetByName(){
+        
+    }
+    
+    public void testCourseGetByCC(){
+        
+    }
+    
     @Test
     public void testUserGetBySsnbr() throws Exception {
         Long ssnbr = 1234L;
@@ -90,5 +119,5 @@ public class TestPersistence {
         GroupUser u2 = forum.getUserList().getBySsnbr(ssnbr);
         assertTrue(u2.getSsnbr() == u.getSsnbr());
     }
-    
 }
+
