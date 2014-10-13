@@ -5,6 +5,7 @@
  */
 package core;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
@@ -80,14 +81,25 @@ public class TestPersistence {
         assertTrue(us.get(0).getSsnbr() == u.getSsnbr());
     }
     
-    public void testPersistAGroup(){
-        
-    }
-    
+    @Test
     public void testPersistACourse(){
-        
+        Course c = new Course("1234", "testCourse");
+        forum.getCourseList().create(c);
+        Course c2 = forum.getCourseList().getByCC(c.getCCode());
+        assertTrue(c2.getCCode().equals(c.getCCode()));
+                
     }
     
+    @Test
+    public void testPersistAGroup(){
+        Course c = new Course("DAT076", "Web-applikationer");
+        forum.getCourseList().create(c);
+        CourseGroup g = new CourseGroup(c, "Code Dark");
+        forum.getGroupList().create(g);
+        List<CourseGroup> gs = forum.getGroupList().getByCourse(c);
+        assertTrue(gs.size() > 0);
+        assertTrue(gs.get(0).getCourse().equals(c));
+    }
     
     public void testUserDelete(){
         

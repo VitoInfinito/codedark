@@ -6,6 +6,7 @@
 
 package core;
 
+import java.util.Objects;
 import javax.persistence.*;
 import persistence.AbstractEntity;
 
@@ -40,6 +41,22 @@ public class Course extends AbstractEntity{
     
     public String toString(){
         return "Course{ cCode = " + cCode + ", name = " + name + "}";
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Course other = (Course) obj;
+        if (!Objects.equals(this.cCode, other.cCode) || !Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        
+        return true;
     }
     
 }
