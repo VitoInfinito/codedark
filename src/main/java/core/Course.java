@@ -26,6 +26,12 @@ public class Course extends AbstractEntity{
         
     }
     
+    public Course(Long id, String cCode, String name){
+        super(id);
+        this.cCode = cCode;
+        this.name = name;
+    }
+    
     public Course(String cCode, String name){
         this.cCode = cCode;
         this.name = name;
