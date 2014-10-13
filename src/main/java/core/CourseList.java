@@ -18,7 +18,7 @@ import persistence.AbstractDAO;
  * @author codeshark
  */
 @Stateless
-public class CourseList extends AbstractDAO<Course, String> implements ICourseList{
+public class CourseList extends AbstractDAO<Course, Long> implements ICourseList{
 
     
     
