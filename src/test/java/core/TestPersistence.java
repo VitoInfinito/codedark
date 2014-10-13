@@ -5,6 +5,7 @@
  */
 package core;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
@@ -80,33 +81,74 @@ public class TestPersistence {
         assertTrue(us.get(0).getSsnbr() == u.getSsnbr());
     }
     
-    public void testPersistAGroup(){
-        
-    }
-    
+    @Test
     public void testPersistACourse(){
-        
+        Course c = new Course("1234", "testCourse");
+        forum.getCourseList().create(c);
+        Course c2 = forum.getCourseList().getByCC(c.getCCode());
+        assertTrue(c2.getCCode().equals(c.getCCode()));
+                
     }
     
-    
+    @Test
+    public void testPersistAGroup(){
+        Course c = new Course("DAT076", "Web-applikationer");
+        forum.getCourseList().create(c);
+        CourseGroup g = new CourseGroup(c, "Code Dark");
+        forum.getGroupList().create(g);
+        List<CourseGroup> gs = forum.getGroupList().getByCourse(c);
+        assertTrue(gs.size() > 0);
+        assertTrue(gs.get(0).getCourse().equals(c));
+    }
+
     public void testUserDelete(){
-        
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd");
+        forum.getUserList().create(u);
+        assertTrue(forum.getUserList().count() == 1);
+        forum.getUserList().delete(u.getId());
+        assertTrue(forum.getUserList().count() == 0);
     }
     
+    @Test
     public void testGroupDelete(){
-        
+        Course c = new Course("DAT999", "Testkursen");
+        forum.getCourseList().create(c);
+        CourseGroup u = new CourseGroup(c, "Testgrupp");
+        forum.getGroupList().create(u);
+        assertTrue(forum.getGroupList().count() == 1);
+        forum.getGroupList().delete(u.getId());
+        assertTrue(forum.getGroupList().count() == 0);
     }
     
+    @Test
     public void testCourseDelete(){
-        
+        Course c = new Course("TST999", "Testkurs");
+        forum.getCourseList().create(c);
+        assertTrue(forum.getCourseList().count() == 1);
+        System.out.println(c.getId());
+        forum.getCourseList().delete(c.getId());
+        assertTrue(forum.getCourseList().count() == 0);
     }
     
+    @Test
     public void testGroupGetByName(){
+        Course c = new Course("DAT999", "Testkursen");
+        forum.getCourseList().create(c);
+        CourseGroup u = new CourseGroup(c, "Testgrupp");
+        forum.getGroupList().create(u);
         
+        CourseGroup u1 = forum.getGroupList().getByName("Testgrupp");
+        
+        assertTrue(u.equals(u1));
     }
     
+    @Test
     public void testCourseGetByCC(){
+        Course c = new Course("DAT999", "Testkursen");
+        forum.getCourseList().create(c);
         
+        Course c1 = forum.getCourseList().getByCC("DAT999");
+        assertTrue(c.equals(c1));
     }
     
     @Test

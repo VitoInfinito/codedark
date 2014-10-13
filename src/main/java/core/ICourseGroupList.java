@@ -16,4 +16,6 @@ import persistence.IDAO;
 @Local
 public interface ICourseGroupList extends IDAO<CourseGroup, Long> {
     public CourseGroup getByName(String name);
+    
+    public List<CourseGroup> getByCourse(Course course);
 }

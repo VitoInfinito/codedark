@@ -5,6 +5,7 @@
  */
 package core;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -43,4 +44,15 @@ public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements I
         }
         return null;
     }  
+
+    @Override
+    public List<CourseGroup> getByCourse(Course course) {
+       List<CourseGroup> found = new ArrayList<>();
+        for (CourseGroup g : findRange(0, count())) {
+            if (g.getCourse().equals(course)) {
+                found.add(g);
+            }
+        }
+        return found;
+    }
 }

@@ -5,7 +5,7 @@
 var groupListService = angular.module('GroupListService', []);
 
 // Representing the remote RESTful GroupList
-groupListService.factory('GroupListProxy', ['$http',
+groupListService.factory('DBProxy', ['$http',
     function($http) {
         var url = "http://localhost:8080/codedark/webresources/forum";
         

@@ -23,6 +23,13 @@ public class GroupUser extends AbstractEntity{
     
     public GroupUser(){}
     
+    public GroupUser(Long id, Long ssnbr, String email, String pwd) {
+        super(id);
+        this.ssnbr = ssnbr;
+        this.email = email;
+        this.pwd = pwd;
+    }
+    
     public GroupUser(Long ssnbr, String email, String pwd) {
         this.ssnbr = ssnbr;
         this.email = email;

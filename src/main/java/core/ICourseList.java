@@ -14,8 +14,10 @@ import persistence.IDAO;
  * @author Patricia
  */
 @Local
-public interface ICourseList extends IDAO<Course, String>{
+public interface ICourseList extends IDAO<Course, Long>{
     
     public Course getByCC(String cc);
+    
+    public List<Course> getByName(String name);
     
 }
