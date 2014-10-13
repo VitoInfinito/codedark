@@ -68,13 +68,11 @@ public class TestPersistence {
     @Test
     public void testTester() {
         //Will always fail to check if the testing is working.
-        assertTrue(1 == 2);
+        //assertTrue(1 == 2);
     }
     
-    
-    @InSequence(0)
     @Test
-    public void testPersistAUser() throws Exception {
+    public void testPersistAUser() {
         GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd");
         forum.getUserList().create(u);
         List<GroupUser> us = forum.getUserList().findAll();
@@ -112,7 +110,7 @@ public class TestPersistence {
     }
     
     @Test
-    public void testUserGetBySsnbr() throws Exception {
+    public void testUserGetBySsnbr() {
         Long ssnbr = 1234L;
         GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd");
         forum.getUserList().create(u);
