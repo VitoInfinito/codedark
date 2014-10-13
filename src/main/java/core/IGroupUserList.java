@@ -13,7 +13,7 @@ import persistence.IDAO;
  * @author 
  */
 @Local
-public interface IUserList extends IDAO<User, Long> {
+public interface IGroupUserList extends IDAO<GroupUser, Long> {
     
-    public User getBySsnbr(Long ssnbr);
+    public GroupUser getBySsnbr(Long ssnbr);
 }

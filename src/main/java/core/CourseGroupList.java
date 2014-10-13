@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package core;
 
-
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -15,19 +15,18 @@ import persistence.AbstractDAO;
 
 /**
  *
- * @author
+ * @author HForsvall
  */
 @Stateless
-public class UserList extends AbstractDAO<User, Long> implements IUserList{
+public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements ICourseGroupList {
 
     
     @PersistenceContext
     private EntityManager em;
     
-    public UserList() {
-        super(User.class);
+    public CourseGroupList() {
+        super(CourseGroup.class);
     }
-    
     
     @Override
     protected EntityManager getEntityManager() {
@@ -35,15 +34,13 @@ public class UserList extends AbstractDAO<User, Long> implements IUserList{
     }
 
     @Override
-    public User getBySsnbr(Long ssnbr) {
-        for (User u : findAll()) {
-            if (u.getSsnbr() == ssnbr) {
-                return u;
-            }
+    public CourseGroup getByName(String name) {
+        Iterator<CourseGroup> it = findAll().iterator();
+        while(it.hasNext()){
+            CourseGroup g = it.next();
+            if(g.getgName().equals(name))
+                return g;
         }
         return null;
-    }
-    
-    
-    
+    }  
 }

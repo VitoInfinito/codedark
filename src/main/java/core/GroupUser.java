@@ -10,7 +10,7 @@ import persistence.AbstractEntity;
  * @author
  */
 @Entity
-public class User extends AbstractEntity{
+public class GroupUser extends AbstractEntity{
 
     @Column(nullable = false)
     private long ssnbr;
@@ -21,9 +21,9 @@ public class User extends AbstractEntity{
     @Column(nullable = false)
     private String pwd;
     
-    public User(){}
+    public GroupUser(){}
     
-    public User(Long ssnbr, String email, String pwd) {
+    public GroupUser(Long ssnbr, String email, String pwd) {
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;

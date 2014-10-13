@@ -12,7 +12,7 @@ package core;
 public interface IForum {
     public ICourseList getCourseList();
     
-    public IUserList getUserList();
+    public IGroupUserList getUserList();
     
-    public IGroupList getGroupList();
+    public ICourseGroupList getGroupList();
 }

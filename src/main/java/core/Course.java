@@ -16,6 +16,7 @@ import persistence.AbstractEntity;
 @Entity
 public class Course extends AbstractEntity{
     
+    @Column(nullable = false)
     private String cCode;
     private String name;
     

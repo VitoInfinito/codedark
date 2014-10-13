@@ -58,9 +58,10 @@ public class TestPersistence {
     private void clearAll() throws Exception {  
         utx.begin();  
         em.joinTransaction();
-        em.createQuery("delete from Group").executeUpdate();
-        em.createQuery("delete from User").executeUpdate();
-        em.createQuery("delete from Course").executeUpdate();
+    //    em.createQuery("delete from Group").executeUpdate();
+    //    em.createQuery("delete from User").executeUpdate();
+    //    em.createQuery("delete from Course").executeUpdate();
+        
         utx.commit();
     }
     
