@@ -13,3 +13,6 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
             $location.path(url);
         };
     }]);
+
+controllers.controller('GroupController', ['$scope', '$location',
+    function])
