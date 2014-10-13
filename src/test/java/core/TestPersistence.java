@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package core;
 
 import core.Forum;
 import core.User;
@@ -66,6 +66,12 @@ public class TestPersistence {
         utx.commit();
     }
     
+    @Test
+    public void testTester() {
+        
+    }
+    
+    /*
     @InSequence(0)
     @Test
     public void testPersistAUser() throws Exception {
@@ -83,6 +89,6 @@ public class TestPersistence {
         forum.getUserList().create(u);
         User u2 = forum.getUserList().getBySsnbr(ssnbr);
         assertTrue(u2.getSsnbr() == u.getSsnbr());
-    }
+    }*/
     
 }
