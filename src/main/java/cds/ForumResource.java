@@ -128,11 +128,9 @@ public class ForumResource {
         Course c = forum.getCourseList().getByCC(j.getString("course"));
         CourseGroup cg = new CourseGroup(c, j.getString("name"));
         List<GroupUser> gU = new ArrayList<>();
+
+        gU.add(forum.getUserList().find((long) j.getInt("userId")));
         
-        Iterator it = j.getJsonArray("members").iterator();
-        while(it.hasNext()){
-            gU.add((GroupUser) it.next());
-        }
         try {  
             forum.getGroupList().create(cg);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cg.getId())).build(cg);
