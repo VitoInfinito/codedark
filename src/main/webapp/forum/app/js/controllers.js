@@ -28,5 +28,5 @@ controllers.controller('TestController',['$scope','$location','DBProxy',
     function($scope, $location, DBProxy){
         $scope.create = function(){
             DBProxy.create($scope.group);
-        }
-    }])
+        };
+    }]);
