@@ -23,3 +23,10 @@ controllers.controller('ForumController', ['$scope', '$location', 'DBProxy',
     function($scope, $location, DBProxy){
         //TODO: Fill with buisness
     }]);
+
+controllers.controller('TestController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        $scope.create = function(){
+            DBProxy.create($scope.group);
+        }
+    }])

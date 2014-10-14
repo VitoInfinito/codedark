@@ -18,6 +18,10 @@ shop.config(['$routeProvider',
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
                 }).
+                when('/test', {
+                    templateUrl: 'partials/frontTest/test.html',
+                    controller: 'TestController'
+                }).
                 
                 otherwise({
                     redirectTo: '/index.html'

@@ -23,7 +23,7 @@ groupListService.factory('DBProxy', ['$http',
 //                return $http.put(url + "/" + id, product);
             },
             create: function(name,cc) {
-//                return $http.post(url, product);
+                return $http.post(url, name, cc);
             },
             delete: function(id) {
 //                return $http.delete(url + "/" + id);
