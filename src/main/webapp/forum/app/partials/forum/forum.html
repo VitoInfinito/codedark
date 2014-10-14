@@ -7,6 +7,27 @@ and open the template in the editor.
 <div>
     <p>forum</p>
     
+    <div class="top">
+        <h2>Groups</h2>
+
+        <button class="btn btn-default" ng-click="navigate('/product-new')" ng-controller="NavigationCtrl">
+            Create new group
+        </button>
+        <div class="btn-group">
+
+            <button class="btn btn-default" ng-disabled="currentPage === 0" 
+                ng-click="currentPage = currentPage - 1">
+                Previous
+            </button>
+
+            <button class="btn btn-default" 
+                ng-disabled="currentPage >= count / pageSize - 1"
+                ng-click="currentPage = currentPage + 1"> 
+                Next
+            </button>
+        </div>
+    </div>
+    
     <table class="table">
         <thead>
             <td>Group Number</td><td>Members</td><td>Course</td>
@@ -15,7 +36,7 @@ and open the template in the editor.
         <tr ng-repeat="group in groups" ng-click="nav(group.id)">
             <td>{{group.id}}</td>
             <td>{{group.name}}</td>
-            <td>{{group.nbrOfMembers}}/5</td>
+            <td>{{group.nbrOfMembers}}</td>
             <td><a href="#/group/{{group.id}}">Edit</a></td>
             <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
         </tr>
