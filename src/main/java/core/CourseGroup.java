@@ -7,6 +7,7 @@ package core;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -17,15 +18,29 @@ import persistence.AbstractEntity;
  * @author HForsvall
  */
 @Entity
-public class Group extends AbstractEntity<Long> implements Serializable {
+public class CourseGroup extends AbstractEntity {
    
     @OneToMany
-    private List<User> members;
+    private List<GroupUser> members;
     @ManyToOne
     private Course course;
+    @Column(nullable = false)
     private String gName;
-
-    public List<User> getMembers() {
+    
+    public CourseGroup(){}
+    
+    public CourseGroup(Course c, String n){
+        course = c;
+        gName = n;
+    }
+    
+    public CourseGroup(Long id, Course c, String n){
+        super(id);
+        gName = n;
+        course = c;
+    }
+    
+    public List<GroupUser> getMembers() {
         return members;
     }
 

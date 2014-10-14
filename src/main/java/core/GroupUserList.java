@@ -7,7 +7,6 @@
 package core;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import persistence.AbstractDAO;
@@ -17,14 +16,14 @@ import persistence.AbstractDAO;
  * @author
  */
 @Stateless
-public class UserList extends AbstractDAO<User, Long> implements IUserList{
+public class GroupUserList extends AbstractDAO<GroupUser, Long> implements IGroupUserList{
 
-    @Inject
+    
     @PersistenceContext
     private EntityManager em;
     
-    public UserList() {
-        super(User.class);
+    public GroupUserList() {
+        super(GroupUser.class);
     }
     
     
@@ -34,8 +33,8 @@ public class UserList extends AbstractDAO<User, Long> implements IUserList{
     }
 
     @Override
-    public User getBySsnbr(Long ssnbr) {
-        for (User u : findAll()) {
+    public GroupUser getBySsnbr(Long ssnbr) {
+       for(GroupUser u : findAll()) {
             if (u.getSsnbr() == ssnbr) {
                 return u;
             }

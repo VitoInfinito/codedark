@@ -13,3 +13,20 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
             $location.path(url);
         };
     }]);
+
+controllers.controller('GroupController', ['$scope', '$location','DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);
+
+controllers.controller('ForumController', ['$scope', '$location', 'DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);
+
+controllers.controller('TestController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        $scope.create = function(){
+            DBProxy.create($scope.group);
+        }
+    }])

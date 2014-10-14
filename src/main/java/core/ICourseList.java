@@ -6,14 +6,18 @@
 package core;
 
 import java.util.List;
+import javax.ejb.Local;
 import persistence.IDAO;
 
 /**
  *
  * @author Patricia
  */
-public interface ICourseList extends IDAO<Course, String>{
+@Local
+public interface ICourseList extends IDAO<Course, Long>{
     
     public Course getByCC(String cc);
+    
+    public List<Course> getByName(String name);
     
 }

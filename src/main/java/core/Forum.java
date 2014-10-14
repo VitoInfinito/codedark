@@ -16,8 +16,15 @@ import javax.enterprise.context.ApplicationScoped;
 public class Forum implements IForum{
 
     @EJB private ICourseList courseList;
-    @EJB private IUserList userList;
-    @EJB private IGroupList groupList;
+    @EJB private IGroupUserList userList;
+    @EJB private ICourseGroupList groupList;
+    
+    public Forum(){}
+    
+     public static IForum newInstance() {
+        return new Forum();
+    }
+
     
     @Override
     public ICourseList getCourseList() {
@@ -25,12 +32,12 @@ public class Forum implements IForum{
     }
 
     @Override
-    public IUserList getUserList() {
+    public IGroupUserList getUserList() {
         return userList;
     }
 
     @Override
-    public IGroupList getGroupList() {
+    public ICourseGroupList getGroupList() {
         return groupList;
     }
     

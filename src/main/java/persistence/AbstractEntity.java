@@ -16,7 +16,7 @@ import javax.persistence.MappedSuperclass;
  * @param <K> type for key (later primary key)
  */
 @MappedSuperclass
-public class AbstractEntity<K> implements Serializable  {
+public abstract class AbstractEntity implements Serializable  {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

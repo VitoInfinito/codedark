@@ -5,6 +5,7 @@
  */
 package core;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,14 +19,14 @@ import persistence.AbstractDAO;
  * @author HForsvall
  */
 @Stateless
-public class GroupList extends AbstractDAO<Group, Long> implements IGroupList {
+public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements ICourseGroupList {
 
-    @Inject
+    
     @PersistenceContext
     private EntityManager em;
     
-    public GroupList() {
-        super(Group.class);
+    public CourseGroupList() {
+        super(CourseGroup.class);
     }
     
     @Override
@@ -34,13 +35,24 @@ public class GroupList extends AbstractDAO<Group, Long> implements IGroupList {
     }
 
     @Override
-    public Group getByName(String name) {
-        Iterator<Group> it = findAll().iterator();
+    public CourseGroup getByName(String name) {
+        Iterator<CourseGroup> it = findAll().iterator();
         while(it.hasNext()){
-            Group g = it.next();
+            CourseGroup g = it.next();
             if(g.getgName().equals(name))
                 return g;
         }
         return null;
     }  
+
+    @Override
+    public List<CourseGroup> getByCourse(Course course) {
+       List<CourseGroup> found = new ArrayList<>();
+        for (CourseGroup g : findRange(0, count())) {
+            if (g.getCourse().equals(course)) {
+                found.add(g);
+            }
+        }
+        return found;
+    }
 }
