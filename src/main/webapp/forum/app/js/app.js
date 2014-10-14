@@ -1,13 +1,14 @@
 'use strict';
 
 
-var shop = angular.module('Shop', [
-    'ngRoute'
-     // More here
+var forum = angular.module('Forum', [
+    'ngRoute',
+    'Controllers',
+    'GroupListService'
 ]);
 
 
-shop.config(['$routeProvider',
+forum.config(['$routeProvider',
     function($routeProvider) {  // Injected object $routeProvider
         $routeProvider.
                 when('/forum', {
