@@ -4,6 +4,7 @@ package cds;
 import cds.core.Course;
 import cds.core.CourseGroup;
 import cds.core.Forum;
+import cds.core.GroupUser;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
