@@ -6,6 +6,7 @@ import core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -93,7 +94,10 @@ public class ForumResource {
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
-            CourseGroup cg = new CourseGroup(id, c, name);
+            CourseGroup cg1 = forum.getGroupList().find(id);
+            List<GroupUser> list = cg1.getMembers();
+            list.add(forum.getUserList().find((long)j.getInt("userId")));
+            CourseGroup cg = new CourseGroup(id, c, name, list);
             forum.getGroupList().update(cg);
             // Convert old to HTTP response
             return Response.ok(cg).build();
