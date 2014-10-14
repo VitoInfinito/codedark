@@ -1,11 +1,14 @@
-package cd;
+package cds;
 
 
-import core.Forum;
-import core.*;
+import cds.core.Course;
+import cds.core.CourseGroup;
+import cds.core.Forum;
+import cds.core.GroupUser;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -108,13 +111,53 @@ public class ForumResource {
  
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response create(JsonObject j, String cc) {
-        
-        Course c = forum.getCourseList().getByCC(cc);
+    public Response create(JsonObject j) {
+        switch(j.getString("type")){
+            case "group": 
+                return createGroup(j);
+            case "course":
+                return createCourse(j);
+            case "user":
+                return createUser(j);
+            default:
+                return null;
+        }
+    }
+    
+    private Response createGroup(JsonObject j){
+        Course c = forum.getCourseList().getByCC(j.getString("course"));
         CourseGroup cg = new CourseGroup(c, j.getString("name"));
+        List<GroupUser> gU = new ArrayList<>();
+        
+        Iterator it = j.getJsonArray("members").iterator();
+        while(it.hasNext()){
+            gU.add((GroupUser) it.next());
+        }
         try {  
             forum.getGroupList().create(cg);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cg.getId())).build(cg);
+            return Response.created(uri).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response createCourse(JsonObject j){
+        Course c = new Course(j.getString("cc"), j.getString("name"));
+        try{
+            forum.getCourseList().create(c);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
+            return Response.created(uri).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response createUser(JsonObject j){
+        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"));
+        try{
+            forum.getUserList().create(gu);  
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

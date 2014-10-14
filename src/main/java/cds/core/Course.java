@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 
-package core;
+package cds.core;
 
 import java.util.Objects;
 import javax.persistence.*;
-import persistence.AbstractEntity;
+import cds.persistence.AbstractEntity;
 
 /**
  *

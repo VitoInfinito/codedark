@@ -1,8 +1,8 @@
-package core;
+package cds.core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import persistence.AbstractEntity;
+import cds.persistence.AbstractEntity;
 
 
 /**

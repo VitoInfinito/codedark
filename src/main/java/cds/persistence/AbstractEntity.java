@@ -1,4 +1,4 @@
-package persistence;
+package cds.persistence;
 
 import java.io.Serializable;
 import java.util.Objects;

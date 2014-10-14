@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div>
+    <!--Body content-->
+    <h2>New Group</h2>
+    
+    <form role="form">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" />
+        </div>
+        <div class="form-group">
+            <label>Course</label>
+            <select ng-model="course" ng-options="course.cc for course in courses"></select>
+        </div>
+        
+        <button class="btn btn-default" ng-click="create()">Submit</button>
+        <button ng-controller="NavigationCtrl" ng-click="navigate('/forum')" class="btn btn-default">Cancel</button>
+    </form>
+</div>

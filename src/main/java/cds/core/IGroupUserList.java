@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package core;
+package cds.core;
 
 import javax.ejb.Local;
-import persistence.IDAO;
+import cds.persistence.IDAO;
 
 /**
  *

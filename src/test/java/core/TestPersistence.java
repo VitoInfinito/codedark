@@ -5,6 +5,10 @@
  */
 package core;
 
+import cds.core.Forum;
+import cds.core.Course;
+import cds.core.CourseGroup;
+import cds.core.GroupUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
