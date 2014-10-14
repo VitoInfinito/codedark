@@ -11,7 +11,7 @@ import persistence.AbstractEntity;
 
 /**
  *
- * @author 
+ * @author sofiaedstrom
  */
 @Entity
 public class Course extends AbstractEntity<String>{
