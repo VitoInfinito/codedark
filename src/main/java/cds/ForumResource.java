@@ -26,6 +26,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
 /**
  * REST Web Service
  *
@@ -95,7 +96,10 @@ public class ForumResource {
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
-            CourseGroup cg = new CourseGroup(id, c, name);
+            CourseGroup cg1 = forum.getGroupList().find(id);
+            List<GroupUser> list = cg1.getMembers();
+            list.add(forum.getUserList().find((long)j.getInt("userId")));
+            CourseGroup cg = new CourseGroup(id, c, name, list);
             forum.getGroupList().update(cg);
             // Convert old to HTTP response
             return Response.ok(cg).build();
@@ -123,6 +127,7 @@ public class ForumResource {
         Course c = forum.getCourseList().getByCC(j.getString("course"));
         CourseGroup cg = new CourseGroup(c, j.getString("name"));
         List<GroupUser> gU = new ArrayList<>();
+
         gU.add(forum.getUserList().find((long) j.getInt("userId")));
         
         try {  

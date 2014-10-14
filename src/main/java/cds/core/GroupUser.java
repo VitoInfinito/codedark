@@ -35,6 +35,7 @@ public class GroupUser extends AbstractEntity{
         this.email = email;
         this.pwd = pwd;
     }
+    
 
     public long getSsnbr() {
         return ssnbr;
