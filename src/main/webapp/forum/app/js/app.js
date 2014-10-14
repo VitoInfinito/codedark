@@ -9,7 +9,7 @@ var forum = angular.module('Forum', [
 
 
 forum.config(['$routeProvider',
-    function($routeProvider) {  // Injected object $routeProvider
+    function($routeProvider) {  
         $routeProvider.
                 when('/forum', {
                     templateUrl: 'partials/forum/forum.html',
