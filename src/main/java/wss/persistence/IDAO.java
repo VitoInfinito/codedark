@@ -1,5 +1,5 @@
     
-package persistence;
+package wss.persistence;
 
 import java.util.List;
 

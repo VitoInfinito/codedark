@@ -1,4 +1,4 @@
-package persistence;
+package wss.persistence;
 
 import java.util.ArrayList;
 import java.util.List;

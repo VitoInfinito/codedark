@@ -1,8 +1,8 @@
-package core;
+package wss.core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import persistence.AbstractEntity;
+import wss.persistence.AbstractEntity;
 
 
 /**

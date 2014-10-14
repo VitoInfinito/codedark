@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package core;
+package wss.core;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import persistence.AbstractDAO;
+import wss.persistence.AbstractDAO;
 
 /**
  *

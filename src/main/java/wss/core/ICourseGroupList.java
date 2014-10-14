@@ -1,8 +1,8 @@
-package core;
+package wss.core;
 
 import java.util.List;
 import javax.ejb.Local;
-import persistence.IDAO;
+import wss.persistence.IDAO;
 
 /**
  

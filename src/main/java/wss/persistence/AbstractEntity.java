@@ -1,4 +1,4 @@
-package persistence;
+package wss.persistence;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,8 +1,9 @@
-package cd;
+package wss;
 
 
-import core.Forum;
-import core.*;
+import wss.core.Course;
+import wss.core.CourseGroup;
+import wss.core.Forum;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
