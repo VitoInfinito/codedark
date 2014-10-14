@@ -1,5 +1,5 @@
     
-package wss.persistence;
+package cds.persistence;
 
 import java.util.List;
 

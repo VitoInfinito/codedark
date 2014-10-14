@@ -5,10 +5,10 @@
  */
 package core;
 
-import wss.core.Forum;
-import wss.core.Course;
-import wss.core.CourseGroup;
-import wss.core.GroupUser;
+import cds.core.Forum;
+import cds.core.Course;
+import cds.core.CourseGroup;
+import cds.core.GroupUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;

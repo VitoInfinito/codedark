@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package wss.core;
-
-import javax.ejb.Local;
-import wss.persistence.IDAO;
+package cds.core;
 
 /**
  *
- * @author 
+ * @author HForsvall
  */
-@Local
-public interface IGroupUserList extends IDAO<GroupUser, Long> {
+public interface IForum {
+    public ICourseList getCourseList();
     
-    public GroupUser getBySsnbr(Long ssnbr);
+    public IGroupUserList getUserList();
+    
+    public ICourseGroupList getGroupList();
 }

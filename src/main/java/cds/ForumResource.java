@@ -1,9 +1,10 @@
-package wss;
+package cds;
 
 
-import wss.core.Course;
-import wss.core.CourseGroup;
-import wss.core.Forum;
+import cds.core.Course;
+import cds.core.CourseGroup;
+import cds.core.Forum;
+import cds.core.GroupUser;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
