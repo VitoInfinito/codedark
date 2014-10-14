@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package core;
+package cds.core;
 
-import cds.core.Forum;
+
 import cds.core.Course;
 import cds.core.CourseGroup;
+import cds.core.Forum;
 import cds.core.GroupUser;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class TestPersistence {
     @Deployment
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "forum.war")
-                .addPackage("core")
+                .addPackage("cds.core")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -91,6 +92,7 @@ public class TestPersistence {
         forum.getCourseList().create(c);
         Course c2 = forum.getCourseList().getByCC(c.getCCode());
         assertTrue(c2.getCCode().equals(c.getCCode()));
+        
                 
     }
     

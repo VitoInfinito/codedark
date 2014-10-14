@@ -196,7 +196,15 @@ public class ForumResource {
     @GET
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+    public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
+        if(type == "group"){
+           return findGroupRange(fst, count); 
+        }
+        
+        return null;
+    }
+
+    private Response findGroupRange(int fst, int count){
         Collection<CourseGroup> groups = new ArrayList<>();
         for(CourseGroup g : forum.getGroupList().findRange(fst, count)){
             groups.add(g);
@@ -206,7 +214,6 @@ public class ForumResource {
         };
         return Response.ok(ge).build();
     }
-
 }
 
     
