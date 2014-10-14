@@ -8,7 +8,6 @@ import cds.core.GroupUser;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -58,11 +57,43 @@ public class ForumResource {
     
     @GET
     @Path(value = "{id}")
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response find( @PathParam(value = "id") Long id) {
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response find(JsonObject j, @PathParam(value= "id") Long id){
+        switch(j.getString("type")){
+            case "group":
+                return findGroup(j, id);
+            case "course":
+                return findCourse(j, id);
+            case "user":
+                return findUser(j, id);
+            default:
+                return null;
+        }
+    
+    }
+
+    private Response findGroup(JsonObject j, Long id) {
         CourseGroup cg = forum.getGroupList().find(id);
         if (cg != null) {
             return Response.ok(cg).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+    
+    private Response findCourse(JsonObject j, Long id) {
+        Course c = forum.getCourseList().find(id);
+        if (c != null) {
+            return Response.ok(c).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+    
+    private Response findUser(JsonObject j, Long id) {
+        GroupUser user = forum.getUserList().find(id);
+        if (user != null) {
+            return Response.ok(user).build();
         } else {
             return Response.noContent().build();
         }
@@ -91,7 +122,7 @@ public class ForumResource {
 
     @PUT
     @Path(value = "{id}")
-    @Consumes(value = MediaType.APPLICATION_JSON)
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response update(@PathParam(value = "id") Long id, JsonObject j) {
         try {
