@@ -180,18 +180,62 @@ public class ForumResource {
     @Path(value = "{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
+    public Response update(JsonObject j, @PathParam(value = "id") Long id) {
+        switch(j.getString("type")){
+            case "group":
+                return updateGroup(j, id);
+            case "course":
+                return updateCourse(j, id);
+            case "user":
+                return updateUser(j, id);
+            default:
+                return null;
+        }
+    }
+    
+    private Response updateGroup(JsonObject j, Long id){
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
             CourseGroup cg1 = forum.getGroupList().find(id);
             List<GroupUser> list = cg1.getMembers();
+     
             list.add(forum.getUserList().find((long)j.getInt("userId")));
             CourseGroup cg = new CourseGroup(id, c, name, list);
             forum.getGroupList().update(cg);
             // Convert old to HTTP response
             return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response updateCourse(JsonObject j, Long id){
+        try{
+            String cc = j.getString("cc");
+            String name = j.getString("name");
+            Course updatedCourse = new Course(id, cc, name);
+            forum.getCourseList().update(updatedCourse);
+        
+            return Response.ok(updatedCourse).build();
+        }catch (IllegalArgumentException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        
+    }
+    
+    private Response updateUser(JsonObject j, Long id){
+        try{
+            Integer ssnbrInt = j.getInt("ssnbr");
+            Long ssnbr = ssnbrInt.longValue();
+            String email = j.getString("email");
+            String pwd = j.getString("pwd");
+            String fname = j.getString("fname");
+            String lname = j.getString("lname");
+
+            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname);
+            return Response.ok(updatedUser).build();
+        }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
