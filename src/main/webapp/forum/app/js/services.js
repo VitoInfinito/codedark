@@ -28,7 +28,7 @@ groupListService.factory('DBProxy', ['$http',
             delete: function(id) {
 //                return $http.delete(url + "/" + id);
             },
-            count: function() {
+            count: function(object) {
                 return $http.get(url + "/count");
             }
         }
