@@ -135,9 +135,41 @@ public class ForumResource {
 
     @DELETE
     @Path(value = "{id}")
-    public Response delete(@PathParam(value = "id") final Long id) {
+    public Response delete(JsonObject j, @PathParam(value = "id") final Long id) {
+        switch(j.getString("type")){
+            case "group":
+                return deleteGroup(id);
+            case "course":
+                return deleteCourse(id);
+            case "user":
+                return deleteUser(id);
+            default:
+                return null;
+        }
+
+    }
+    
+    private Response deleteGroup(final Long id){
         try {
             forum.getGroupList().delete(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response deleteCourse(final Long id){
+        try {
+            forum.getCourseList().delete(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response deleteUser(final Long id){
+        try {
+            forum.getUserList().delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
