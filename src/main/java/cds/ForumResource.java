@@ -283,7 +283,8 @@ public class ForumResource {
     }
     
     private Response createUser(JsonObject j){
-        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"));
+        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
+            j.getString("fname"), j.getString("lname"));
         try{
             forum.getUserList().create(gu);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
