@@ -27,6 +27,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/forum/login.html',
                     controller: 'LoginController'
                 }).
+                when('/signup', {
+                    templateUrl: 'partials/forum/signup.html',
+                    controller: 'SignupController'
+                }).
                 
                 otherwise({
                     redirectTo: '/index.html'
