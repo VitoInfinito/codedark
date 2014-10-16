@@ -197,7 +197,7 @@ public class ForumResource {
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
-        if(type == "group"){
+        if(type.equals("group")){
            return findGroupRange(fst, count); 
         }
         
