@@ -4,7 +4,7 @@
 var forum = angular.module('Forum', [
     'ngRoute',
     'Controllers',
-    'GroupListService'
+    'DBService'
 ]);
 
 
@@ -22,6 +22,10 @@ forum.config(['$routeProvider',
                 when('/test', {
                     templateUrl: 'partials/frontTest/test.html',
                     controller: 'TestController'
+                }).
+                when('/login', {
+                    templateUrl: 'partials/forum/login.html',
+                    controller: 'LoginController'
                 }).
                 
                 otherwise({
