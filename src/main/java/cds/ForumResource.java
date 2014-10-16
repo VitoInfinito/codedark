@@ -63,21 +63,19 @@ public class ForumResource {
     @GET
     @Path(value = "{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response find(JsonObject j, @PathParam(value= "id") Long id){
-        switch(j.getString("type")){
-            case "group":
-                return findGroup(j, id);
-            case "course":
-                return findCourse(j, id);
-            case "user":
-                return findUser(j, id);
-            default:
-                return null;
+    public Response findUser(@PathParam(value= "id") Long id){
+        GroupUser user = forum.getUserList().find(id);
+        if (user != null) {
+            return Response.ok(user).build();
+        } else {
+            return Response.noContent().build();
         }
     
     }
-
-    private Response findGroup(JsonObject j, Long id) {
+    @GET
+    @Path(value = "{id}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findGroup( @PathParam(value= "id")Long id) {
         CourseGroup cg = forum.getGroupList().find(id);
         if (cg != null) {
             return Response.ok(cg).build();
@@ -86,7 +84,10 @@ public class ForumResource {
         }
     }
     
-    private Response findCourse(JsonObject j, Long id) {
+    @GET
+    @Path(value = "{id}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findCourse(@PathParam(value= "id") Long id) {
         Course c = forum.getCourseList().find(id);
         if (c != null) {
             return Response.ok(c).build();
@@ -95,14 +96,6 @@ public class ForumResource {
         }
     }
     
-    private Response findUser(JsonObject j, Long id) {
-        GroupUser user = forum.getUserList().find(id);
-        if (user != null) {
-            return Response.ok(user).build();
-        } else {
-            return Response.noContent().build();
-        }
-    }
 
     @GET
     @Path(value = "count")
@@ -332,7 +325,7 @@ public class ForumResource {
     }
     
     private Response findCourseRange(int fst, int count){
-        
+        return null;
     }
     
 }
