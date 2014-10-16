@@ -2,7 +2,7 @@
 
 /* Services */
 
-var groupListService = angular.module('GroupListService', []);
+var dbService = angular.module('DBService', []);
 
 // Representing the remote RESTful GroupList
 groupListService.factory('DBProxy', ['$http',
@@ -16,7 +16,7 @@ groupListService.factory('DBProxy', ['$http',
             findRange: function(first, count) {
                 return $http.get(url + "/range?fst=" + first + "&count=" + count);
             },
-            find: function(id) {
+            find: function(object, id) {
 //                return $http.get(url + "/" + id);
             },
             update: function(id, cc) {
