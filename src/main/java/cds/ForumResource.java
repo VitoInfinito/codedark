@@ -102,18 +102,74 @@ public class ForumResource {
     @GET
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response count() {
+    public Response count(JsonObject j) {
+        switch(j.getString("type")){
+            case "group":
+                return countGroups();
+            case "course":
+                return countCourses();
+            case "user":
+                return countUsers();
+            default:
+                return null;
+        }
+    }
+    
+    private Response countGroups(){
         int c = forum.getGroupList().count();
-        
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+    
+    private Response countCourses(){
+        int c = forum.getCourseList().count();
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+    
+    private Response countUsers(){
+        int c = forum.getUserList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
 
     @DELETE
     @Path(value = "{id}")
-    public Response delete(@PathParam(value = "id") final Long id) {
+    public Response delete(JsonObject j, @PathParam(value = "id") final Long id) {
+        switch(j.getString("type")){
+            case "group":
+                return deleteGroup(id);
+            case "course":
+                return deleteCourse(id);
+            case "user":
+                return deleteUser(id);
+            default:
+                return null;
+        }
+
+    }
+    
+    private Response deleteGroup(final Long id){
         try {
             forum.getGroupList().delete(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response deleteCourse(final Long id){
+        try {
+            forum.getCourseList().delete(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response deleteUser(final Long id){
+        try {
+            forum.getUserList().delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -124,18 +180,62 @@ public class ForumResource {
     @Path(value = "{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
+    public Response update(JsonObject j, @PathParam(value = "id") Long id) {
+        switch(j.getString("type")){
+            case "group":
+                return updateGroup(j, id);
+            case "course":
+                return updateCourse(j, id);
+            case "user":
+                return updateUser(j, id);
+            default:
+                return null;
+        }
+    }
+    
+    private Response updateGroup(JsonObject j, Long id){
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
             CourseGroup cg1 = forum.getGroupList().find(id);
             List<GroupUser> list = cg1.getMembers();
+     
             list.add(forum.getUserList().find((long)j.getInt("userId")));
             CourseGroup cg = new CourseGroup(id, c, name, list);
             forum.getGroupList().update(cg);
             // Convert old to HTTP response
             return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    private Response updateCourse(JsonObject j, Long id){
+        try{
+            String cc = j.getString("cc");
+            String name = j.getString("name");
+            Course updatedCourse = new Course(id, cc, name);
+            forum.getCourseList().update(updatedCourse);
+        
+            return Response.ok(updatedCourse).build();
+        }catch (IllegalArgumentException e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+        
+    }
+    
+    private Response updateUser(JsonObject j, Long id){
+        try{
+            Integer ssnbrInt = j.getInt("ssnbr");
+            Long ssnbr = ssnbrInt.longValue();
+            String email = j.getString("email");
+            String pwd = j.getString("pwd");
+            String fname = j.getString("fname");
+            String lname = j.getString("lname");
+
+            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname);
+            return Response.ok(updatedUser).build();
+        }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -183,7 +283,8 @@ public class ForumResource {
     }
     
     private Response createUser(JsonObject j){
-        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"));
+        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
+            j.getString("fname"), j.getString("lname"));
         try{
             forum.getUserList().create(gu);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
