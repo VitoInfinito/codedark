@@ -171,7 +171,7 @@ public class ForumResource {
     @Path(value = "{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(JsonObject j, @PathParam(value = "id") Long id) {
+    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
         switch(j.getString("type")){
             case "group":
                 return updateGroup(j, id);

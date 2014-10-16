@@ -19,11 +19,11 @@ groupListService.factory('DBProxy', ['$http',
             find: function(id) {
                 return $http.get(url + "/" + id);
             },
-            update: function(id) {
-                return $http.put(url + "/" + id);
+            update: function(id, object) {
+                return $http.put(url + "/" + id, object);
             },
-            create: function() {
-                return $http.post(url);
+            create: function(object) {
+                return $http.post(url, object);
             },
             delete: function(id) {
                 return $http.delete(url + "/" + id);
