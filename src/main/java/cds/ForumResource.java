@@ -100,32 +100,25 @@ public class ForumResource {
     @GET
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response count(JsonObject j) {
-        switch(j.getString("type")){
-            case "group":
-                return countGroups();
-            case "course":
-                return countCourses();
-            case "user":
-                return countUsers();
-            default:
-                return null;
-        }
-    }
-    
-    private Response countGroups(){
+    public Response countGroups() {
         int c = forum.getGroupList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
     
-    private Response countCourses(){
+    @GET
+    @Path(value = "count")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countCourses(){
         int c = forum.getCourseList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
     
-    private Response countUsers(){
+    @GET
+    @Path(value = "count")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countUsers(){
         int c = forum.getUserList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
