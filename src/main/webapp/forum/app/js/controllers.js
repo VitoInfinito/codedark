@@ -30,3 +30,13 @@ controllers.controller('TestController',['$scope','$location','DBProxy',
             DBProxy.create($scope.group);
         };
     }]);
+
+controllers.controller('LoginController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);
+
+controllers.controller('SignupController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        //TODO: Fill with buisness
+    }]);

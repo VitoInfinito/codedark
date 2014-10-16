@@ -5,9 +5,14 @@ import cds.core.Course;
 import cds.core.CourseGroup;
 import cds.core.Forum;
 import cds.core.GroupUser;
+import cds.core.ICourseGroupList;
+import cds.core.ICourseList;
+import cds.core.IGroupUserList;
+import cds.persistence.IDAO;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -298,23 +303,38 @@ public class ForumResource {
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
-        if(type.equals("group")){
-           return findGroupRange(fst, count); 
+
+        ICourseGroupList cGL = forum.getGroupList();
+        IGroupUserList gUL = forum.getUserList();
+        ICourseList cL = forum.getCourseList();
+        
+        switch(type){
+            case "group":
+            case "course":
+            case "member":
+
         }
+        
         
         return null;
     }
 
-    private Response findGroupRange(int fst, int count){
-        Collection<CourseGroup> groups = new ArrayList<>();
-        for(CourseGroup g : forum.getGroupList().findRange(fst, count)){
+    private <T extends IDAO> Response findRange(int fst, int count, T list){
+        Collection<T> groups = new ArrayList<>();
+        for (Iterator<T> it = list.findRange(fst, count).iterator(); it.hasNext();) {
+            T g = it.next();
             groups.add(g);
         }
         
-        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        GenericEntity<Collection<T>> ge = new GenericEntity<Collection<T>>(groups) {
         };
         return Response.ok(ge).build();
     }
+    
+    private Response findCourseRange(int fst, int count){
+        
+    }
+    
 }
 
     
