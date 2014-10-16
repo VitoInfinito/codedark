@@ -13,8 +13,11 @@ body {
 
 #input{
     margin-right: auto;
-    width : 20em; 
+    margin-left: auto;
+    width: 80%; 
+    
 }
+
 
 header {
     /*background-image:  url(../img/banner.jpg);
