@@ -136,24 +136,8 @@ public class ForumResource {
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
-
-    @DELETE
-    @Path(value = "{id}")
-    public Response delete(JsonObject j, @PathParam(value = "id") final Long id) {
-        switch(j.getString("type")){
-            case "group":
-                return deleteGroup(id);
-            case "course":
-                return deleteCourse(id);
-            case "user":
-                return deleteUser(id);
-            default:
-                return null;
-        }
-
-    }
     
-    private Response deleteGroup(final Long id){
+    public Response deleteGroup(final Long id){
         try {
             forum.getGroupList().delete(id);
             return Response.ok().build();
@@ -162,7 +146,7 @@ public class ForumResource {
         }
     }
     
-    private Response deleteCourse(final Long id){
+    public Response deleteCourse(final Long id){
         try {
             forum.getCourseList().delete(id);
             return Response.ok().build();
@@ -171,7 +155,7 @@ public class ForumResource {
         }
     }
     
-    private Response deleteUser(final Long id){
+    public Response deleteUser(final Long id){
         try {
             forum.getUserList().delete(id);
             return Response.ok().build();
