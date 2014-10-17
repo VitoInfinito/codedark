@@ -139,7 +139,7 @@ public class ForumResource {
     
     @DELETE
     @Path(value = "group/{id}")
-    public Response deleteGroup(final Long id){
+    public Response deleteGroup(@PathParam(value= "id") final Long id){
         try {
             forum.getGroupList().delete(id);
             return Response.ok().build();
@@ -150,7 +150,7 @@ public class ForumResource {
     
     @DELETE
     @Path(value = "course/{id}")
-    public Response deleteCourse(final Long id){
+    public Response deleteCourse(@PathParam(value= "id") final Long id){
         try {
             forum.getCourseList().delete(id);
             return Response.ok().build();
@@ -161,7 +161,7 @@ public class ForumResource {
     
     @DELETE
     @Path(value = "user/{id}")
-    public Response deleteUser(final Long id){
+    public Response deleteUser(@PathParam(value= "id") final Long id){
         try {
             forum.getUserList().delete(id);
             return Response.ok().build();
@@ -174,7 +174,7 @@ public class ForumResource {
     @Path(value = "group/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateGroup(JsonObject j, Long id){
+    public Response updateGroup(JsonObject j, @PathParam(value= "id") Long id){
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
@@ -194,7 +194,7 @@ public class ForumResource {
     @Path(value = "course/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateCourse(JsonObject j, Long id){
+    public Response updateCourse(JsonObject j, @PathParam(value= "id") Long id){
         try{
             String cc = j.getString("cc");
             String name = j.getString("name");
@@ -211,7 +211,7 @@ public class ForumResource {
     @Path(value = "user/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateUser(JsonObject j, Long id){
+    public Response updateUser(JsonObject j, @PathParam(value= "id") Long id){
         try{
             Integer ssnbrInt = j.getInt("ssnbr");
             Long ssnbr = ssnbrInt.longValue();
