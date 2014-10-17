@@ -16,8 +16,29 @@
         <script src="js/controllers.js"></script>  
         <script src="js/services.js"></script>  
         <script src="js/filters.js"></script>  
+        <script src="js/breadcrumb_creator.js"></script>  
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/default.css">
+    
+    <script>
+        $(document).ready(function() {
+            $("a").click(function () {
+                var data = $(this).attr("data-value");
+                if(data !== "Home") {
+                   displayBreadcrumbs("default");
+                   $("#breadcrumb").html(data);
+                }else{
+                    displayBreadcrumbs("none");
+                }
+            });
+            
+            var displayBreadcrumbs = function(displayValue) {
+                $("#breadcrumb-home").css("display", displayValue);
+                $("#breadcrumb-indicator").css("display", displayValue);
+                $("#breadcrumb").css("display", displayValue);
+            };
+        });
+    </script>
     </head>
     <body>
         <header>
@@ -27,13 +48,14 @@
             </hgroup>
         </header>
         <nav class="navbar navbar-default" role="navigation">
-            <a class="navbar-brand" href="#">Home</a>
-            <a class="navbar-brand" href="#/forum">Forum</a>
-            <a class="navbar-brand" href="#/group">Group</a>
-            <a class="navbar-brand" href="#/test">Test</a>
             
-            <a class="navbar-brand navbar-right" href="#/signup">Sign up</a>
-            <a class="navbar-brand navbar-right" href="#/login">Log in</a>
+            <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#">Home</a>
+            <div id="breadcrumb-indicator" class="menu-box navbar-brand">></div>
+            <a id="breadcrumb" data-value="B" class="navbar-brand" href="#">B</a>
+            
+            
+            <a class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
+            <a class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
             <div id="login-name" class="menu-box navbar-right"></div>
         </nav>  
             
@@ -42,5 +64,6 @@
             <div ng-view ></div>
         </div>
         <footer>This is footer</footer>
+        
     </body>
 </html>
