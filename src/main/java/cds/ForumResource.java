@@ -319,10 +319,6 @@ public class ForumResource {
         return Response.ok(ge).build();
     }
     
-    private Response findCourseRange(int fst, int count){
-        return null;
-    }
-    
 }
 
     
