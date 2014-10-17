@@ -287,21 +287,21 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "group/range")
+    @Path(value = "groups/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
                 return findRange(fst, count, forum.getGroupList());
     }
     
     @GET
-    @Path(value = "course/range")
+    @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
                 return findRange(fst, count, forum.getGroupList());
     }
     
     @GET
-    @Path(value = "user/range")
+    @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
                 return findRange(fst, count, forum.getGroupList());
