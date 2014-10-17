@@ -2,34 +2,76 @@
 
 /* Services */
 
-var groupListService = angular.module('GroupListService', []);
+var dbService = angular.module('DBService', []);
 
 // Representing the remote RESTful GroupList
-groupListService.factory('DBProxy', ['$http',
+dbService.factory('DBProxy', ['$http',
     function($http) {
         var url = "http://localhost:8080/codedark/webresources/forum";
         
         return{
-            findAll: function() {
-                return $http.get(url);
+            findAllCourses: function() {
+                return $http.get(url + "/allCourses");
             },
-            findRange: function(first, count) {
-                return $http.get(url + "/range?fst=" + first + "&count=" + count);
+            findAllGroups: function(){
+                return $http.get(url + "/allGroups");
             },
-            find: function(id) {
-//                return $http.get(url + "/" + id);
+            findAllUsers: function(){
+                return $http.get(url + "/allUsers");
             },
-            update: function(id, cc) {
-//                return $http.put(url + "/" + id, product);
+            findRangeCourses: function(first, count) {
+                return $http.get(url + "courses/range?fst=" + first + "&count=" + count);
             },
-            create: function(name,cc) {
-//                return $http.post(url, product);
+            findRangeGroups: function(first, count){
+                return $http.get(url + "groups/range?fst=" + first + "&count=" + count);
             },
-            delete: function(id) {
-//                return $http.delete(url + "/" + id);
+            findRangeUsers: function(first, count){
+                return $http.get(url + "users/range?fst=" + first + "&count=" + count);
             },
-            count: function() {
-                return $http.get(url + "/count");
+            findCourse: function(id) {
+                return $http.get(url + "/course/" + id);
+            },
+            findGroup: function(id){
+                return $http.get(url + "/group/" + id);
+            },
+            findUser: function(id){
+                return $http.get(url + "/user/" + id);
+            },
+            updateCourse: function(id, object) {
+                return $http.put(url + "/course/" + id, object);
+            },
+            updateGroup: function(id, object){
+                return $http.put(url + "/group/" + id, object);
+            },
+            updateUser: function(id, object){
+                return $http.put(url + "/user/" + id, object);
+            },
+            createCourse: function(object) {
+                return $http.post(url + "/course/", object);
+            },
+            createGroup: function(object) {
+                return $http.post(url + "/group/", object);
+            },
+            createUser: function(object) {
+                return $http.post(url + "/user/", object);
+            },
+            deleteCourse: function(id) {
+                return $http.delete(url + "/course/" + id);
+            },
+            deleteGroup: function(id) {
+                return $http.delete(url + "/group/" + id);
+            },
+            deleteUser: function(id) {
+                return $http.delete(url + "/user/" + id);
+            },
+            countCourses: function() {
+                return $http.get(url + "/countCourses");
+            },
+            countGroups: function() {
+                return $http.get(url + "/countGroups");
+            },
+            countUsers: function() {
+                return $http.get(url + "/countUsers");
             }
-        }
+        };
     }]);

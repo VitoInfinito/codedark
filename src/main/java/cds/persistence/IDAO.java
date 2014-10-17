@@ -1,5 +1,5 @@
     
-package persistence;
+package cds.persistence;
 
 import java.util.List;
 

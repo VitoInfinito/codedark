@@ -4,15 +4,15 @@
  * and open the template in the editor.
  */
 
-package core;
+package cds.core;
 
 import java.util.Objects;
 import javax.persistence.*;
-import persistence.AbstractEntity;
+import cds.persistence.AbstractEntity;
 
 /**
  *
- * @author 
+ * @author sofiaedstrom
  */
 @Entity
 public class Course extends AbstractEntity{
@@ -22,7 +22,7 @@ public class Course extends AbstractEntity{
     private String name;
     
     
-    protected Course(){
+    public Course(){
         
     }
     
@@ -45,6 +45,7 @@ public class Course extends AbstractEntity{
         return name;
     }
     
+    @Override
     public String toString(){
         return "Course{ cCode = " + cCode + ", name = " + name + "}";
     }

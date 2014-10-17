@@ -1,14 +1,15 @@
 'use strict';
 
 
-var shop = angular.module('Shop', [
-    'ngRoute'
-     // More here
+var forum = angular.module('Forum', [
+    'ngRoute',
+    'Controllers',
+    'DBService'
 ]);
 
 
-shop.config(['$routeProvider',
-    function($routeProvider) {  // Injected object $routeProvider
+forum.config(['$routeProvider',
+    function($routeProvider) {  
         $routeProvider.
                 when('/forum', {
                     templateUrl: 'partials/forum/forum.html',
@@ -17,6 +18,18 @@ shop.config(['$routeProvider',
                 when('/group', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
+                }).
+                when('/test', {
+                    templateUrl: 'partials/frontTest/test.html',
+                    controller: 'TestController'
+                }).
+                when('/login', {
+                    templateUrl: 'partials/forum/login.html',
+                    controller: 'LoginController'
+                }).
+                when('/signup', {
+                    templateUrl: 'partials/forum/signup.html',
+                    controller: 'SignupController'
                 }).
                 
                 otherwise({

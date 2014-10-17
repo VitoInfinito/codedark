@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package core;
+package cds.core;
 
+
+import cds.core.Course;
+import cds.core.CourseGroup;
+import cds.core.Forum;
+import cds.core.GroupUser;
 import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
@@ -46,7 +51,7 @@ public class TestPersistence {
     @Deployment
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "forum.war")
-                .addPackage("core")
+                .addPackage("cds.core")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -74,7 +79,7 @@ public class TestPersistence {
     
     @Test
     public void testPersistAUser() {
-        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd");
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "fnmae", "lname");
         forum.getUserList().create(u);
         List<GroupUser> us = forum.getUserList().findAll();
         assertTrue(us.size() > 0);
@@ -87,6 +92,7 @@ public class TestPersistence {
         forum.getCourseList().create(c);
         Course c2 = forum.getCourseList().getByCC(c.getCCode());
         assertTrue(c2.getCCode().equals(c.getCCode()));
+        
                 
     }
     
@@ -94,7 +100,7 @@ public class TestPersistence {
     public void testPersistAGroup(){
         Course c = new Course("DAT076", "Web-applikationer");
         forum.getCourseList().create(c);
-        CourseGroup g = new CourseGroup(c, "Code Dark");
+        CourseGroup g = new CourseGroup(c, "Code Dark", null);
         forum.getGroupList().create(g);
         List<CourseGroup> gs = forum.getGroupList().getByCourse(c);
         assertTrue(gs.size() > 0);
@@ -102,7 +108,7 @@ public class TestPersistence {
     }
 
     public void testUserDelete(){
-        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd");
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "a", "b");
         forum.getUserList().create(u);
         assertTrue(forum.getUserList().count() == 1);
         forum.getUserList().delete(u.getId());
@@ -113,7 +119,7 @@ public class TestPersistence {
     public void testGroupDelete(){
         Course c = new Course("DAT999", "Testkursen");
         forum.getCourseList().create(c);
-        CourseGroup u = new CourseGroup(c, "Testgrupp");
+        CourseGroup u = new CourseGroup(c, "Testgrupp", null);
         forum.getGroupList().create(u);
         assertTrue(forum.getGroupList().count() == 1);
         forum.getGroupList().delete(u.getId());
@@ -134,7 +140,7 @@ public class TestPersistence {
     public void testGroupGetByName(){
         Course c = new Course("DAT999", "Testkursen");
         forum.getCourseList().create(c);
-        CourseGroup u = new CourseGroup(c, "Testgrupp");
+        CourseGroup u = new CourseGroup(c, "Testgrupp", null);
         forum.getGroupList().create(u);
         
         CourseGroup u1 = forum.getGroupList().getByName("Testgrupp");
@@ -154,7 +160,7 @@ public class TestPersistence {
     @Test
     public void testUserGetBySsnbr() {
         Long ssnbr = 1234L;
-        GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd");
+        GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd", "a", "b");
         forum.getUserList().create(u);
         GroupUser u2 = forum.getUserList().getBySsnbr(ssnbr);
         assertTrue(u2.getSsnbr() == u.getSsnbr());

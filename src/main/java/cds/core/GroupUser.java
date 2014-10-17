@@ -1,8 +1,8 @@
-package core;
+package cds.core;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import persistence.AbstractEntity;
+import cds.persistence.AbstractEntity;
 
 
 /**
@@ -23,18 +23,19 @@ public class GroupUser extends AbstractEntity{
     
     public GroupUser(){}
     
-    public GroupUser(Long id, Long ssnbr, String email, String pwd) {
+    public GroupUser(Long id, Long ssnbr, String email, String pwd, String fname, String lname) {
         super(id);
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
     }
     
-    public GroupUser(Long ssnbr, String email, String pwd) {
+    public GroupUser(Long ssnbr, String email, String pwd, String fname, String lname) {
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
     }
+    
 
     public long getSsnbr() {
         return ssnbr;
