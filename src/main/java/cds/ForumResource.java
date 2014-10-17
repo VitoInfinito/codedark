@@ -43,17 +43,20 @@ public class ForumResource {
     private UriInfo uriInfo;
     
     @GET
+    @Path(value = "allGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllGroups() {
         return findAll(new CourseGroup(), forum.getGroupList());
     }
     
     @GET
+    @Path(value = "allUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllUsers() {
         return findAll(new GroupUser(), forum.getGroupList());
     }
     @GET
+    @Path(value = "allCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllCourses() {
         return findAll(new Course(), forum.getGroupList());
@@ -178,7 +181,7 @@ public class ForumResource {
     }
 
     @PUT
-    @Path(value = "group/update/{id}")
+    @Path(value = "group/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateGroup(JsonObject j, Long id){
@@ -198,7 +201,7 @@ public class ForumResource {
         }
     }
     @PUT
-    @Path(value = "course/update/{id}")
+    @Path(value = "course/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateCourse(JsonObject j, Long id){
@@ -215,7 +218,7 @@ public class ForumResource {
         
     }
     @PUT
-    @Path(value = "user/update/{id}")
+    @Path(value = "user/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateUser(JsonObject j, Long id){
