@@ -1,13 +1,8 @@
 package cds;
 
 
-import cds.core.Course;
-import cds.core.CourseGroup;
-import cds.core.Forum;
-import cds.core.GroupUser;
-import cds.core.ICourseGroupList;
-import cds.core.ICourseList;
-import cds.core.IGroupUserList;
+import cds.core.*;
+import cds.persistence.AbstractEntity;
 import cds.persistence.IDAO;
 import java.net.URI;
 import java.util.ArrayList;
@@ -247,10 +242,12 @@ public class ForumResource {
     
     private Response createGroup(JsonObject j){
         Course c = forum.getCourseList().getByCC(j.getString("course"));
-        CourseGroup cg = new CourseGroup(c, j.getString("name"));
+        
         List<GroupUser> gU = new ArrayList<>();
 
         gU.add(forum.getUserList().find((long) j.getInt("userId")));
+        
+        CourseGroup cg = new CourseGroup(c, j.getString("name"), gU);
         
         try {  
             forum.getGroupList().create(cg);
@@ -275,9 +272,14 @@ public class ForumResource {
     private Response createUser(JsonObject j){
         GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));
+        
+        return createHelpMethod(gu);
+    }
+    
+    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         try{
-            forum.getUserList().create(gu);  
-            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
+            utilList.create(c);  
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
