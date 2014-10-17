@@ -63,21 +63,19 @@ public class ForumResource {
     @GET
     @Path(value = "{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response find(JsonObject j, @PathParam(value= "id") Long id){
-        switch(j.getString("type")){
-            case "group":
-                return findGroup(j, id);
-            case "course":
-                return findCourse(j, id);
-            case "user":
-                return findUser(j, id);
-            default:
-                return null;
+    public Response findUser(@PathParam(value= "id") Long id){
+        GroupUser user = forum.getUserList().find(id);
+        if (user != null) {
+            return Response.ok(user).build();
+        } else {
+            return Response.noContent().build();
         }
     
     }
-
-    private Response findGroup(JsonObject j, Long id) {
+    @GET
+    @Path(value = "{id}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findGroup( @PathParam(value= "id")Long id) {
         CourseGroup cg = forum.getGroupList().find(id);
         if (cg != null) {
             return Response.ok(cg).build();
@@ -86,7 +84,10 @@ public class ForumResource {
         }
     }
     
-    private Response findCourse(JsonObject j, Long id) {
+    @GET
+    @Path(value = "{id}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findCourse(@PathParam(value= "id") Long id) {
         Course c = forum.getCourseList().find(id);
         if (c != null) {
             return Response.ok(c).build();
@@ -95,44 +96,29 @@ public class ForumResource {
         }
     }
     
-    private Response findUser(JsonObject j, Long id) {
-        GroupUser user = forum.getUserList().find(id);
-        if (user != null) {
-            return Response.ok(user).build();
-        } else {
-            return Response.noContent().build();
-        }
-    }
 
     @GET
     @Path(value = "count")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response count(JsonObject j) {
-        switch(j.getString("type")){
-            case "group":
-                return countGroups();
-            case "course":
-                return countCourses();
-            case "user":
-                return countUsers();
-            default:
-                return null;
-        }
-    }
-    
-    private Response countGroups(){
+    public Response countGroups() {
         int c = forum.getGroupList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
     
-    private Response countCourses(){
+    @GET
+    @Path(value = "count")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countCourses(){
         int c = forum.getCourseList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
     
-    private Response countUsers(){
+    @GET
+    @Path(value = "count")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countUsers(){
         int c = forum.getUserList().count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
@@ -185,7 +171,7 @@ public class ForumResource {
     @Path(value = "{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(JsonObject j, @PathParam(value = "id") Long id) {
+    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
         switch(j.getString("type")){
             case "group":
                 return updateGroup(j, id);
@@ -303,18 +289,26 @@ public class ForumResource {
     @Path(value = "range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
+
         ICourseGroupList cGL = forum.getGroupList();
         IGroupUserList gUL = forum.getUserList();
         ICourseList cL = forum.getCourseList();
         
         switch(type){
             case "group":
+<<<<<<< HEAD
                 return findRange(fst, count, cGL);
                 break;
+=======
+>>>>>>> FETCH_HEAD
             case "course":
                 break;
             case "member":
+<<<<<<< HEAD
                 break;
+=======
+
+>>>>>>> FETCH_HEAD
         }
         
         
@@ -336,11 +330,14 @@ public class ForumResource {
     
     private Response findCourseRange(int fst, int count){
         return null;
+<<<<<<< HEAD
     }
     
     private static <Coursegroup> T testMeth(){
         T g = forum.getGroupList().find(1);
         return new T;       
+=======
+>>>>>>> FETCH_HEAD
     }
     
 }

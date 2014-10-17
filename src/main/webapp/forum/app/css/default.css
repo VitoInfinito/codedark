@@ -13,8 +13,11 @@ body {
 
 #input{
     margin-right: auto;
-    width : 20em; 
+    margin-left: auto;
+    width: 80%; 
+    
 }
+
 
 header {
     /*background-image:  url(../img/banner.jpg);
@@ -52,13 +55,14 @@ footer {
     color:  red;
 }
 
-.navbar-right {
+.float-right {
     float: right;
 }
 
-.navbar-div {
+.menu-box {
     height:50px;
     padding:15px 15px;
     font-size:18px;
     line-height:20px;
+    color:#777;
 }

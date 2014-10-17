@@ -10,26 +10,26 @@ groupListService.factory('DBProxy', ['$http',
         var url = "http://localhost:8080/codedark/webresources/forum";
         
         return{
-            findAll: function(object) {
-                return $http.get(url, object);
+            findAll: function() {
+                return $http.get(url);
             },
-            findRange: function(object, first, count) {
-                return $http.get(url + "/range?fst=" + first + "&count=" + count, object);
+            findRange: function(first, count) {
+                return $http.get(url + "/range?fst=" + first + "&count=" + count);
             },
-            find: function(object, id) {
-//                return $http.get(url + "/" + id);
+            find: function(id) {
+                return $http.get(url + "/" + id);
             },
-            update: function(object, id) {
+            update: function(id, object) {
                 return $http.put(url + "/" + id, object);
             },
             create: function(object) {
                 return $http.post(url, object);
             },
-            delete: function(object, id) {
+            delete: function(id) {
                 return $http.delete(url + "/" + id);
             },
-            count: function(object) {
+            count: function() {
                 return $http.get(url + "/count");
             }
-        }
+        };
     }]);
