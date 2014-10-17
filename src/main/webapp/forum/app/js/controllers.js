@@ -38,5 +38,11 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
 
 controllers.controller('SignupController',['$scope','$location','DBProxy',
     function($scope, $location, DBProxy){
-        //TODO: Fill with buisness
+        $scope.createUser = function(){
+            DBProxy.createUser($scope.user)
+                    .success(function(){
+                        console.log("New user: "+ $scope.user);
+                        $location.path('/forum');
+            });
+        };
     }]);
