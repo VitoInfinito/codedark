@@ -137,6 +137,8 @@ public class ForumResource {
         return Response.ok(value).build();
     }
     
+    @DELETE
+    @Path(value = "group/{id}")
     public Response deleteGroup(final Long id){
         try {
             forum.getGroupList().delete(id);
@@ -146,6 +148,8 @@ public class ForumResource {
         }
     }
     
+    @DELETE
+    @Path(value = "course/{id}")
     public Response deleteCourse(final Long id){
         try {
             forum.getCourseList().delete(id);
@@ -155,6 +159,8 @@ public class ForumResource {
         }
     }
     
+    @DELETE
+    @Path(value = "user/{id}")
     public Response deleteUser(final Long id){
         try {
             forum.getUserList().delete(id);
