@@ -25,6 +25,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -298,6 +299,19 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
                 return findRange(fst, count, forum.getGroupList());
+    }
+    
+    @GET
+    @Path(value = "login")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response login(JsonObject j) {
+                
+        GroupUser u = forum.getUserList().getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
+        if(u != null && u.getPwd().equals(j.getString("pwd"))) {
+            return Response.status(Status.OK).build();
+        }
+        
+        return Response.status(Status.NOT_ACCEPTABLE).build();
     }
     
 
