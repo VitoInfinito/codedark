@@ -225,7 +225,8 @@ public class ForumResource {
         }
     }
  
-    //TODO: Proper path
+    @POST
+    @Path(value = "group")
     public Response createGroup(JsonObject j){
         Course c = forum.getCourseList().getByCC(j.getString("course"));
         
@@ -243,7 +244,9 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    //TODO: Proper path
+    
+    @POST
+    @Path(value = "course")
     public Response createCourse(JsonObject j){
         Course c = new Course(j.getString("cc"), j.getString("name"));
         try{
@@ -255,7 +258,8 @@ public class ForumResource {
         }
     }
     
-    //TODO: Proper path
+    @POST
+    @Path(value = "user")
     public Response createUser(JsonObject j){
         GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));

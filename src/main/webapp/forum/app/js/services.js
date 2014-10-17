@@ -5,28 +5,28 @@
 var dbService = angular.module('DBService', []);
 
 // Representing the remote RESTful GroupList
-groupListService.factory('DBProxy', ['$http',
+dbService.factory('DBProxy', ['$http',
     function($http) {
         var url = "http://localhost:8080/codedark/webresources/forum";
         
         return{
             findAllCourses: function() {
-                return $http.get(url);
+                return $http.get(url + "/allCourses");
             },
             findAllGroups: function(){
-                return $http.get(url);
+                return $http.get(url + "/allGroups");
             },
             findAllUsers: function(){
-                return $http.get(url);
+                return $http.get(url + "/allUsers");
             },
             findRangeCourses: function(first, count) {
-                return $http.get(url + "/range?fst=" + first + "&count=" + count);
+                return $http.get(url + "courses/range?fst=" + first + "&count=" + count);
             },
             findRangeGroups: function(first, count){
-                return $http.get(url + "/range?fst=" + first + "&count=" + count);
+                return $http.get(url + "groups/range?fst=" + first + "&count=" + count);
             },
             findRangeUsers: function(first, count){
-                return $http.get(url + "/range?fst=" + first + "&count=" + count);
+                return $http.get(url + "users/range?fst=" + first + "&count=" + count);
             },
             findCourse: function(id) {
                 return $http.get(url + "/course/" + id);
@@ -38,31 +38,31 @@ groupListService.factory('DBProxy', ['$http',
                 return $http.get(url + "/user/" + id);
             },
             updateCourse: function(id, object) {
-                return $http.put(url + "/" + id, object);
+                return $http.put(url + "/course/" + id, object);
             },
             updateGroup: function(id, object){
-                return $http.put(url + "/" + id, object);
+                return $http.put(url + "/group/" + id, object);
             },
             updateUser: function(id, object){
-                return $http.put(url + "/" + id, object);
+                return $http.put(url + "/user/" + id, object);
             },
             createCourse: function(object) {
-                return $http.post(url, object);
+                return $http.post(url + "/course/", object);
             },
             createGroup: function(object) {
-                return $http.post(url, object);
+                return $http.post(url + "/group/", object);
             },
             createUser: function(object) {
-                return $http.post(url, object);
+                return $http.post(url + "/user/", object);
             },
             deleteCourse: function(id) {
-                return $http.delete(url + "/" + id);
+                return $http.delete(url + "/course/" + id);
             },
             deleteGroup: function(id) {
-                return $http.delete(url + "/" + id);
+                return $http.delete(url + "/group/" + id);
             },
             deleteUser: function(id) {
-                return $http.delete(url + "/" + id);
+                return $http.delete(url + "/user/" + id);
             },
             countCourses: function() {
                 return $http.get(url + "/countCourses");
