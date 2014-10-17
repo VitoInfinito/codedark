@@ -44,13 +44,29 @@ public class ForumResource {
     
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAll() {
-        Collection<CourseGroup> groups = new ArrayList<>();
-        for (CourseGroup g : forum.getGroupList().findAll()) {
-            groups.add(g);
+    public Response findAllGroups() {
+        return findAll(new CourseGroup(), forum.getGroupList());
+    }
+    
+    @GET
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findAllUsers() {
+        return findAll(new GroupUser(), forum.getGroupList());
+    }
+    @GET
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findAllCourses() {
+        return findAll(new Course(), forum.getGroupList());
+    }
+    
+    private <T extends AbstractEntity, K extends IDAO> Response findAll(T l, K list){
+        Collection<T> groups = new ArrayList<>();
+        Iterator<T> it = list.findAll().iterator();
+        while (it.hasNext()) {
+            groups.add(it.next());
         }
         
-        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        GenericEntity<Collection<T>> ge = new GenericEntity<Collection<T>>(groups) {
         };
         return Response.ok(ge).build();
     }
@@ -162,23 +178,10 @@ public class ForumResource {
     }
 
     @PUT
-    @Path(value = "{id}")
+    @Path(value = "group/update/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(@PathParam(value = "id") Long id, JsonObject j) {
-        switch(j.getString("type")){
-            case "group":
-                return updateGroup(j, id);
-            case "course":
-                return updateCourse(j, id);
-            case "user":
-                return updateUser(j, id);
-            default:
-                return null;
-        }
-    }
-    
-    private Response updateGroup(JsonObject j, Long id){
+    public Response updateGroup(JsonObject j, Long id){
         try {
             String name = j.getString("gName");
             Course c = forum.getGroupList().find(id).getCourse();
@@ -194,8 +197,11 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-    private Response updateCourse(JsonObject j, Long id){
+    @PUT
+    @Path(value = "course/update/{id}")
+    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response updateCourse(JsonObject j, Long id){
         try{
             String cc = j.getString("cc");
             String name = j.getString("name");
@@ -208,8 +214,11 @@ public class ForumResource {
         }
         
     }
-    
-    private Response updateUser(JsonObject j, Long id){
+    @PUT
+    @Path(value = "user/update/{id}")
+    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response updateUser(JsonObject j, Long id){
         try{
             Integer ssnbrInt = j.getInt("ssnbr");
             Long ssnbr = ssnbrInt.longValue();
