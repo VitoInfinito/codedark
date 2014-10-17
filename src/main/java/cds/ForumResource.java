@@ -225,22 +225,8 @@ public class ForumResource {
         }
     }
  
-    @POST
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response create(JsonObject j) {
-        switch(j.getString("type")){
-            case "group": 
-                return createGroup(j);
-            case "course":
-                return createCourse(j);
-            case "user":
-                return createUser(j);
-            default:
-                return null;
-        }
-    }
-    
-    private Response createGroup(JsonObject j){
+    //TODO: Proper path
+    public Response createGroup(JsonObject j){
         Course c = forum.getCourseList().getByCC(j.getString("course"));
         
         List<GroupUser> gU = new ArrayList<>();
@@ -257,8 +243,8 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-    private Response createCourse(JsonObject j){
+    //TODO: Proper path
+    public Response createCourse(JsonObject j){
         Course c = new Course(j.getString("cc"), j.getString("name"));
         try{
             forum.getCourseList().create(c);
@@ -269,7 +255,8 @@ public class ForumResource {
         }
     }
     
-    private Response createUser(JsonObject j){
+    //TODO: Proper path
+    public Response createUser(JsonObject j){
         GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));
         
