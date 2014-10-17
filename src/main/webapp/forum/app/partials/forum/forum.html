@@ -8,10 +8,10 @@ and open the template in the editor.
     <p>forum</p>
     
     <div class="top">
-        <h2>Groups</h2>
+        <h2>Courses</h2>
 
-        <button class="btn btn-default" ng-click="navigate('/product-new')" ng-controller="NavigationCtrl">
-            Create new group
+        <button class="btn btn-default" ng-click="navigate('/course-new')" ng-controller="NavigationCtrl">
+            Add course
         </button>
         <div class="btn-group">
 
@@ -30,16 +30,16 @@ and open the template in the editor.
     
     <table class="table">
         <thead>
-            <td>Group Number</td><td>Members</td><td>Course</td>
+            <td>Course</td><td>Members</td><td>Course</td>
         </thead>
     
-        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
+<!--        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
             <td>{{group.id}}</td>
             <td>{{group.name}}</td>
             <td>{{group.nbrOfMembers}}</td>
             <td><a href="#/group/{{group.id}}">Edit</a></td>
             <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
-        </tr>
+        </tr>-->
         
     </table>
    
