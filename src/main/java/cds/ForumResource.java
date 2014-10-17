@@ -94,8 +94,7 @@ public class ForumResource {
         } else {
             return Response.noContent().build();
         }
-    }
-    
+    }    
 
     @GET
     @Path(value = "count")
@@ -286,34 +285,26 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "range")
+    @Path(value = "group/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
-
-        ICourseGroupList cGL = forum.getGroupList();
-        IGroupUserList gUL = forum.getUserList();
-        ICourseList cL = forum.getCourseList();
-        
-        switch(type){
-            case "group":
-<<<<<<< HEAD
-                return findRange(fst, count, cGL);
-                break;
-=======
->>>>>>> FETCH_HEAD
-            case "course":
-                break;
-            case "member":
-<<<<<<< HEAD
-                break;
-=======
-
->>>>>>> FETCH_HEAD
-        }
-        
-        
-        return null;
+    public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
     }
+    
+    @GET
+    @Path(value = "course/range")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
+    }
+    
+    @GET
+    @Path(value = "user/range")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
+    }
+    
 
     private static <T extends IDAO> Response findRange(int fst, int count, T list){
         Collection<T> groups = new ArrayList<>();
@@ -330,14 +321,6 @@ public class ForumResource {
     
     private Response findCourseRange(int fst, int count){
         return null;
-<<<<<<< HEAD
-    }
-    
-    private static <Coursegroup> T testMeth(){
-        T g = forum.getGroupList().find(1);
-        return new T;       
-=======
->>>>>>> FETCH_HEAD
     }
     
 }
