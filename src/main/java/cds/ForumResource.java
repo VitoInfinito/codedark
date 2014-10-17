@@ -61,7 +61,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "{id}")
+    @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
         GroupUser user = forum.getUserList().find(id);
@@ -73,7 +73,7 @@ public class ForumResource {
     
     }
     @GET
-    @Path(value = "{id}")
+    @Path(value = "group/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findGroup( @PathParam(value= "id")Long id) {
         CourseGroup cg = forum.getGroupList().find(id);
@@ -85,7 +85,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "{id}")
+    @Path(value = "course/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findCourse(@PathParam(value= "id") Long id) {
         Course c = forum.getCourseList().find(id);
@@ -98,7 +98,7 @@ public class ForumResource {
     
 
     @GET
-    @Path(value = "count")
+    @Path(value = "countGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countGroups() {
         int c = forum.getGroupList().count();
@@ -107,7 +107,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "count")
+    @Path(value = "countCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countCourses(){
         int c = forum.getCourseList().count();
@@ -116,7 +116,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "count")
+    @Path(value = "countUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countUsers(){
         int c = forum.getUserList().count();

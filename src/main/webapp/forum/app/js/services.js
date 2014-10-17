@@ -10,26 +10,68 @@ groupListService.factory('DBProxy', ['$http',
         var url = "http://localhost:8080/codedark/webresources/forum";
         
         return{
-            findAll: function() {
+            findAllCourses: function() {
                 return $http.get(url);
             },
-            findRange: function(first, count) {
+            findAllGroups: function(){
+                return $http.get(url);
+            },
+            findAllUsers: function(){
+                return $http.get(url);
+            },
+            findRangeCourses: function(first, count) {
                 return $http.get(url + "/range?fst=" + first + "&count=" + count);
             },
-            find: function(id) {
-                return $http.get(url + "/" + id);
+            findRangeGroups: function(first, count){
+                return $http.get(url + "/range?fst=" + first + "&count=" + count);
             },
-            update: function(id, object) {
+            findRangeUsers: function(first, count){
+                return $http.get(url + "/range?fst=" + first + "&count=" + count);
+            },
+            findCourse: function(id) {
+                return $http.get(url + "/course/" + id);
+            },
+            findGroup: function(id){
+                return $http.get(url + "/group/" + id);
+            },
+            findUser: function(id){
+                return $http.get(url + "/user/" + id);
+            },
+            updateCourse: function(id, object) {
                 return $http.put(url + "/" + id, object);
             },
-            create: function(object) {
+            updateGroup: function(id, object){
+                return $http.put(url + "/" + id, object);
+            },
+            updateUser: function(id, object){
+                return $http.put(url + "/" + id, object);
+            },
+            createCourse: function(object) {
                 return $http.post(url, object);
             },
-            delete: function(id) {
+            createGroup: function(object) {
+                return $http.post(url, object);
+            },
+            createUser: function(object) {
+                return $http.post(url, object);
+            },
+            deleteCourse: function(id) {
                 return $http.delete(url + "/" + id);
             },
-            count: function() {
-                return $http.get(url + "/count");
+            deleteGroup: function(id) {
+                return $http.delete(url + "/" + id);
+            },
+            deleteUser: function(id) {
+                return $http.delete(url + "/" + id);
+            },
+            countCourses: function() {
+                return $http.get(url + "/countCourses");
+            },
+            countGroups: function() {
+                return $http.get(url + "/countGroups");
+            },
+            countUsers: function() {
+                return $http.get(url + "/countUsers");
             }
         };
     }]);
