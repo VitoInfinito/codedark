@@ -1,13 +1,8 @@
 package cds;
 
 
-import cds.core.Course;
-import cds.core.CourseGroup;
-import cds.core.Forum;
-import cds.core.GroupUser;
-import cds.core.ICourseGroupList;
-import cds.core.ICourseList;
-import cds.core.IGroupUserList;
+import cds.core.*;
+import cds.persistence.AbstractEntity;
 import cds.persistence.IDAO;
 import java.net.URI;
 import java.util.ArrayList;
@@ -94,8 +89,7 @@ public class ForumResource {
         } else {
             return Response.noContent().build();
         }
-    }
-    
+    }    
 
     @GET
     @Path(value = "countGroups")
@@ -248,10 +242,12 @@ public class ForumResource {
     
     private Response createGroup(JsonObject j){
         Course c = forum.getCourseList().getByCC(j.getString("course"));
-        CourseGroup cg = new CourseGroup(c, j.getString("name"));
+        
         List<GroupUser> gU = new ArrayList<>();
 
         gU.add(forum.getUserList().find((long) j.getInt("userId")));
+        
+        CourseGroup cg = new CourseGroup(c, j.getString("name"), gU);
         
         try {  
             forum.getGroupList().create(cg);
@@ -276,9 +272,14 @@ public class ForumResource {
     private Response createUser(JsonObject j){
         GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));
+        
+        return createHelpMethod(gu);
+    }
+    
+    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         try{
-            forum.getUserList().create(gu);  
-            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
+            utilList.create(c);  
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -286,28 +287,31 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "range")
+    @Path(value = "group/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count, @QueryParam(value = "type")String type) {
-
-        ICourseGroupList cGL = forum.getGroupList();
-        IGroupUserList gUL = forum.getUserList();
-        ICourseList cL = forum.getCourseList();
-        
-        switch(type){
-            case "group":
-            case "course":
-            case "member":
-
-        }
-        
-        
-        return null;
+    public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
     }
+    
+    @GET
+    @Path(value = "course/range")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
+    }
+    
+    @GET
+    @Path(value = "user/range")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+                return findRange(fst, count, forum.getGroupList());
+    }
+    
 
-    private <T extends IDAO> Response findRange(int fst, int count, T list){
+    private static <T extends IDAO> Response findRange(int fst, int count, T list){
         Collection<T> groups = new ArrayList<>();
-        for (Iterator<T> it = list.findRange(fst, count).iterator(); it.hasNext();) {
+        Iterator<T> it = list.findRange(fst, count).iterator();
+        while(it.hasNext()) {
             T g = it.next();
             groups.add(g);
         }
@@ -317,10 +321,10 @@ public class ForumResource {
         return Response.ok(ge).build();
     }
     
-    private Response findCourseRange(int fst, int count){
-        return null;
-    }
+
     
+    
+
 }
 
     
