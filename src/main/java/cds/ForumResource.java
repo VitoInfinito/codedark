@@ -309,18 +309,22 @@ public class ForumResource {
         
         switch(type){
             case "group":
-                return findRange<CourseGroup>(fst, count, cGL);
+                return findRange(fst, count, cGL);
+                break;
             case "course":
+                break;
             case "member":
+                break;
         }
         
         
         return null;
     }
 
-    private <T extends IDAO> Response findRange(int fst, int count, T list){
+    private static <T extends IDAO> Response findRange(int fst, int count, T list){
         Collection<T> groups = new ArrayList<>();
-        for (Iterator<T> it = list.findRange(fst, count).iterator(); it.hasNext();) {
+        Iterator<T> it = list.findRange(fst, count).iterator();
+        while(it.hasNext()) {
             T g = it.next();
             groups.add(g);
         }
@@ -331,7 +335,12 @@ public class ForumResource {
     }
     
     private Response findCourseRange(int fst, int count){
-        
+        return null;
+    }
+    
+    private static <Coursegroup> T testMeth(){
+        T g = forum.getGroupList().find(1);
+        return new T;       
     }
     
 }
