@@ -225,22 +225,8 @@ public class ForumResource {
         }
     }
  
-    @POST
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    public Response create(JsonObject j) {
-        switch(j.getString("type")){
-            case "group": 
-                return createGroup(j);
-            case "course":
-                return createCourse(j);
-            case "user":
-                return createUser(j);
-            default:
-                return null;
-        }
-    }
-    
-    private Response createGroup(JsonObject j){
+    //TODO: Proper path
+    public Response createGroup(JsonObject j){
         Course c = forum.getCourseList().getByCC(j.getString("course"));
         
         List<GroupUser> gU = new ArrayList<>();
@@ -257,8 +243,8 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
-    private Response createCourse(JsonObject j){
+    //TODO: Proper path
+    public Response createCourse(JsonObject j){
         Course c = new Course(j.getString("cc"), j.getString("name"));
         try{
             forum.getCourseList().create(c);
@@ -269,21 +255,22 @@ public class ForumResource {
         }
     }
     
-    private Response createUser(JsonObject j){
+    //TODO: Proper path
+    public Response createUser(JsonObject j){
         GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));
         
-        return createHelpMethod(gu);
-    }
-    
-    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         try{
-            utilList.create(c);  
-            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
+            forum.getUserList().create(gu);  
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    //TODO: Fix this implementation
+    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
+        return null;
     }
     
     @GET
