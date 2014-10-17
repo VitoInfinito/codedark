@@ -25,8 +25,9 @@
             $("a").click(function () {
                 var data = $(this).attr("data-value");
                 if(data !== "Home") {
-                   displayBreadcrumbs("default");
-                   $("#breadcrumb").html(data);
+                    displayBreadcrumbs("default");
+                    $("#breadcrumb").html(data);
+                    $("#breadcrumb").attr("href", $(this).attr("href"));
                 }else{
                     displayBreadcrumbs("none");
                 }
@@ -37,6 +38,8 @@
                 $("#breadcrumb-indicator").css("display", displayValue);
                 $("#breadcrumb").css("display", displayValue);
             };
+            
+            displayBreadcrumbs("none");
         });
     </script>
     </head>
@@ -51,7 +54,7 @@
             
             <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#">Home</a>
             <div id="breadcrumb-indicator" class="menu-box navbar-brand">></div>
-            <a id="breadcrumb" data-value="B" class="navbar-brand" href="#">B</a>
+            <a id="breadcrumb" class="navbar-brand" href="#">B</a>
             
             
             <a class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>

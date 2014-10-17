@@ -11,6 +11,19 @@ body {
     width : 50em;*/
 }
 
+/*
+a#breadcrumb-home {
+    display:none;
+}
+
+div#breadcrumb-indicator {
+    display:none;
+}
+
+a#breadcrumb {
+    display:none;
+}*/
+
 #input{
     margin-right: auto;
     margin-left: auto;
