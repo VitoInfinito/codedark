@@ -1,13 +1,7 @@
 package cds;
 
 
-import cds.core.Course;
-import cds.core.CourseGroup;
-import cds.core.Forum;
-import cds.core.GroupUser;
-import cds.core.ICourseGroupList;
-import cds.core.ICourseList;
-import cds.core.IGroupUserList;
+import cds.core.*;
 import cds.persistence.IDAO;
 import java.net.URI;
 import java.util.ArrayList;
@@ -296,19 +290,12 @@ public class ForumResource {
         
         switch(type){
             case "group":
-<<<<<<< HEAD
                 return findRange(fst, count, cGL);
-                break;
-=======
->>>>>>> FETCH_HEAD
             case "course":
                 break;
             case "member":
-<<<<<<< HEAD
                 break;
-=======
 
->>>>>>> FETCH_HEAD
         }
         
         
@@ -330,15 +317,8 @@ public class ForumResource {
     
     private Response findCourseRange(int fst, int count){
         return null;
-<<<<<<< HEAD
     }
     
-    private static <Coursegroup> T testMeth(){
-        T g = forum.getGroupList().find(1);
-        return new T;       
-=======
->>>>>>> FETCH_HEAD
-    }
     
 }
 
