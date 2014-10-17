@@ -22,7 +22,7 @@ public class Course extends AbstractEntity{
     private String name;
     
     
-    protected Course(){
+    public Course(){
         
     }
     
