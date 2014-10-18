@@ -28,15 +28,13 @@
             
             var checkBreadcrumbs = function(elem) {
                 var data = $("#"+elem).attr("data-value");
-                if(data !== "Home") {
+                if(data !== "Home" && typeof data !== 'undefined') {
                     displayBreadcrumbs("default");
                     $("#breadcrumb").html(data);
                     $("#breadcrumb").attr("href", $(this).attr("href"));
                 }else{
                     displayBreadcrumbs("none");
                 }
-            
-                
             };
             
             var displayBreadcrumbs = function(displayValue) {
