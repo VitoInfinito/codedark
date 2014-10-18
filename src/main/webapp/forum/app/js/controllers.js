@@ -55,21 +55,24 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
         //var loginName = "test";
         $scope.user = {
             login: function(newLoginName, pwd) {
-               /* console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                ProductCatalogueProxy.update($scope.user)
-                        .success(function(){
+                console.log($scope.user.ssnbr + " " + $scope.user.pwd);
+                DBProxy.login($scope.user)
+                        .success(function(response){
+                            //var status = response.status;
+                            //alert(response);
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                            return("hej");
+                            if (angular.isDefined(newLoginName)) {
+                                setCookie("username", newLoginName, 365);
+                            }
 
                             //$location.path('/login');
-                }).error(function() {
-
+                }).error(function(response) {
+                    //alert(response);
                     console.log("login failed");
-                    return("då");
-                });*/
-                if (angular.isDefined(newLoginName)) {
+                });
+                /*if (angular.isDefined(newLoginName)) {
                     setCookie("username", newLoginName, 365);
-                }
+                }*/
             },
             getLoginName: function() {
                 return getCookie("username");

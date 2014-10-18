@@ -307,13 +307,14 @@ public class ForumResource {
     public Response login(JsonObject j) {
         //Made to be used later      
         //GroupUser u = forum.getUserList().getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
+        System.out.println("Got here");
+        GroupUserWrapper u = new GroupUserWrapper(new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname"));
+        /*if(u != null && u.getPwd().equals(j.getString("pwd"))) {
+            return Response.accepted().build();
+        }*/
         
-        GroupUser u = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname");
-        if(u != null && u.getPwd().equals(j.getString("pwd"))) {
-            return Response.status(Status.OK).build();
-        }
-        
-        return Response.status(Status.NOT_ACCEPTABLE).build();
+       // return Response.status(Status.NOT_ACCEPTABLE).build();
+        return Response.ok(u).build();
     }
     
 

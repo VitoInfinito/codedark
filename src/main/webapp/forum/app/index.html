@@ -28,12 +28,14 @@
             
             var checkBreadcrumbs = function(elem) {
                 var data = $("#"+elem).attr("data-value");
-                if(data !== "Home" && typeof data !== 'undefined') {
+                if(data === "Home" || typeof data === 'undefined') {
+                    displayBreadcrumbs("none");
+                }else if(data === "Breadcrumb"){
+                    
+                }else{
                     displayBreadcrumbs("default");
                     $("#breadcrumb").html(data);
-                    $("#breadcrumb").attr("href", $(this).attr("href"));
-                }else{
-                    displayBreadcrumbs("none");
+                    $("#breadcrumb").attr("href", $("#"+elem).attr("href"));
                 }
             };
             
@@ -58,7 +60,7 @@
             
             <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#">Home</a>
             <div id="breadcrumb-indicator" class="menu-box navbar-brand">></div>
-            <a id="breadcrumb" class="navbar-brand" href="#">B</a>
+            <a id="breadcrumb" data-value="Breadcrumb" class="navbar-brand" href="#">B</a>
             
             
             <a id="signup" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>

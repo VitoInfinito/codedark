@@ -74,7 +74,7 @@ dbService.factory('DBProxy', ['$http',
                 return $http.get(url + "/countUsers");
             },
             login: function(object) {
-                return $http.get(url + "/login/" + object);
+                return $http.get(url + "/login", object);
             }
         };
     }]);
