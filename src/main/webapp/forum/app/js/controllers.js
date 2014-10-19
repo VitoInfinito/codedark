@@ -37,9 +37,32 @@ controllers.controller('GroupController', ['$scope', '$location','DBProxy',
         //TODO: Fill with buisness
     }]);
 
-controllers.controller('ForumController', ['$scope', '$location', 'DBProxy',
+controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function($scope, $location, DBProxy){
-        //TODO: Fill with buisness
+        $scope.pageSize = '5';
+        $scope.currentPage = 0;
+        
+        DBProxy.countCourses()
+                .success(function(count) {
+                    $scope.count = count.value;
+                }).error(function() {
+            console.log("count: error");
+        });
+        
+        getRange();
+        $scope.$watch('currentPage', function() {
+            getRange();
+        });
+        function getRange() {
+            var fst = $scope.pageSize * $scope.currentPage;
+            DBProxy.findRange(fst, $scope.pageSize)
+                    .success(function(courses) {
+                        $scope.courses = courses;
+                    }).error(function() {
+                console.log("findRange: error");
+            });
+        }
+        
     }]);
 
 controllers.controller('TestController',['$scope','$location','DBProxy',
@@ -65,7 +88,7 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                                 setCookie("_username", newLoginName, 365);
                             }
 
-                            //$location.path('/login');
+                            $location.path('/courses');
                 }).error(function(response) {
                     alert(response);
                     console.log("login failed");
@@ -76,19 +99,17 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
             },
             getLoginName: function() {
                 return getCookie("_username");
+            },
+            //Sign up
+            signUp: function(){
+                DBProxy.createUser($scope.user)
+                        .success(function(){
+                            console.log("New user: "+ $scope.user);
+                            $scope.user.login($scope.user.ssnbr, $scope.user.pwd); 
+                });
             }
+            
         };
-        
-        
+      
     }]);
 
-controllers.controller('SignupController',['$scope','$location','DBProxy',
-    function($scope, $location, DBProxy){
-        $scope.createUser = function(){
-            DBProxy.createUser($scope.user)
-                    .success(function(){
-                        console.log("New user: "+ $scope.user);
-                        $location.path('/forum');
-            });
-        };
-    }]);

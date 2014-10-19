@@ -20,34 +20,34 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/default.css">
     
-    <script>
-        $(document).ready(function() {
-            $("a").click(function () {
-                checkBreadcrumbs($(this).attr("id"));
+        <script>
+            $(document).ready(function() {
+                $("a").click(function () {
+                    checkBreadcrumbs($(this).attr("id"));
+                });
+
+                var checkBreadcrumbs = function(elem) {
+                    var data = $("#"+elem).attr("data-value");
+                    if(data === "Home" || typeof data === 'undefined') {
+                        displayBreadcrumbs("none");
+                    }else if(data === "Breadcrumb"){
+
+                    }else{
+                        displayBreadcrumbs("default");
+                        $("#breadcrumb").html(data);
+                        $("#breadcrumb").attr("href", $("#"+elem).attr("href"));
+                    }
+                };
+
+                var displayBreadcrumbs = function(displayValue) {
+                    $("#breadcrumb-home").css("display", displayValue);
+                    $("#breadcrumb-indicator").css("display", displayValue);
+                    $("#breadcrumb").css("display", displayValue);
+                };
+
+                checkBreadcrumbs(window.location.hash.substring(2));
             });
-            
-            var checkBreadcrumbs = function(elem) {
-                var data = $("#"+elem).attr("data-value");
-                if(data === "Home" || typeof data === 'undefined') {
-                    displayBreadcrumbs("none");
-                }else if(data === "Breadcrumb"){
-                    
-                }else{
-                    displayBreadcrumbs("default");
-                    $("#breadcrumb").html(data);
-                    $("#breadcrumb").attr("href", $("#"+elem).attr("href"));
-                }
-            };
-            
-            var displayBreadcrumbs = function(displayValue) {
-                $("#breadcrumb-home").css("display", displayValue);
-                $("#breadcrumb-indicator").css("display", displayValue);
-                $("#breadcrumb").css("display", displayValue);
-            };
-            
-            checkBreadcrumbs(window.location.hash.substring(2));
-        });
-    </script>
+        </script>
     </head>
     <body>
         <header>
@@ -58,14 +58,15 @@
         </header>
         <nav class="navbar navbar-default" role="navigation">
             
-            <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#">Home</a>
+            <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#/courses">Home</a>
             <div id="breadcrumb-indicator" class="menu-box navbar-brand">></div>
             <a id="breadcrumb" data-value="Breadcrumb" class="navbar-brand" href="#">B</a>
             
             
             <a id="signup" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
             <a id="login" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
-            <div id="login-name" ng-controller="LoginController" class="menu-box navbar-right"><span ng-bind="user.getLoginName()">meh</span></div>
+            <div id="login-name" ng-controller="LoginController" class="menu-box navbar-right">
+                <span ng-bind="user.getLoginName()">meh</span></div>
         </nav>  
             
         <div class="view-container">
