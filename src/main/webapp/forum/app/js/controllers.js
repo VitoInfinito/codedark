@@ -62,12 +62,12 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                             //alert(response);
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
                             if (angular.isDefined(newLoginName)) {
-                                setCookie("username", newLoginName, 365);
+                                setCookie("_username", newLoginName, 365);
                             }
 
                             //$location.path('/login');
                 }).error(function(response) {
-                    //alert(response);
+                    alert(response);
                     console.log("login failed");
                 });
                 /*if (angular.isDefined(newLoginName)) {
@@ -75,7 +75,7 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                 }*/
             },
             getLoginName: function() {
-                return getCookie("username");
+                return getCookie("_username");
             }
         };
         

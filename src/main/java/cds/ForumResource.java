@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -39,6 +42,10 @@ public class ForumResource {
       
    // private final IForum forum = Forum.newInstance();
     @Inject Forum forum;
+    
+    @PersistenceContext(unitName = "jpa_forum_pu")
+    @Default
+    EntityManager em;
             
     @Context
     private UriInfo uriInfo;
