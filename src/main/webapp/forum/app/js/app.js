@@ -11,9 +11,9 @@ var forum = angular.module('Forum', [
 forum.config(['$routeProvider',
     function($routeProvider) {  
         $routeProvider.
-                when('/forum', {
-                    templateUrl: 'partials/forum/forum.html',
-                    controller: 'ForumController'
+                when('/courses', {
+                    templateUrl: 'partials/forum/courses.html',
+                    controller: 'CourseController'
                 }).
                 when('/group', {
                     templateUrl: 'partials/group/group.html',

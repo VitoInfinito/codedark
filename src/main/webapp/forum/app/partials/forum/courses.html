@@ -5,12 +5,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div>
-    <p>forum</p>
+    <h2>Courses</h2>
     
     <div class="top">
         <h2>Courses</h2>
 
-        <button class="btn btn-default" ng-click="navigate('/course-new')" ng-controller="NavigationCtrl">
+        <button class="btn btn-default" ng-click="navigate('/addCourse')" ng-controller="NavigationCtrl">
             Add course
         </button>
         <div class="btn-group">
@@ -30,16 +30,13 @@ and open the template in the editor.
     
     <table class="table">
         <thead>
-            <td>Course</td><td>Members</td><td>Course</td>
+            <td>Course Code</td><td>Name</td><td>
         </thead>
     
-<!--        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
-            <td>{{group.id}}</td>
-            <td>{{group.name}}</td>
-            <td>{{group.nbrOfMembers}}</td>
-            <td><a href="#/group/{{group.id}}">Edit</a></td>
-            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
-        </tr>-->
+        <tr ng-repeat="course in courses" ng-click="">
+            <td>{{course.cc}}</td>
+            <td>{{course.name}}</td>
+        </tr>
         
     </table>
    
