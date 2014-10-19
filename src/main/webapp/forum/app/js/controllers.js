@@ -65,7 +65,7 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                                 setCookie("username", newLoginName, 365);
                             }
 
-                            //$location.path('/login');
+                            $location.path('/forum');
                 }).error(function(response) {
                     //alert(response);
                     console.log("login failed");
@@ -76,19 +76,17 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
             },
             getLoginName: function() {
                 return getCookie("username");
+            },
+            //Sign up
+            signUp: function(){
+                DBProxy.createUser($scope.user)
+                        .success(function(){
+                            console.log("New user: "+ $scope.user);
+                            $scope.user.login($scope.user.ssnbr, $scope.user.pwd); 
+                });
             }
+            
         };
-        
-        
+      
     }]);
 
-controllers.controller('SignupController',['$scope','$location','DBProxy',
-    function($scope, $location, DBProxy){
-        $scope.createUser = function(){
-            DBProxy.createUser($scope.user)
-                    .success(function(){
-                        console.log("New user: "+ $scope.user);
-                        $location.path('/forum');
-            });
-        };
-    }]);

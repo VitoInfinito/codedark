@@ -29,7 +29,7 @@ forum.config(['$routeProvider',
                 }).
                 when('/signup', {
                     templateUrl: 'partials/forum/signup.html',
-                    controller: 'SignupController'
+                    controller: 'LoginController'
                 }).
                 
                 otherwise({
