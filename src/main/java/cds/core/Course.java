@@ -17,7 +17,7 @@ import cds.persistence.AbstractEntity;
 @Entity
 public class Course extends AbstractEntity{
     
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cCode;
     private String name;
     

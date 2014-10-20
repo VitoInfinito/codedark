@@ -12,7 +12,7 @@ import cds.persistence.AbstractEntity;
 @Entity
 public class GroupUser extends AbstractEntity{
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private Long ssnbr;
     private String fname;
     private String lname;
