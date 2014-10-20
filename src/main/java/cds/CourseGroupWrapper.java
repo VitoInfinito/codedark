@@ -1,8 +1,9 @@
 package cds;
 
 
-import cds.core.Course;
+import cds.core.CourseGroup;
 import cds.core.GroupUser;
+import java.util.List;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -15,41 +16,43 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Course", propOrder = {
+@XmlType(name = "CourseGroup", propOrder = {
     "id",
-    "cCode",
-    "name"
+    "members",
+    "course",
+    "gName"
 })
-public class CourseWrapper {
 
-    private Course course;
 
-    protected CourseWrapper() { // Must have
+public class CourseGroupWrapper {
+
+    private CourseGroup cGroup;
+
+    protected CourseGroupWrapper() { // Must have
     }
    
-    public CourseWrapper(Course course) { 
-        this.course = course; 
+    public CourseGroupWrapper(CourseGroup cGroup) { 
+        this.cGroup = cGroup; 
     }
     
     @XmlElement //If serving XML we should use @XmlAttribute 
     public Long getId() {
-        return course.getId();
-    }
-    
-    @XmlElement
-    public String getCCode() {
-        return course.getCCode();
+        return cGroup.getId();
     }
 
     @XmlElement
-    public String getName() {
-        return course.getName();
+    public List<GroupUser> getMembers() {
+        return cGroup.getMembers();
+    }
+    
+    @XmlElement
+    public String getgName() {
+        return cGroup.getgName();
     }
 
     @Override
     public String toString() {
-        return "Course{" + "id=" + getId() + ", cCode=" + getCCode() + ", name=" + getName() + "}";
+        return "CourseGroup{" + "id=" + getId() + ", members=" + getMembers() + ", gName=" + getgName() + "}";
     }
     
-   
 }
