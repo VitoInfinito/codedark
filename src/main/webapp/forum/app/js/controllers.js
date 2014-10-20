@@ -39,27 +39,39 @@ controllers.controller('GroupController', ['$scope', '$location','DBProxy',
 
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function($scope, $location, DBProxy){
-        $scope.pageSize = '5';
+        $scope.pageSize = '4';
         $scope.currentPage = 0;
+        
+//        $scope.courses = [
+//            {cc:'tda111', name:'First course'},
+//            {cc:'tda222', name:'Second course'},
+//            {cc:'tda333', name:'Third course'},
+//            {cc:'tda444', name:'Fourth course'}
+//        ];
+        DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+        DBProxy.createCourse({cc:'222', name:'SecCourse'});
+        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+        DBProxy.createCourse({cc:'444', name:'FourthCourse'});        
         
         DBProxy.countCourses()
                 .success(function(count) {
                     $scope.count = count.value;
+                    console.log("count: " + count.value);
                 }).error(function() {
             console.log("count: error");
         });
         
         getRange();
-        $scope.$watch('currentPage', function() {
-            getRange();
-        });
+//        $scope.$watch('currentPage', function() {
+//            getRange();
+//        });
         function getRange() {
             var fst = $scope.pageSize * $scope.currentPage;
-            DBProxy.findRange(fst, $scope.pageSize)
+            DBProxy.findRangeCourses(fst, $scope.pageSize)
                     .success(function(courses) {
                         $scope.courses = courses;
                     }).error(function() {
-                console.log("findRange: error");
+                console.log("findRangeCourses: error");
             });
         }
         

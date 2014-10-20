@@ -313,14 +313,14 @@ public class ForumResource {
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, groupList);
+                return findRange(fst, count, courseList);
     }
     
     @GET
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, groupList);
+                return findRange(fst, count, userList);
     }
     
     @GET
