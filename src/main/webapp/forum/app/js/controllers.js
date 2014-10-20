@@ -84,14 +84,31 @@ controllers.controller('TestController',['$scope','$location','DBProxy',
         };
     }]);
 
+controllers.controller('MenuController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        
+        $scope.menu = {
+            loggedIn: function() {
+                return getCookie("_username") !== "";
+            },
+            logout: function() {
+                setCookie("_userssnbr", "", 365);
+                setCookie("_username", "", 365);
+            },
+            getLoginName: function() {
+                return getCookie("_username");
+            }
+            
+        };
+        
+    }]);
+
 controllers.controller('LoginController',['$scope','$location','DBProxy',
     function($scope, $location, DBProxy){
         
-        //var loginName = "test";
+            
         $scope.user = {
-            login: function(newLoginName, pwd) {
-                console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                console.log($scope.user);
+            login: function() {
                 DBProxy.login($scope.user.ssnbr, $scope.user.pwd)
                         .success(function(){
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
@@ -101,23 +118,16 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                                 DBProxy.findUser($scope.user.ssnbr)
                                     .success(function(response){
                                         console.log("Found user: " + JSON.stringify(response));
-                                        setCookie("_username", response.fname, 365);
+                                        setCookie("_username", response.fname + " " + response.lname, 365);
                                     }).error(function() {
                                     console.log("Could not find user");
                                 });
-                                
                             }
-
                             $location.path('/index');
                 }).error(function(response) {
-                    alert(response);
                     console.log("login failed");
                 });
             },
-            getLoginName: function() {
-                return getCookie("_username");
-            },
-            //Sign up
             signUp: function(){
                 DBProxy.createUser($scope.user)
                         .success(function(){
@@ -127,6 +137,5 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
             }
             
         };
-      
     }]);
 

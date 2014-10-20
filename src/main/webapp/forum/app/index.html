@@ -21,13 +21,13 @@
     
         <script>
             $(document).ready(function() {
-/*                $("a").click(function () {
+                $("a").click(function () {
                     checkBreadcrumbs($(this).attr("id"));
                 });
 
                 var checkBreadcrumbs = function(elem) {
                     var data = $("#"+elem).attr("data-value");
-                    if(data === "Home" || typeof data === 'undefined') {
+                    if(data === "Home" || typeof data === 'undefined' || data === "") {
                         displayBreadcrumbs("none");
                     }else if(data === "Breadcrumb"){
 
@@ -44,7 +44,7 @@
                     $("#breadcrumb").css("display", displayValue);
                 };
 
-                checkBreadcrumbs(window.location.hash.substring(2));*/
+                checkBreadcrumbs(window.location.hash.substring(2));
             });
         </script>
     </head>
@@ -63,9 +63,11 @@
             
             
             <a id="signup" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
-            <a id="login" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
-            <div id="login-name" ng-controller="LoginController" class="menu-box navbar-right">
-                <span ng-bind="user.getLoginName()">meh</span></div>
+            <div ng-controller="MenuController">
+                <a id="login" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
+                <a id="logout" ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>
+                <div id="login-name" class="menu-box navbar-right"><span ng-bind="menu.getLoginName()"></span></div>
+            </div>
         </nav>  
             
         <div class="view-container">
