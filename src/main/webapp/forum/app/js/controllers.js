@@ -84,6 +84,25 @@ controllers.controller('TestController',['$scope','$location','DBProxy',
         };
     }]);
 
+controllers.controller('MenuController',['$scope','$location','DBProxy',
+    function($scope, $location, DBProxy){
+        
+        $scope.menu = {
+            loggedIn: function() {
+                return getCookie("_username") !== "";
+            },
+            logout: function() {
+                setCookie("_userssnbr", "", 365);
+                setCookie("_username", "", 365);
+            },
+            getLoginName: function() {
+                return getCookie("_username");
+            }
+            
+        };
+        
+    }]);
+
 controllers.controller('LoginController',['$scope','$location','DBProxy',
     function($scope, $location, DBProxy){
         
@@ -109,13 +128,6 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                     console.log("login failed");
                 });
             },
-            logout: function() {
-                setCookie("_userssnbr", "", 365);
-                setCookie("_username", "", 365);
-            },
-            getLoginName: function() {
-                return getCookie("_username");
-            },
             signUp: function(){
                 DBProxy.createUser($scope.user)
                         .success(function(){
@@ -125,10 +137,5 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
             }
             
         };
-        
-        $scope.loggedIn = function(){
-            return getCookie("_username") !== "";
-        }
-      
     }]);
 

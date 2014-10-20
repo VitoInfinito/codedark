@@ -33,7 +33,8 @@ forum.config(['$routeProvider',
                 }).
                 
                 otherwise({
-                    redirectTo: '/index.html'
+                    redirectTo: '/index.html',
+                    controller: 'MenuController'
                 });
 
     }]);

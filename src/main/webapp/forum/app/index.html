@@ -63,11 +63,10 @@
             
             
             <a id="signup" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
-            <div ng-controller="LoginController">
-            <a id="login" ng-hide="loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
-            <a id="logout" ng-click="user.logout()" ng-show="loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>
-            <div id="login-name" class="menu-box navbar-right">
-                <span ng-bind="user.getLoginName()"></span></div>
+            <div ng-controller="MenuController">
+                <a id="login" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
+                <a id="logout" ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>
+                <div id="login-name" class="menu-box navbar-right"><span ng-bind="menu.getLoginName()"></span></div>
             </div>
         </nav>  
             
