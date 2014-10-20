@@ -306,21 +306,48 @@ public class ForumResource {
     @Path(value = "groups/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, groupList);
+        Collection<CourseGroup> groups = new ArrayList<>();
+        Iterator<CourseGroup> it = groupList.findRange(fst, count).iterator();
+        while(it.hasNext()) {
+            CourseGroup g = it.next();
+            groups.add(g);
+        }
+        
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        };
+        return Response.ok(ge).build();
     }
     
     @GET
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, groupList);
+        Collection<Course> groups = new ArrayList<>();
+        Iterator<Course> it = courseList.findRange(fst, count).iterator();
+        while(it.hasNext()) {
+            Course g = it.next();
+            groups.add(g);
+        }
+        
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(groups) {
+        };
+        return Response.ok(ge).build();
     }
     
     @GET
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, groupList);
+        Collection<GroupUser> groups = new ArrayList<>();
+        Iterator<GroupUser> it = userList.findRange(fst, count).iterator();
+        while(it.hasNext()) {
+            GroupUser g = it.next();
+            groups.add(g);
+        }
+        
+        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(groups) {
+        };
+        return Response.ok(ge).build();
     }
     
     @GET
