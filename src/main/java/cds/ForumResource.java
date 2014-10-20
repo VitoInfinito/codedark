@@ -49,28 +49,33 @@ public class ForumResource {
     @PersistenceContext(unitName = "jpa_forum_pu")
     @Default
     EntityManager em;
-            
     @Context
     private UriInfo uriInfo;
     
- /*   @GET
+    @GET
+    @Path(value = "testGet")
+    public Response testGet(){
+        return Response.status(Status.OK).build();
+    }
+    
+    @GET
     @Path(value = "allGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllGroups() {
-        return findAll(new CourseGroup(), forum.getGroupList());
+        return findAll(new CourseGroup(), groupList);
     }
     
     @GET
     @Path(value = "allUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllUsers() {
-        return findAll(new GroupUser(), forum.getGroupList());
+        return findAll(new GroupUser(), groupList);
     }
     @GET
     @Path(value = "allCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllCourses() {
-        return findAll(new Course(), forum.getGroupList());
+        return findAll(new Course(), groupList);
     }
     
     private <T extends AbstractEntity, K extends IDAO> Response findAll(T l, K list){
@@ -89,7 +94,7 @@ public class ForumResource {
     @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
-        GroupUser user = forum.getUserList().find(id);
+        GroupUser user = userList.find(id);
         if (user != null) {
             return Response.ok(user).build();
         } else {
@@ -101,7 +106,7 @@ public class ForumResource {
     @Path(value = "group/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findGroup( @PathParam(value= "id")Long id) {
-        CourseGroup cg = forum.getGroupList().find(id);
+        CourseGroup cg = groupList.find(id);
         if (cg != null) {
             return Response.ok(cg).build();
         } else {
@@ -113,7 +118,7 @@ public class ForumResource {
     @Path(value = "course/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findCourse(@PathParam(value= "id") Long id) {
-        Course c = forum.getCourseList().find(id);
+        Course c = courseList.find(id);
         if (c != null) {
             return Response.ok(c).build();
         } else {
@@ -125,7 +130,7 @@ public class ForumResource {
     @Path(value = "countGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countGroups() {
-        int c = forum.getGroupList().count();
+        int c = groupList.count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
@@ -134,7 +139,7 @@ public class ForumResource {
     @Path(value = "countCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countCourses(){
-        int c = forum.getCourseList().count();
+        int c = courseList.count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
@@ -143,7 +148,7 @@ public class ForumResource {
     @Path(value = "countUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countUsers(){
-        int c = forum.getUserList().count();
+        int c = userList.count();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
@@ -152,7 +157,7 @@ public class ForumResource {
     @Path(value = "group/{id}")
     public Response deleteGroup(@PathParam(value= "id") final Long id){
         try {
-            forum.getGroupList().delete(id);
+            groupList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -163,7 +168,7 @@ public class ForumResource {
     @Path(value = "course/{id}")
     public Response deleteCourse(@PathParam(value= "id") final Long id){
         try {
-            forum.getCourseList().delete(id);
+            courseList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -174,7 +179,7 @@ public class ForumResource {
     @Path(value = "user/{id}")
     public Response deleteUser(@PathParam(value= "id") final Long id){
         try {
-            forum.getUserList().delete(id);
+            userList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -188,13 +193,13 @@ public class ForumResource {
     public Response updateGroup(JsonObject j, @PathParam(value= "id") Long id){
         try {
             String name = j.getString("gName");
-            Course c = forum.getGroupList().find(id).getCourse();
-            CourseGroup cg1 = forum.getGroupList().find(id);
+            Course c = groupList.find(id).getCourse();
+            CourseGroup cg1 = groupList.find(id);
             List<GroupUser> list = cg1.getMembers();
      
-            list.add(forum.getUserList().find((long)j.getInt("userId")));
+            list.add(userList.find((long)j.getInt("userId")));
             CourseGroup cg = new CourseGroup(id, c, name, list);
-            forum.getGroupList().update(cg);
+            groupList.update(cg);
             // Convert old to HTTP response
             return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
@@ -210,7 +215,7 @@ public class ForumResource {
             String cc = j.getString("cc");
             String name = j.getString("name");
             Course updatedCourse = new Course(id, cc, name);
-            forum.getCourseList().update(updatedCourse);
+            courseList.update(updatedCourse);
         
             return Response.ok(updatedCourse).build();
         }catch (IllegalArgumentException e){
@@ -241,16 +246,16 @@ public class ForumResource {
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
-        Course c = forum.getCourseList().getByCC(j.getString("course"));
+        Course c = courseList.getByCC(j.getString("course"));
         
         List<GroupUser> gU = new ArrayList<>();
 
-        gU.add(forum.getUserList().find((long) j.getInt("userId")));
+        gU.add(userList.find((long) j.getInt("userId")));
         
         CourseGroup cg = new CourseGroup(c, j.getString("name"), gU);
         
         try {  
-            forum.getGroupList().create(cg);
+            groupList.create(cg);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cg.getId())).build(cg);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
@@ -263,14 +268,14 @@ public class ForumResource {
     public Response createCourse(JsonObject j){
         Course c = new Course(j.getString("cc"), j.getString("name"));
         try{
-            forum.getCourseList().create(c);
+            courseList.create(c);
         URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    */
+    
     @POST
     @Path(value = "user")
     public Response createUser(JsonObject j){
@@ -286,7 +291,7 @@ public class ForumResource {
         }
     }
     //TODO: Fix this implementation
-   /* private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
+    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         return null;
     }
     
@@ -294,22 +299,22 @@ public class ForumResource {
     @Path(value = "groups/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, forum.getGroupList());
+                return findRange(fst, count, groupList);
     }
     
     @GET
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, forum.getGroupList());
+                return findRange(fst, count, groupList);
     }
     
     @GET
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-                return findRange(fst, count, forum.getGroupList());
-    }*/
+                return findRange(fst, count, groupList);
+    }
     
     @GET
     @Path(value = "login")
