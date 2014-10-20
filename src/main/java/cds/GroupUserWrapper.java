@@ -14,7 +14,7 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "GroupUse", propOrder = {
+@XmlType(name = "GroupUser", propOrder = {
     "ssnbr",
     "id",
     "email",
