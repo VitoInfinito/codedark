@@ -55,7 +55,8 @@ public class ForumResource {
     @GET
     @Path(value = "testGet")
     public Response testGet(){
-        return Response.status(Status.OK).build();
+        
+        return Response.ok("hi").build();
     }
     
     @GET
@@ -278,8 +279,9 @@ public class ForumResource {
     
     @POST
     @Path(value = "user")
+    @Consumes(value = MediaType.APPLICATION_JSON)
     public Response createUser(JsonObject j){
-        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
+        GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"),10), j.getString("email"), j.getString("password"), 
             j.getString("fname"), j.getString("lname"));
         
         try{
@@ -324,9 +326,9 @@ public class ForumResource {
         GroupUser u = userList.getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
         //System.out.println("Got here");
        // GroupUserWrapper u = new GroupUserWrapper(new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname"));
-        /*if(u != null && u.getPwd().equals(j.getString("pwd"))) {
+        if(u != null && u.getPwd().equals(j.getString("pwd"))) {
             return Response.ok().build();
-        }*/
+        }
         
         //return Response.status(Status.NOT_ACCEPTABLE).build();
         return Response.ok().build();
@@ -345,6 +347,7 @@ public class ForumResource {
         };
         return Response.ok(ge).build();
     }
+    
     
 
     
