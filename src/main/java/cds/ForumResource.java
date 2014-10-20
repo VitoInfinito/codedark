@@ -126,7 +126,7 @@ public class ForumResource {
     public Response findGroup( @PathParam(value= "id")Long id) {
         CourseGroup cg = groupList.find(id);
         if (cg != null) {
-            return Response.ok(cg).build();
+            return Response.ok(new CourseGroupWrapper(cg)).build();
         } else {
             return Response.noContent().build();
         }
@@ -138,7 +138,7 @@ public class ForumResource {
     public Response findCourse(@PathParam(value= "id") Long id) {
         Course c = courseList.find(id);
         if (c != null) {
-            return Response.ok(c).build();
+            return Response.ok(new CourseWrapper(c)).build();
         } else {
             return Response.noContent().build();
         }
@@ -219,7 +219,7 @@ public class ForumResource {
             CourseGroup cg = new CourseGroup(id, c, name, list);
             groupList.update(cg);
             // Convert old to HTTP response
-            return Response.ok(cg).build();
+            return Response.ok(new CourseGroupWrapper(cg)).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -235,7 +235,7 @@ public class ForumResource {
             Course updatedCourse = new Course(id, cc, name);
             courseList.update(updatedCourse);
         
-            return Response.ok(updatedCourse).build();
+            return Response.ok(new CourseWrapper(updatedCourse)).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -255,7 +255,7 @@ public class ForumResource {
             String lname = j.getString("lname");
 
             GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname);
-            return Response.ok(updatedUser).build();
+            return Response.ok(new GroupUserWrapper(updatedUser)).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -319,14 +319,14 @@ public class ForumResource {
     @Path(value = "groups/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        Collection<CourseGroup> groups = new ArrayList<>();
+        Collection<CourseGroupWrapper> groups = new ArrayList<>();
         Iterator<CourseGroup> it = groupList.findRange(fst, count).iterator();
         while(it.hasNext()) {
             CourseGroup g = it.next();
-            groups.add(g);
+            groups.add(new CourseGroupWrapper(g));
         }
         
-        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
         };
         return Response.ok(ge).build();
     }
@@ -351,14 +351,14 @@ public class ForumResource {
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        Collection<GroupUser> groups = new ArrayList<>();
+        Collection<GroupUserWrapper> user = new ArrayList<>();
         Iterator<GroupUser> it = userList.findRange(fst, count).iterator();
         while(it.hasNext()) {
-            GroupUser g = it.next();
-            groups.add(g);
+            GroupUser gu = it.next();
+            user.add(new GroupUserWrapper(gu));
         }
         
-        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(groups) {
+        GenericEntity<Collection<GroupUserWrapper>> ge = new GenericEntity<Collection<GroupUserWrapper>>(user) {
         };
         return Response.ok(ge).build();
     }
