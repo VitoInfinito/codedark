@@ -67,30 +67,42 @@ public class ForumResource {
     @Path(value = "allGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllGroups() {
-        return findAll(new CourseGroup(), groupList);
+        Collection<CourseGroupWrapper> groups = new ArrayList<>();
+        Iterator<CourseGroup> it = groupList.findAll().iterator();
+        while (it.hasNext()) {
+            groups.add(new CourseGroupWrapper(it.next()));
+        }
+        
+        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
+        };
+        return Response.ok(ge).build();
     }
     
     @GET
     @Path(value = "allUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllUsers() {
-        return findAll(new GroupUser(), groupList);
+        Collection<GroupUserWrapper> users = new ArrayList<>();
+        Iterator<GroupUser> it = userList.findAll().iterator();
+        while (it.hasNext()) {
+            users.add(new GroupUserWrapper(it.next()));
+        }
+        
+        GenericEntity<Collection<GroupUserWrapper>> ge = new GenericEntity<Collection<GroupUserWrapper>>(users) {
+        };
+        return Response.ok(ge).build();
     }
     @GET
     @Path(value = "allCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllCourses() {
-        return findAll(new Course(), groupList);
-    }
-    
-    private <T extends AbstractEntity, K extends IDAO> Response findAll(T l, K list){
-        Collection<T> groups = new ArrayList<>();
-        Iterator<T> it = list.findAll().iterator();
+        Collection<CourseWrapper> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
         while (it.hasNext()) {
-            groups.add(it.next());
+            courses.add(new CourseWrapper(it.next()));
         }
         
-        GenericEntity<Collection<T>> ge = new GenericEntity<Collection<T>>(groups) {
+        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
         };
         return Response.ok(ge).build();
     }
@@ -323,14 +335,14 @@ public class ForumResource {
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-       Collection<Course> groups = new ArrayList<>();
+       Collection<CourseWrapper> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findRange(fst, count).iterator();
         while(it.hasNext()) {
-            Course g = it.next();
-            groups.add(g);
+            Course c = it.next();
+            courses.add(new CourseWrapper(c));
         }
         
-        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(groups) {
+        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
         };
         return Response.ok(ge).build();
     }
