@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
 <!--  Change when understanding what it does  -->
-    <groupId>edu.gu.hajo</groupId>
-    <artifactId>ws_shop_skel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>cds</groupId>
+    <artifactId>codedark</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
 
     <name>code_dark</name>

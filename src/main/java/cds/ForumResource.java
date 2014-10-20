@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -45,6 +47,8 @@ public class ForumResource {
     @EJB private ICourseList courseList;
     @EJB private IGroupUserList userList;
     @EJB private ICourseGroupList groupList;
+    
+    private final static Logger log = Logger.getAnonymousLogger();
     
     @PersistenceContext(unitName = "jpa_forum_pu")
     @Default
@@ -273,10 +277,12 @@ public class ForumResource {
     */
     @POST
     @Path(value = "user")
+    @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
-        GroupUser gu = new GroupUser((long) j.getInt("ssnbr"), j.getString("email"), j.getString("password"), 
+        GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), j.getString("email"), j.getString("pwd"), 
             j.getString("fname"), j.getString("lname"));
         
+        log.log(Level.INFO, "Logging ssnbr3: " + gu.toString());
         try{
             userList.create(gu);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
@@ -313,18 +319,21 @@ public class ForumResource {
     
     @GET
     @Path(value = "login")
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response login(JsonObject j) {
+    public Response login(@QueryParam("ssnbr") String ssnbr, @QueryParam("pwd") String pwd) {
         //Made to be used later      
-        GroupUser u = userList.getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
+        log.log(Level.INFO, "Got here");
+        log.log(Level.INFO, "Logging ssnbr3: " + ssnbr);
+        log.log(Level.INFO, "Logging ssnbr1: " + pwd);
+        GroupUser u = userList.getBySsnbr(Long.parseLong(ssnbr, 10));
+        log.log(Level.INFO, "Logging ssnbr2: " + u.toString());
         //System.out.println("Got here");
        // GroupUserWrapper u = new GroupUserWrapper(new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname"));
-        /*if(u != null && u.getPwd().equals(j.getString("pwd"))) {
+        if(u != null && u.getPwd().equals(pwd)) {
             return Response.ok().build();
-        }*/
+        }
         
-        //return Response.status(Status.NOT_ACCEPTABLE).build();
-        return Response.ok().build();
+        return Response.status(Response.Status.NOT_FOUND).build();
+        //return Response.ok().build();
     }
     
 

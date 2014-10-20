@@ -13,9 +13,8 @@ import cds.persistence.AbstractEntity;
 public class GroupUser extends AbstractEntity{
 
     @Column(nullable = false)
-    private long ssnbr;
+    private Long ssnbr;
     private String fname;
-
     private String lname;
     private String email;
     @Column(nullable = false)
@@ -28,12 +27,16 @@ public class GroupUser extends AbstractEntity{
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
+        this.fname = fname;
+        this.lname = lname;
     }
     
     public GroupUser(Long ssnbr, String email, String pwd, String fname, String lname) {
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
+        this.fname = fname;
+        this.lname = lname;
     }
     
 
@@ -56,5 +59,12 @@ public class GroupUser extends AbstractEntity{
     public String getLname() {
         return lname;
     }
+
+    @Override
+    public String toString() {
+        return "GroupUser{" + "ssnbr=" + ssnbr + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + '}';
+    }
+    
+
 
 }

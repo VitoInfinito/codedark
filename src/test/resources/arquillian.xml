@@ -10,7 +10,7 @@
     <container qualifier="glassfish" default="true">
         <configuration>     
             <property name="resourcesXml">
-               src/main/setup/glassfish-resources.xml   
+               src/test/setup/glassfish-resources.xml   
             </property>
             <property name="bindHttpPort">8282</property>
         </configuration>

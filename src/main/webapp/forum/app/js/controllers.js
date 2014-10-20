@@ -79,7 +79,8 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
         $scope.user = {
             login: function(newLoginName, pwd) {
                 console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                DBProxy.login($scope.user)
+                console.log($scope.user);
+                DBProxy.login($scope.user.ssnbr, $scope.user.pwd)
                         .success(function(response){
                             //var status = response.status;
                             //alert(response);

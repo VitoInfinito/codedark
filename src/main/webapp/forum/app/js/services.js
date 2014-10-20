@@ -47,13 +47,13 @@ dbService.factory('DBProxy', ['$http',
                 return $http.put(url + "/user/" + id, object);
             },
             createCourse: function(object) {
-                return $http.post(url + "/course/", object);
+                return $http.post(url + "/course", object);
             },
             createGroup: function(object) {
-                return $http.post(url + "/group/", object);
+                return $http.post(url + "/group", object);
             },
             createUser: function(object) {
-                return $http.post(url + "/user/", object);
+                return $http.post(url + "/user", object);
             },
             deleteCourse: function(id) {
                 return $http.delete(url + "/course/" + id);
@@ -73,8 +73,8 @@ dbService.factory('DBProxy', ['$http',
             countUsers: function() {
                 return $http.get(url + "/countUsers");
             },
-            login: function(object) {
-                return $http.get(url + "/login", object);
+            login: function(ssnbr, pwd) {
+                return $http.get(url + "/login?ssnbr=" + ssnbr + "&pwd=" + pwd);
             }
         };
     }]);
