@@ -88,7 +88,7 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                                 setCookie("_username", newLoginName, 365);
                             }
 
-                            $location.path('/courses');
+                            $location.path('/index');
                 }).error(function(response) {
                     alert(response);
                     console.log("login failed");

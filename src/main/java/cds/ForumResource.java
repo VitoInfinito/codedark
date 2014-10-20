@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
 import javax.json.Json;
@@ -41,7 +42,9 @@ import javax.ws.rs.core.UriInfo;
 public class ForumResource {
       
    // private final IForum forum = Forum.newInstance();
-    @Inject Forum forum;
+    @EJB private ICourseList courseList;
+    @EJB private IGroupUserList userList;
+    @EJB private ICourseGroupList groupList;
     
     @PersistenceContext(unitName = "jpa_forum_pu")
     @Default
@@ -50,7 +53,7 @@ public class ForumResource {
     @Context
     private UriInfo uriInfo;
     
-    @GET
+ /*   @GET
     @Path(value = "allGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllGroups() {
@@ -267,7 +270,7 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+    */
     @POST
     @Path(value = "user")
     public Response createUser(JsonObject j){
@@ -275,7 +278,7 @@ public class ForumResource {
             j.getString("fname"), j.getString("lname"));
         
         try{
-            forum.getUserList().create(gu);  
+            userList.create(gu);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(gu.getId())).build(gu);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
@@ -283,7 +286,7 @@ public class ForumResource {
         }
     }
     //TODO: Fix this implementation
-    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
+   /* private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         return null;
     }
     
@@ -306,22 +309,22 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
                 return findRange(fst, count, forum.getGroupList());
-    }
+    }*/
     
     @GET
     @Path(value = "login")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response login(JsonObject j) {
         //Made to be used later      
-        //GroupUser u = forum.getUserList().getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
-        System.out.println("Got here");
-        GroupUserWrapper u = new GroupUserWrapper(new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname"));
+        GroupUser u = userList.getBySsnbr(Long.parseLong(j.getString("ssnbr"), 10));
+        //System.out.println("Got here");
+       // GroupUserWrapper u = new GroupUserWrapper(new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), "email", "password", "fname", "lname"));
         /*if(u != null && u.getPwd().equals(j.getString("pwd"))) {
-            return Response.accepted().build();
+            return Response.ok().build();
         }*/
         
-       // return Response.status(Status.NOT_ACCEPTABLE).build();
-        return Response.ok(u).build();
+        //return Response.status(Status.NOT_ACCEPTABLE).build();
+        return Response.ok().build();
     }
     
 
