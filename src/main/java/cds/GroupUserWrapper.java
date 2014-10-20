@@ -14,10 +14,13 @@ import javax.xml.bind.annotation.*;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "Product", propOrder = {
+@XmlType(name = "GroupUse", propOrder = {
+    "ssnbr",
     "id",
-    "name",
-    "price"
+    "email",
+    "pwd",
+    "fname",
+    "lname"
 })
 public class GroupUserWrapper {
 
@@ -59,4 +62,10 @@ public class GroupUserWrapper {
     public String getLname() {
         return user.getLname();
     }
+
+    @Override
+    public String toString() {
+        return "GroupUser{" + "ssnbr=" + getSsnbr() + ", fname=" + getFname() + ", lname=" + getLname() + ", email=" + getEmail() + ", pwd=" + getPwd() + '}';
+    }
+    
 }

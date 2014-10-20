@@ -81,12 +81,19 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                 console.log($scope.user.ssnbr + " " + $scope.user.pwd);
                 console.log($scope.user);
                 DBProxy.login($scope.user.ssnbr, $scope.user.pwd)
-                        .success(function(response){
-                            //var status = response.status;
-                            //alert(response);
+                        .success(function(){
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                            if (angular.isDefined(newLoginName)) {
-                                setCookie("_username", newLoginName, 365);
+                            if (angular.isDefined($scope.user.ssnbr)) {
+                                setCookie("_userssnbr", $scope.user.ssnbr, 365);
+                                console.log("User ok, attempting to find name");
+                                DBProxy.findUser($scope.user.ssnbr)
+                                    .success(function(response){
+                                        console.log("Found user: " + JSON.stringify(response));
+                                        setCookie("_username", response.fname, 365);
+                                    }).error(function() {
+                                    console.log("Could not find user");
+                                });
+                                
                             }
 
                             $location.path('/index');
@@ -94,9 +101,6 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
                     alert(response);
                     console.log("login failed");
                 });
-                /*if (angular.isDefined(newLoginName)) {
-                    setCookie("username", newLoginName, 365);
-                }*/
             },
             getLoginName: function() {
                 return getCookie("_username");
