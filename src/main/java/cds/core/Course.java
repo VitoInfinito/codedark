@@ -50,7 +50,7 @@ public class Course extends AbstractEntity{
         return "Course{ ccode = " + ccode + ", name = " + name + "}";
     }
     
-    /*@Override
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -64,6 +64,6 @@ public class Course extends AbstractEntity{
         }
         
         return true;
-    }*/
+    }
     
 }

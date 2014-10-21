@@ -314,6 +314,25 @@ public class ForumResource {
     private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
         return null;
     }
+            
+    @GET
+    @Path(value = "courses/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInCourses(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching courses with search: " + search);
+        Collection<CourseWrapper> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
+        while(it.hasNext()) {
+            Course c = it.next();
+            if(c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) {
+                courses.add(new CourseWrapper(c));
+            }
+        }
+        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
+        };
+        return Response.ok(ge).build();
+    }
     
     @GET
     @Path(value = "groups/range")
