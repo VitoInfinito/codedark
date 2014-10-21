@@ -31,6 +31,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/forum/signup.html',
                     controller: 'LoginController'
                 }).
+                when('/addCourse', {
+                    templateUrl: 'partials/course/addCourse.html',
+                    controller: 'CourseController'
+                }).
                 
                 otherwise({
                     redirectTo: '/course'

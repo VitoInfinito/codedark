@@ -8,9 +8,8 @@ and open the template in the editor.
     <div class="top">
         <h2>Courses</h2>
 
-<!--        <button class="btn btn-default" ng-click="navigate('/addCourse')" ng-controller="NavigationCtrl">
-            Add course
-        </button>-->
+        <a ng-click="menu.setBreadcrumb('Course > Add')" class="navbar-brand navbar-right" href="#/addCourse">Add course</a>
+        
 <!--        <div class="btn-group">
 
             <button class="btn btn-default" ng-disabled="currentPage === 0" 
