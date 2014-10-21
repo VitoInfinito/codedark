@@ -69,7 +69,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             var fst = $scope.pageSize * $scope.currentPage;
             DBProxy.findRangeCourses(fst, $scope.pageSize)
                     .success(function(courses) {
-                        $scope.courses = courses;
+                        //$scope.courses = courses;
                     }).error(function() {
                 console.log("findRangeCourses: error");
             });
@@ -100,14 +100,14 @@ controllers.controller('MenuController',['$scope','$location','DBProxy',
             },
             getBreadcrumb: function() {
                 var cbc = window.location.hash.substring(2);
-                if(cbc === "courses") {
+                if(cbc === "course") {
                     return "";
                 }else {
                     return cbc;
                 }
             },
             showBreadcrumb: function() {
-                return window.location.hash.substring(2) !== "courses";
+                return window.location.hash.substring(2) !== "course";
             }
         };
     }]);

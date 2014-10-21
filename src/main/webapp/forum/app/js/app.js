@@ -11,8 +11,8 @@ var forum = angular.module('Forum', [
 forum.config(['$routeProvider',
     function($routeProvider) {  
         $routeProvider.
-                when('/courses', {
-                    templateUrl: 'partials/forum/courses.html',
+                when('/course', {
+                    templateUrl: 'partials/course/courses.html',
                     controller: 'CourseController'
                 }).
                 when('/group', {
@@ -33,7 +33,7 @@ forum.config(['$routeProvider',
                 }).
                 
                 otherwise({
-                    redirectTo: '/courses'
+                    redirectTo: '/course'
                 });
 
     }]);

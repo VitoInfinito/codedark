@@ -335,16 +335,16 @@ public class ForumResource {
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-       Collection<CourseWrapper> courses = new ArrayList<>();
+        log.log(Level.INFO, "Entered findCourseRange with values: " + fst + " " + count);
+        Collection<CourseWrapper> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findRange(fst, count).iterator();
         while(it.hasNext()) {
             Course c = it.next();
             courses.add(new CourseWrapper(c));
         }
-        
         GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
         };
-        return Response.ok(ge).build();
+        return Response.ok(new CourseWrapper(courseList.getByCC("111"))).build();
     }
     
     @GET
