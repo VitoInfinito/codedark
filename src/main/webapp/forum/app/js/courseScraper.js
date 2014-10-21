@@ -12,7 +12,7 @@ function scrape(){
 		dataType: 'html',
 		success: function(data) {
 			data = data.replace(/<img\b[^>]*>/ig, '');
-			data = data.replace(/<script.*?>([\w\W\d\D\s\S\0\n\f\r\t\v\b\B]*?)<\/script>/gi, '');
+			data = data.replace(/<script.*?>([\s\S]*?)<\/script>/gmi, '');
 			var tBody = $(data).find('table')[2].tBodies[0];
 			var secondTbl = tBody.rows[0].cells[0];
 			console.log(secondTbl+ "Hej");
