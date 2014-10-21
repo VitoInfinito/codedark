@@ -15,38 +15,10 @@
         <script src="js/app.js"></script>   
         <script src="js/controllers.js"></script>  
         <script src="js/services.js"></script>  
-        <script src="js/filters.js"></script>   
+        <script src="js/filters.js"></script> 
+        <script src="js/courseScraper.js"></script>
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/default.css">
-    
-        <script>
-            $(document).ready(function() {
-              /*  $("a").click(function () {
-                    checkBreadcrumbs($(this).attr("id"));
-                });
-
-                var checkBreadcrumbs = function(elem) {
-                    var data = $("#"+elem).attr("data-value");
-                    if(data === "Home" || typeof data === 'undefined' || data === "") {
-                        displayBreadcrumbs("none");
-                    }else if(data === "Breadcrumb"){
-
-                    }else{
-                        displayBreadcrumbs("default");
-                        $("#breadcrumb").html(data);
-                        $("#breadcrumb").attr("href", $("#"+elem).attr("href"));
-                    }
-                };
-
-                var displayBreadcrumbs = function(displayValue) {
-                    $("#breadcrumb-home").css("display", displayValue);
-                    $("#breadcrumb-indicator").css("display", displayValue);
-                    $("#breadcrumb").css("display", displayValue);
-                };
-
-                checkBreadcrumbs(window.location.hash.substring(2));*/
-            });
-        </script>
     </head>
     <body>
         <header>
@@ -57,16 +29,13 @@
         </header>
         <nav class="navbar navbar-default" role="navigation">
             <div ng-controller="MenuController">
-                <a id="breadcrumb-home" ng-click="menu.disableBreadcrumb()" ng-show="menu.showBreadcrumb()" data-value="Home" class="navbar-brand" href="#/course">Home</a>
-                <div id="breadcrumb-indicator" ng-show="menu.showBreadcrumb()" class="menu-box navbar-brand">></div>
-                <a id="breadcrumb" ng-show="menu.showBreadcrumb()" data-value="Breadcrumb" class="navbar-brand" href=""><span ng-bind="menu.getBreadcrumb()"></span></a>
-
-
-                <a id="signup" ng-click="menu.setBreadcrumb('Sign up')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
-            
-                <a id="login" ng-click="menu.setBreadcrumb('Login')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
-                <a id="logout" ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>
-                <div id="login-name" class="menu-box navbar-right"><span ng-bind="menu.getLoginName()"></span></div>
+                <a ng-click="menu.disableBreadcrumb()" ng-show="menu.showBreadcrumb()" class="navbar-brand" href="#/course">Home</a>
+                <div ng-show="menu.showBreadcrumb()" class="menu-box navbar-brand">></div>
+                <a ng-show="menu.showBreadcrumb()" class="navbar-brand" ng-bind="menu.getBreadcrumb()" href=""></a>
+                <a ng-click="menu.setBreadcrumb('Sign up')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" href="#/signup">Sign up</a>
+                <a ng-click="menu.setBreadcrumb('Login')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" href="#/login">Log in</a>
+                <a ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" href="">Log out</a>
+                <div ng-bind="menu.getLoginName()" class="menu-box navbar-right"></div>
             </div>
         </nav>  
             
