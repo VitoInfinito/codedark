@@ -48,10 +48,10 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
 //            {cc:'tda333', name:'Third course'},
 //            {cc:'tda444', name:'Fourth course'}
 //        ];
-        DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+      /*  DBProxy.createCourse({cc:'111', name:'FirstCourse'});
         DBProxy.createCourse({cc:'222', name:'SecCourse'});
         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-        DBProxy.createCourse({cc:'444', name:'FourthCourse'});        
+        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */      
         
         DBProxy.countCourses()
                 .success(function(count) {
@@ -97,10 +97,19 @@ controllers.controller('MenuController',['$scope','$location','DBProxy',
             },
             getLoginName: function() {
                 return getCookie("_username");
+            },
+            getBreadcrumb: function() {
+                var cbc = window.location.hash.substring(2);
+                if(cbc === "courses") {
+                    return "";
+                }else {
+                    return cbc;
+                }
+            },
+            showBreadcrumb: function() {
+                return window.location.hash.substring(2) !== "courses";
             }
-            
         };
-        
     }]);
 
 controllers.controller('LoginController',['$scope','$location','DBProxy',

@@ -21,7 +21,7 @@
     
         <script>
             $(document).ready(function() {
-                $("a").click(function () {
+              /*  $("a").click(function () {
                     checkBreadcrumbs($(this).attr("id"));
                 });
 
@@ -44,7 +44,7 @@
                     $("#breadcrumb").css("display", displayValue);
                 };
 
-                checkBreadcrumbs(window.location.hash.substring(2));
+                checkBreadcrumbs(window.location.hash.substring(2));*/
             });
         </script>
     </head>
@@ -56,15 +56,15 @@
             </hgroup>
         </header>
         <nav class="navbar navbar-default" role="navigation">
-            
-            <a id="breadcrumb-home" data-value="Home" class="navbar-brand" href="#/courses">Home</a>
-            <div id="breadcrumb-indicator" class="menu-box navbar-brand">></div>
-            <a id="breadcrumb" data-value="Breadcrumb" class="navbar-brand" href="#">B</a>
-            
-            
-            <a id="signup" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
             <div ng-controller="MenuController">
-                <a id="login" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
+                <a id="breadcrumb-home" ng-click="menu.disableBreadcrumb()" ng-show="menu.showBreadcrumb()" data-value="Home" class="navbar-brand" href="#/courses">Home</a>
+                <div id="breadcrumb-indicator" ng-show="menu.showBreadcrumb()" class="menu-box navbar-brand">></div>
+                <a id="breadcrumb" ng-show="menu.showBreadcrumb()" data-value="Breadcrumb" class="navbar-brand" href=""><span ng-bind="menu.getBreadcrumb()"></span></a>
+
+
+                <a id="signup" ng-click="menu.setBreadcrumb('Sign up')" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
+            
+                <a id="login" ng-click="menu.setBreadcrumb('Login')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
                 <a id="logout" ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>
                 <div id="login-name" class="menu-box navbar-right"><span ng-bind="menu.getLoginName()"></span></div>
             </div>

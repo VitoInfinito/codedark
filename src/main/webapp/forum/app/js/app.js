@@ -33,8 +33,7 @@ forum.config(['$routeProvider',
                 }).
                 
                 otherwise({
-                    redirectTo: '/index.html',
-                    controller: 'MenuController'
+                    redirectTo: '/courses'
                 });
 
     }]);
