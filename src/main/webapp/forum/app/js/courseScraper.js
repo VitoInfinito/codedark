@@ -1,4 +1,5 @@
 function scrape(){
+        console.log("Initiated scraping");
 	function Course() {
 		courseCode: ;
 		courseName: ;
@@ -34,13 +35,16 @@ function scrape(){
 			}
 		});
 	}
-	return fetchedCourses;
+    console.log(fetchedCourses);
+    return fetchedCourses;
+        
 }
-
 
 var items = scrape();
 
-
+function retScrapedItems(){
+    return items;
+}
 
 
 
