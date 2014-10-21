@@ -75,20 +75,28 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             });
         }
         
-        $scope.course = {
-            detail: function(cc){
-                
-            },
-            search: function(s) {
-                DBProxy.searchInCourses($scope.course.searchfield)
+        var searchCourses = function() {
+            DBProxy.searchInCourses($scope.course.searchfield)
                     .success(function(courses) {
-                        alert
                         $scope.courses = courses;
                     }).error(function() {
                         console.log("searchInCourses: error");
                 });
+        }
+        var searchTimeout;
+        
+        $scope.course = {
+            detail: function(cc){
+                
+            },
+            search: function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(searchCourses, 500);
+                
             }
         };
+        
+        
         
     }]);
 
