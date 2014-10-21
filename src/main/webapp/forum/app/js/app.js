@@ -35,7 +35,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/addCourse.html',
                     controller: 'CourseController'
                 }).
-                
+                when('/hemligasida', {
+                    templateUrl: 'partials/frontTest/admin.html',
+                    controller: 'AdminController'
+                }).
                 otherwise({
                     redirectTo: '/course'
                 });

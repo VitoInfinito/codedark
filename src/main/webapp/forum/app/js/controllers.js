@@ -162,4 +162,14 @@ controllers.controller('LoginController',['$scope','$location','DBProxy',
             
         };
     }]);
-
+controllers.controller('AdminController', ['$scope','$location', 'DBProxy',
+    function($scope, $location, DBProxy){
+       var course = new Course();
+       var items = scrape();
+       $.each(items, function(index, val){
+           course.cc = index.courseCode;
+           course.name = index.courseName;
+           DBProxy.createCourse(course);
+       });
+       
+}]);
