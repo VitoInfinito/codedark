@@ -84,9 +84,7 @@ public class TestPersistence {
         Course c = new Course("1234", "testCourse");
         forum.getCourseList().create(c);
         Course c2 = forum.getCourseList().getByCC(c.getCcode());
-        assertTrue(c2.equals(c));
-        
-                
+        assertTrue(c2.equals(c));                
     }
     
     @Test

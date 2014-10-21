@@ -127,6 +127,8 @@ controllers.controller('MenuController',['$scope','$location','DBProxy',
                 var cbc = window.location.hash.substring(2);
                 if(cbc === "course") {
                     return "";
+                }else if(cbc.substring(0,7) === "course/") {
+                    //return 
                 }else {
                     return cbc;
                 }
