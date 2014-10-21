@@ -38,8 +38,23 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
-//                alert($scope.course.name);
+                alert($scope.course.name);
         });
+        
+//        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau'});
+//        DBProxy.createGroup({course:'111', name:'AP-GRUPPEN', user:'9201015188'});
+//        DBProxy.createGroup({course:'111', name:'BANAN-GRUPPEN', user:'9201015188'});
+//        DBProxy.createGroup({course:'111', name:'CITRON-GRUPPEN', user:'9201015188'});
+//        DBProxy.createGroup({course:'111', name:'DUMMY-GRUPPEN', user:'9201015188'});
+//        DBProxy.createGroup({course:'111', name:'EFTER-GRUPPEN', user:'9201015188'});
+//        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
+//        
+//        findGroups = function(ccode){
+//            DBProxy.findGroups(ccode)
+//                .success(function(groups){
+//                     $scope.groups = groups;
+//            });
+//        };
         
     }]);
 

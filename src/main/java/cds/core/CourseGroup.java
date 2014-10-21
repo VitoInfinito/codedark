@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import cds.persistence.AbstractEntity;
+import java.util.ArrayList;
 
 /**
  *
@@ -23,23 +24,37 @@ public class CourseGroup extends AbstractEntity {
     @OneToMany
     private List<GroupUser> members;
     @ManyToOne
+    private GroupUser owner;
+    @ManyToOne
     private Course course;
     @Column(nullable = false)
     private String gName;
     
     public CourseGroup(){}
     
-    public CourseGroup(Course c, String n, List<GroupUser> userList){
+    public CourseGroup(Course c, String n, GroupUser user){
         course = c;
         gName = n;
-        members = userList;
+        members = new ArrayList<GroupUser>();
+        owner = user;
+        members.add(owner);
     }
     
-    public CourseGroup(Long id, Course c, String n, List<GroupUser> userList){
+    public CourseGroup(Long id, Course c, String n, List<GroupUser> memberList, GroupUser user){
+        super(id);
+        course = c;
+        gName = n;
+        owner = user;
+        members = memberList;
+    }
+    
+    public CourseGroup(Long id, Course c, String n, GroupUser user){
         super(id);
         gName = n;
         course = c;
-        members = userList;
+        members = new ArrayList<GroupUser>();
+        owner = user;
+        members.add(owner);
     }
     
     public List<GroupUser> getMembers() {
@@ -53,4 +68,15 @@ public class CourseGroup extends AbstractEntity {
     public String getgName() {
         return gName;
     }  
+    
+    public GroupUser getOwner() {
+        return owner;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseGroup{" + "members=" + members.toString() + ", owner=" + owner.toString() + ", course=" + course.toString() + ", gName=" + gName + '}';
+    }
+    
+    
 }

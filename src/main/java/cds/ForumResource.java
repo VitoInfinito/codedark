@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
-import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.persistence.EntityManager;
@@ -31,7 +30,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -120,6 +118,7 @@ public class ForumResource {
         }
     
     }
+    
     @GET
     @Path(value = "group/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
@@ -144,6 +143,26 @@ public class ForumResource {
         } else {
             return Response.noContent().build();
         }
+    }
+    
+    @GET
+    @Path(value = "groups/{ccode}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findGroups(@PathParam(value= "ccode") String ccode) {
+        log.log(Level.INFO, "JAG ÄR I FINDGROUPS");
+        log.log(Level.INFO, ccode);
+        Course c = courseList.getByCC(ccode);
+    
+        Collection<CourseGroupWrapper> groups = new ArrayList<>();
+        for(CourseGroup g: groupList.findAll()){
+            if(g.getCourse().equals(c)){
+                groups.add(new CourseGroupWrapper(g));
+            }
+        }
+        
+        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
+        };
+        return Response.ok(ge).build();
     }    
 
     @GET
@@ -218,7 +237,7 @@ public class ForumResource {
             List<GroupUser> list = cg1.getMembers();
      
             list.add(userList.find((long)j.getInt("userId")));
-            CourseGroup cg = new CourseGroup(id, c, name, list);
+            CourseGroup cg = new CourseGroup(id, c, name, list, cg1.getOwner());
             groupList.update(cg);
             // Convert old to HTTP response
             return Response.ok(new CourseGroupWrapper(cg)).build();
@@ -267,12 +286,9 @@ public class ForumResource {
     @Path(value = "group")
     public Response createGroup(JsonObject j){
         Course c = courseList.getByCC(j.getString("course"));
-        
-        List<GroupUser> gU = new ArrayList<>();
-
-        gU.add(userList.find((long) j.getInt("userId")));
-        
-        CourseGroup cg = new CourseGroup(c, j.getString("name"), gU);
+        String name = j.getString("name");
+        GroupUser user = userList.find((long) j.getInt("user"));
+        CourseGroup cg = new CourseGroup(c, name, user);
         
         try {  
             groupList.create(cg);

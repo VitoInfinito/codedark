@@ -37,6 +37,9 @@ dbService.factory('DBProxy', ['$http',
             findGroup: function(id){
                 return $http.get(url + "/group/" + id);
             },
+            findGroups: function(ccode){
+                return $http.get(url + "/groups/" + ccode);
+            },
             findUser: function(id){
                 return $http.get(url + "/user/" + id);
             },
