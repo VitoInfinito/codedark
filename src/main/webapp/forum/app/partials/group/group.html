@@ -7,12 +7,11 @@ and open the template in the editor.
 <div>
     
     <div class="top">
-        <h2>{{group.name}}</h2>
-        For course: {{group.course}}
-        <button class="btn btn-default">Join</button>
+        <h2>Groups in <span ng-bind="$scope.course.name"></span></h2>
+<!--        <button class="btn btn-default">Join</button>-->
     </div>
     
-    <table class="table">
+<!--    <table class="table">
         <thead>
             <td>Group Number</td><td>Members</td><td>Course</td>
         </thead>
@@ -25,6 +24,6 @@ and open the template in the editor.
             <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
         </tr>
         
-    </table>
+    </table>-->
    
 </div>

@@ -15,6 +15,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/courses.html',
                     controller: 'CourseController'
                 }).
+                when('/course/:id', {
+                    templateUrl: 'partials/group/group.html',
+                    controller: 'GroupController'
+                }).
                 when('/group', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
@@ -35,6 +39,7 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/addCourse.html',
                     controller: 'CourseController'
                 }).
+                
                 
                 otherwise({
                     redirectTo: '/course'

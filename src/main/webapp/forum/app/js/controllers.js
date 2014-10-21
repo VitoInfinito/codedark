@@ -32,9 +32,15 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-controllers.controller('GroupController', ['$scope', '$location','DBProxy',
-    function($scope, $location, DBProxy){
-        //TODO: Fill with buisness
+controllers.controller('GroupController', ['$scope', '$routeParams', '$location','DBProxy',
+    function($scope, $location, $routeParams, DBProxy){
+        
+        DBProxy.findCourse(window.location.hash.substring(9))
+            .success(function(course){
+                $scope.course = course;
+                alert($scope.course.name);
+        });
+        
     }]);
 
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
@@ -74,12 +80,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 console.log("findRangeCourses: error");
             });
         }
-        
-        $scope.course = {
-            detail: function(cc){
-                
-            }
-        }
+
         
     }]);
 

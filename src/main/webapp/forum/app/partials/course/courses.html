@@ -8,7 +8,7 @@ and open the template in the editor.
     <div class="top">
         <h2>Courses</h2>
 
-        <a ng-click="menu.setBreadcrumb('Course > Add')" class="navbar-brand navbar-right" href="#/addCourse">Add course</a>
+        <a class="navbar-brand navbar-right" href="#/addCourse">Add course</a>
         
 <!--        <div class="btn-group">
 
@@ -26,13 +26,12 @@ and open the template in the editor.
     </div>
     
     <table class="table">
-        <thead>
-            <td>Course Code</td><td>Name</td><td>
-        </thead>
-    
-        <tr ng-repeat="course in courses" ng-controller="NavigationCtrl" ng-click="navigate(course.ccode)">
-            <td>{{course.ccode}}</td>
-            <td>{{course.name}}</td>
+            
+        <!-- ng-click="navigate('/course/' + {{course.ccode}}+'')" ng-controller="NavigationCtrl" -->
+        <!--ng-click='course.saveVariable(course)'-->
+        <tr ng-repeat="course in courses" >
+            <td>{{course.ccode}} {{course.name}}</td>
+            <td><a href="#/course/{{course.id}}">View Groups</a></td>
         </tr>
         
     </table>
