@@ -75,6 +75,12 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             });
         }
         
+        $scope.course = {
+            detail: function(cc){
+                
+            }
+        }
+        
     }]);
 
 controllers.controller('TestController',['$scope','$location','DBProxy',

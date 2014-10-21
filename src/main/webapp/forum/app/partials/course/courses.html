@@ -30,7 +30,7 @@ and open the template in the editor.
             <td>Course Code</td><td>Name</td><td>
         </thead>
     
-        <tr ng-repeat="course in courses" ng-click="">
+        <tr ng-repeat="course in courses" ng-controller="NavigationCtrl" ng-click="navigate(course.ccode)">
             <td>{{course.ccode}}</td>
             <td>{{course.name}}</td>
         </tr>
