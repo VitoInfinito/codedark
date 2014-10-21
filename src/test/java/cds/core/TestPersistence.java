@@ -90,8 +90,8 @@ public class TestPersistence {
     public void testPersistACourse(){
         Course c = new Course("1234", "testCourse");
         forum.getCourseList().create(c);
-        Course c2 = forum.getCourseList().getByCC(c.getCCode());
-        assertTrue(c2.getCCode().equals(c.getCCode()));
+        Course c2 = forum.getCourseList().getByCC(c.getCcode());
+        assertTrue(c2.getCcode().equals(c.getCcode()));
         
                 
     }

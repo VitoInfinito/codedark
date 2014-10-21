@@ -43,7 +43,7 @@ public class CourseList extends AbstractDAO<Course, Long> implements ICourseList
     @Override
     public Course getByCC(String cc) {
         for(Course c: findAll()){
-            if(c.getCCode().equals(cc)){
+            if(c.getCcode().equals(cc)){
                 return c;
             }
         }

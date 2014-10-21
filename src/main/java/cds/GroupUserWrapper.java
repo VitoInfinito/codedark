@@ -26,7 +26,7 @@ public class GroupUserWrapper {
 
     private GroupUser user;
 
-    protected GroupUserWrapper() { // Must have
+    protected GroupUserWrapper() {
     }
    
     public GroupUserWrapper(GroupUser user) { 
@@ -38,7 +38,7 @@ public class GroupUserWrapper {
         return user.getSsnbr();
     }
 
-    @XmlElement //If serving XML we should use @XmlAttribute 
+    @XmlElement
     public Long getId() {
         return user.getId();
     }
