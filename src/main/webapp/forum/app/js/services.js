@@ -31,8 +31,8 @@ dbService.factory('DBProxy', ['$http',
             findRangeUsers: function(first, count){
                 return $http.get(url + "/users/range?fst=" + first + "&count=" + count);
             },
-            findCourse: function(id) {
-                return $http.get(url + "/course/" + id);
+            findCourse: function(ccode) {
+                return $http.get(url + "/course/" + ccode);
             },
             findGroup: function(id){
                 return $http.get(url + "/group/" + id);

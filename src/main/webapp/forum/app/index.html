@@ -63,7 +63,7 @@
                 <a id="breadcrumb" ng-show="menu.showBreadcrumb()" data-value="Breadcrumb" class="navbar-brand" href=""><span ng-bind="menu.getBreadcrumb()"></span></a>
 
 
-                <a id="signup" ng-click="menu.setBreadcrumb('Sign up')" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
+                <a id="signup" ng-click="menu.setBreadcrumb('Sign up')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Sign up" href="#/signup">Sign up</a>
             
                 <a id="login" ng-click="menu.setBreadcrumb('Login')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" data-value="Log in" href="#/login">Log in</a>
                 <a id="logout" ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" data-value="" href="">Log out</a>

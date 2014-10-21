@@ -32,9 +32,15 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-controllers.controller('GroupController', ['$scope', '$location','DBProxy',
-    function($scope, $location, DBProxy){
-        //TODO: Fill with buisness
+controllers.controller('GroupController', ['$scope', '$routeParams', '$location','DBProxy',
+    function($scope, $location, $routeParams, DBProxy){
+        
+        DBProxy.findCourse(window.location.hash.substring(9))
+            .success(function(course){
+                $scope.course = course;
+//                alert($scope.course.name);
+        });
+        
     }]);
 
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
@@ -74,21 +80,25 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 console.log("findRangeCourses: error");
             });
         }
-        
-        $scope.course = {
-            detail: function(cc){
-                
-            },
-            search: function(s) {
-                DBProxy.searchInCourses($scope.course.searchfield)
+
+        var searchTimeout;
+        var searchCourses = function() {
+            DBProxy.searchInCourses($scope.course.searchfield)
                     .success(function(courses) {
-                        alert
                         $scope.courses = courses;
                     }).error(function() {
                         console.log("searchInCourses: error");
                 });
+        };
+        
+        $scope.course = {
+            search: function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(searchCourses, 500);
+                
             }
         };
+        
         
     }]);
 
@@ -117,6 +127,8 @@ controllers.controller('MenuController',['$scope','$location','DBProxy',
                 var cbc = window.location.hash.substring(2);
                 if(cbc === "course") {
                     return "";
+                }else if(cbc.substring(0,7) === "course/") {
+                    //return 
                 }else {
                     return cbc;
                 }
