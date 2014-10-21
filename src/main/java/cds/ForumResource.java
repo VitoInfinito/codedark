@@ -315,6 +315,28 @@ public class ForumResource {
         return null;
     }
     
+   /* searchInCourses: function(search) {  
+                return $http.get(url + "/courses/search?searchfield=" + search);
+            },*/
+            
+    @GET
+    @Path(value = "courses/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findCourseRange(@QueryParam(value = "searchfield") String search) {
+        log.log(Level.INFO, "Searching courses with search: " + search);
+        Collection<CourseWrapper> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
+        while(it.hasNext()) {
+            Course c = it.next();
+            if(c.getCcode().toLowerCase().contains(search.toLowerCase()) || c.getName().toLowerCase().contains(search.toLowerCase())) {
+                courses.add(new CourseWrapper(c));
+            }
+        }
+        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
+        };
+        return Response.ok(ge).build();
+    }
+    
     @GET
     @Path(value = "groups/range")
     @Produces(value = {MediaType.APPLICATION_JSON})

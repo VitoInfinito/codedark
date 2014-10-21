@@ -78,8 +78,17 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.course = {
             detail: function(cc){
                 
+            },
+            search: function(s) {
+                DBProxy.searchInCourses($scope.course.searchfield)
+                    .success(function(courses) {
+                        alert
+                        $scope.courses = courses;
+                    }).error(function() {
+                        console.log("searchInCourses: error");
+                });
             }
-        }
+        };
         
     }]);
 
