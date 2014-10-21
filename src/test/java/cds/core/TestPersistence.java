@@ -5,12 +5,6 @@
  */
 package cds.core;
 
-
-import cds.core.Course;
-import cds.core.CourseGroup;
-import cds.core.Forum;
-import cds.core.GroupUser;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
@@ -20,7 +14,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -83,7 +76,7 @@ public class TestPersistence {
         forum.getUserList().create(u);
         List<GroupUser> us = forum.getUserList().findAll();
         assertTrue(us.size() > 0);
-        assertTrue(us.get(0).getSsnbr() == u.getSsnbr());
+        assertTrue(us.get(0).equals(u));
     }
     
     @Test
@@ -91,7 +84,7 @@ public class TestPersistence {
         Course c = new Course("1234", "testCourse");
         forum.getCourseList().create(c);
         Course c2 = forum.getCourseList().getByCC(c.getCcode());
-        assertTrue(c2.getCcode().equals(c.getCcode()));
+        assertTrue(c2.equals(c));
         
                 
     }
