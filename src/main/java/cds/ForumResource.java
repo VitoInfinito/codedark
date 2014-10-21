@@ -344,7 +344,7 @@ public class ForumResource {
         }
         GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
         };
-        return Response.ok(new CourseWrapper(courseList.getByCC("111"))).build();
+        return Response.ok(ge).build();
     }
     
     @GET

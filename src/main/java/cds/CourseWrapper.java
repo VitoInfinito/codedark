@@ -2,7 +2,6 @@ package cds;
 
 
 import cds.core.Course;
-import cds.core.GroupUser;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -16,29 +15,29 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "Course", propOrder = {
+    "ccode",
     "id",
-    "cCode",
     "name"
 })
 public class CourseWrapper {
 
     private Course course;
 
-    protected CourseWrapper() { // Must have
+    protected CourseWrapper() {
     }
    
     public CourseWrapper(Course course) { 
         this.course = course; 
     }
     
-    @XmlElement //If serving XML we should use @XmlAttribute 
+    @XmlElement
     public Long getId() {
         return course.getId();
     }
     
     @XmlElement
-    public String getCCode() {
-        return course.getCCode();
+    public String getCcode() {
+        return course.getCcode();
     }
 
     @XmlElement
@@ -48,7 +47,7 @@ public class CourseWrapper {
 
     @Override
     public String toString() {
-        return "Course{" + "id=" + getId() + ", cCode=" + getCCode() + ", name=" + getName() + "}";
+        return "Course{" + "id=" + getId() + ", cCode=" + getCcode() + ", name=" + getName() + "}";
     }
     
    

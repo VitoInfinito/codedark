@@ -18,7 +18,7 @@ import cds.persistence.AbstractEntity;
 public class Course extends AbstractEntity{
     
     @Column(nullable = false, unique = true)
-    private String cCode;
+    private String ccode;
     private String name;
     
     
@@ -26,19 +26,19 @@ public class Course extends AbstractEntity{
         
     }
     
-    public Course(Long id, String cCode, String name){
+    public Course(Long id, String ccode, String name){
         super(id);
-        this.cCode = cCode;
+        this.ccode = ccode;
         this.name = name;
     }
     
-    public Course(String cCode, String name){
-        this.cCode = cCode;
+    public Course(String ccode, String name){
+        this.ccode = ccode;
         this.name = name;
     }
 
-    public String getCCode(){
-        return cCode;
+    public String getCcode(){
+        return ccode;
     }
     
     public String getName(){
@@ -47,10 +47,10 @@ public class Course extends AbstractEntity{
     
     @Override
     public String toString(){
-        return "Course{ cCode = " + cCode + ", name = " + name + "}";
+        return "Course{ ccode = " + ccode + ", name = " + name + "}";
     }
     
-    @Override
+    /*@Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
@@ -59,11 +59,11 @@ public class Course extends AbstractEntity{
             return false;
         }
         final Course other = (Course) obj;
-        if (!Objects.equals(this.cCode, other.cCode) || !Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.ccode, other.ccode) || !Objects.equals(this.name, other.name)) {
             return false;
         }
         
         return true;
-    }
+    }*/
     
 }

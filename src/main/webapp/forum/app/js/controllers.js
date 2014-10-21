@@ -69,7 +69,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             var fst = $scope.pageSize * $scope.currentPage;
             DBProxy.findRangeCourses(fst, $scope.pageSize)
                     .success(function(courses) {
-                        //$scope.courses = courses;
+                        $scope.courses = courses;
                     }).error(function() {
                 console.log("findRangeCourses: error");
             });
