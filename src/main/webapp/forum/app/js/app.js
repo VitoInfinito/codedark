@@ -15,7 +15,7 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/courses.html',
                     controller: 'CourseController'
                 }).
-                when('/course/:id', {
+                when('/course/:cc', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
                 }).

@@ -133,10 +133,12 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "course/{id}")
+    @Path(value = "course/{ccode}")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response findCourse(@PathParam(value= "id") Long id) {
-        Course c = courseList.find(id);
+    public Response findCourse(@PathParam(value= "ccode") String ccode) {
+        log.log(Level.INFO, "JAG ÄR I FINDCOURSE");
+        log.log(Level.INFO, ccode);
+        Course c = courseList.getByCC(ccode);
         if (c != null) {
             return Response.ok(new CourseWrapper(c)).build();
         } else {

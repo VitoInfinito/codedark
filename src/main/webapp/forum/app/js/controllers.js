@@ -38,7 +38,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
-                alert($scope.course.name);
+//                alert($scope.course.name);
         });
         
     }]);
