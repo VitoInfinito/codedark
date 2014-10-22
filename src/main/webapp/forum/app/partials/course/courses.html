@@ -29,7 +29,7 @@ and open the template in the editor.
             
         <!-- ng-click="navigate('/course/' + {{course.ccode}}+'')" ng-controller="NavigationCtrl" -->
         <!--ng-click='course.saveVariable(course)'-->
-        <tr ng-repeat="course in courses" >
+        <tr class="selectableCourse" ng-repeat="course in courses" >
             <td>{{course.ccode}} {{course.name}}</td>
             <td><a href="#/course/{{course.ccode}}">View Groups</a></td>
         </tr>
