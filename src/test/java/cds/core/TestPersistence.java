@@ -91,7 +91,7 @@ public class TestPersistence {
     public void testPersistAGroup(){
         Course c = new Course("DAT076", "Web-applikationer");
         forum.getCourseList().create(c);
-        CourseGroup g = new CourseGroup(c, "Code Dark", null);
+        CourseGroup g = new CourseGroup(c, "Code Dark", null, 2);
         forum.getGroupList().create(g);
         List<CourseGroup> gs = forum.getGroupList().getByCourse(c);
         assertTrue(gs.size() > 0);
@@ -110,7 +110,7 @@ public class TestPersistence {
     public void testGroupDelete(){
         Course c = new Course("DAT999", "Testkursen");
         forum.getCourseList().create(c);
-        CourseGroup u = new CourseGroup(c, "Testgrupp", null);
+        CourseGroup u = new CourseGroup(c, "Testgrupp", null, 2);
         forum.getGroupList().create(u);
         assertTrue(forum.getGroupList().count() == 1);
         forum.getGroupList().delete(u.getId());
@@ -131,7 +131,7 @@ public class TestPersistence {
     public void testGroupGetByName(){
         Course c = new Course("DAT999", "Testkursen");
         forum.getCourseList().create(c);
-        CourseGroup u = new CourseGroup(c, "Testgrupp", null);
+        CourseGroup u = new CourseGroup(c, "Testgrupp", null, 2);
         forum.getGroupList().create(u);
         
         CourseGroup u1 = forum.getGroupList().getByName("Testgrupp");

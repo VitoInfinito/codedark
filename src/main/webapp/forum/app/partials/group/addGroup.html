@@ -6,24 +6,19 @@ and open the template in the editor.
 -->
 <div id="input">
     <!--Body content-->
-    <h2>New Group </h2>
+    <h2>Create and join new group </h2>
     for course: {{course.ccode}}  {{course.name}}
-    
-<!--    @OneToMany
-    private List<GroupUser> members;
-    @ManyToOne
-    private GroupUser owner;
-    @ManyToOne
-    private Course course;
-    @Column(nullable = false)
-    private String gName;-->
     
     <form role="form">
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="group.name" placeholder="The name of the awesome group" />
-            <input type="text" class="form-control" ng-model="group.user" placeholder="Your social security number" />
+            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" placeholder="The awesome name of the group" required />
+            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" placeholder ="Maximum number of members" required />
+            <input type="text" class="form-control" ng-model="group.user" value="{{group.user}}" placeholder="YYMMDDXXXX" required/>
         </div>
-               
-        <button class="btn btn-default" ng-click="group.createGroup()">Submit</button>
+        <div class ="form-group">
+            
+            <button class="btn btn-default" ng-click="group.createGroup()">Submit</button>
+            <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
+        </div>
     </form>
 </div>
