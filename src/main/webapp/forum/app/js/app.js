@@ -55,8 +55,8 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/courses/addCourse.html',
                     controller: 'AdminController'
                 }).
-                when('/edituser', {
-                    templateUrl: 'partials/frontTest/editUser.html',
+                when('/hemligasidan/editUser/:ssnbr', {
+                    templateUrl: 'partials/user/editUser.html',
                     controller: 'EditUserController'
                 }).
                

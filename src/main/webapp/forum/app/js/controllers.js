@@ -290,3 +290,16 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         
         
     }]);
+
+controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
+        
+        var wlh = window.location.hash;
+        DBProxy.findUser(wlh.substring(24))
+            .success(function(user){
+                $scope.user = user;
+                console.log('Editing ' + $scope.user.ssnbr);
+        });
+        
+        
+    }]);
