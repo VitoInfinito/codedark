@@ -284,7 +284,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     .success(function(users) {
                         $scope.users = users;
                     }).error(function () {
-                console.log("findAllUsers: error");
+                        console.log("findAllUsers: error");
             });
         }
         
@@ -300,6 +300,20 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 $scope.user = user;
                 console.log('Editing ' + $scope.user.ssnbr);
         });
+        
+        $scope.user = {
+            update: function(){
+                console.log('Inside user.update() in AdminController');
+                DBProxy.updateUser($scope.user, $scope.user.id)
+                    .success(function(){
+                        alert('Updated!');
+                        console.log('Updated ' + $scope.user.ssnbr);
+                        //$location.path('/hemligasidan');
+                    }).error(function () {
+                        console.log("updateUser: error");
+                });
+            }
+        };
         
         
     }]);

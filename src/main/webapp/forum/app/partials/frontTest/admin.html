@@ -10,6 +10,7 @@ and open the template in the editor.
     </div>
         
         <!-- LIST OF ALL USERS-->
+        <hr>
         <h3>List of all users</h3>
         
         <div class="row">
@@ -34,7 +35,7 @@ and open the template in the editor.
                 <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
             </div>
                
-            <button class="btn btn-default" ng-click="course.createNewCourse()">Submit</button>
+            <button class="btn btn-default" ng-click="course.createNewCourse()">Add course</button>
         </form>
         <br>
         <span ng-bind="course.status" style="color:green"></span>
