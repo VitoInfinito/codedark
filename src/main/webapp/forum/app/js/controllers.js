@@ -73,11 +73,15 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
         });
         
         $scope.group = {
-            createGroup: function(){
+            createGroup: function(test){
+                $scope.group.user = getCookie("_userssnbr"); 
+                $scope.group.course = $scope.course.ccode;
                 DBProxy.createGroup($scope.group)
                         .success(function(){
                             console.log("Group created" + $scope.group);
-                            $scope.group.createGroup();
+                            //$scope.group.createGroup();
+                }).error(function(){
+                    console.log("errorsomething");
                 });
                         
             }
@@ -90,10 +94,10 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.pageSize = '4';
         $scope.currentPage = 0;
 
-//        DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-//        DBProxy.createCourse({cc:'222', name:'SecCourse'});
-//        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-//        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+     /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+        DBProxy.createCourse({cc:'222', name:'SecCourse'});
+        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */
 
 
         DBProxy.countCourses()

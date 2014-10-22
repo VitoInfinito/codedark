@@ -286,11 +286,24 @@ public class ForumResource {
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
+        log.log(Level.INFO, "createGroup" + j.getString("course"));
         Course c = courseList.getByCC(j.getString("course"));
+        log.log(Level.INFO, j.getString("course"));
+        log.log(Level.INFO, "2");
         String name = j.getString("name");
-        GroupUser user = userList.find((long) j.getInt("user"));
+        log.log(Level.INFO, "3: " + j.getString("user"));
+        log.log(Level.INFO, "3+1: " + Long.parseLong(j.getString("user"), 10));
+        GroupUser user = userList.getBySsnbr(Long.parseLong(j.getString("user"),10));
+        log.log(Level.INFO, "4: " + user);
         int max = j.getInt("maxNbr");
+        log.log(Level.INFO, "5");
         CourseGroup cg = new CourseGroup(c, name, user, max);
+        
+        log.log(Level.INFO, c.toString());
+        log.log(Level.INFO, name);
+        log.log(Level.INFO, user.toString());
+        log.log(Level.INFO, "" + max);
+        log.log(Level.INFO, cg.toString());
         
         try {  
             groupList.create(cg);
