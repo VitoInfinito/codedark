@@ -43,6 +43,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/frontTest/admin.html',
                     controller: 'AdminController'
                 }).
+                when('/edituser', {
+                    templateUrl: 'partials/frontTest/editUser.html',
+                    controller: 'EditUserController'
+                }).
                
              
                 otherwise({
