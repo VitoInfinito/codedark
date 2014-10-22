@@ -69,6 +69,7 @@ footer {
     font-size:18px;
     line-height:20px;
     color:#777;
+    font-style: italic;
 }
 
 .selectableCourse:hover {

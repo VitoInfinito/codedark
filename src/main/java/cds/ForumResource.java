@@ -276,7 +276,7 @@ public class ForumResource {
             String lname = j.getString("lname");
             String admin = j.getString("admin");
 
-            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin);
+            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin.equals("admin"));
             return Response.ok(new GroupUserWrapper(updatedUser)).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -319,7 +319,7 @@ public class ForumResource {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
         GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), j.getString("email"), j.getString("pwd"),
-            j.getString("fname"), j.getString("lname"), j.getString("admin"));
+            j.getString("fname"), j.getString("lname"), j.getString("admin").equals("admin"));
         
         log.log(Level.INFO, "Logging ssnbr3: " + gu.toString());
         try{
@@ -408,6 +408,18 @@ public class ForumResource {
         GroupUser u = userList.getBySsnbr(Long.parseLong(ssnbr, 10));
         if(u != null && u.getPwd().equals(pwd)) {
             log.log(Level.INFO, "Found user: " + u.toString());
+            return Response.ok().build();
+        }
+        
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
+    
+    @GET
+    @Path(value = "isadmin")
+    public Response isAdmin(@QueryParam("ssnbr") String ssnbr) {
+        GroupUser u = userList.getBySsnbr(Long.parseLong(ssnbr, 10));
+        if(u.getBelongingTo().contains("admin")) {
+            log.log(Level.INFO, "Found admin: " + u.toString());
             return Response.ok().build();
         }
         
