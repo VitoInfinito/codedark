@@ -72,10 +72,10 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
 //            {cc:'tda333', name:'Third course'},
 //            {cc:'tda444', name:'Fourth course'}
 //        ];
-        /*  DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-         DBProxy.createCourse({cc:'222', name:'SecCourse'});
-         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */
+//         DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+//         DBProxy.createCourse({cc:'222', name:'SecCourse'});
+//         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+//         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
 
         DBProxy.countCourses()
                 .success(function (count) {
