@@ -72,7 +72,7 @@ public class TestPersistence {
     
     @Test
     public void testPersistAUser() {
-        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "fnmae", "lname", "");
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "fnmae", "lname", false);
         forum.getUserList().create(u);
         List<GroupUser> us = forum.getUserList().findAll();
         assertTrue(us.size() > 0);
@@ -99,7 +99,7 @@ public class TestPersistence {
     }
 
     public void testUserDelete(){
-        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "a", "b", "");
+        GroupUser u = new GroupUser(1234L, "aaa@a.a", "pwd", "a", "b", false);
         forum.getUserList().create(u);
         assertTrue(forum.getUserList().count() == 1);
         forum.getUserList().delete(u.getId());
@@ -151,7 +151,7 @@ public class TestPersistence {
     @Test
     public void testUserGetBySsnbr() {
         Long ssnbr = 1234L;
-        GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd", "a", "b", "");
+        GroupUser u = new GroupUser(ssnbr, "aaa@a.a", "pwd", "a", "b", false);
         forum.getUserList().create(u);
         GroupUser u2 = forum.getUserList().getBySsnbr(ssnbr);
         assertTrue(u2.getSsnbr() == u.getSsnbr());

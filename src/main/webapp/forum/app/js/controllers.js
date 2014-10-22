@@ -172,7 +172,11 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
                 if (cbc === "course") {
                     return "";
                 } else if (cbc.substring(0, 7) === "course/") {
-                    //return 
+                    if(endsWith(cbc, createGroupRef)) {
+                        return cbc.substring(7, cbc.length-createGroupRef.length);
+                    }else {
+                        return cbc.substring(7);
+                    }
                 } else {
                     return cbc;
                 }
@@ -180,6 +184,10 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
             showBreadcrumb: function () {
                 return window.location.hash.substring(2) !== "course";
             }
+        };
+        var createGroupRef = "/newgroup";
+        var endsWith = function(str, suffix) {
+            return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
     }]);
 

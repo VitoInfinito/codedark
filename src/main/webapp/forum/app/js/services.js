@@ -81,6 +81,9 @@ dbService.factory('DBProxy', ['$http',
             },
             login: function(ssnbr, pwd) {
                 return $http.get(url + "/login?ssnbr=" + ssnbr + "&pwd=" + pwd);
+            },
+            isAdmin: function(ssnbr) {
+                return $http.get(url + "/isadmin?ssnbr=" + ssnbr);
             }
         };
     }]);
