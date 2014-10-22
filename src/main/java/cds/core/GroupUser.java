@@ -3,6 +3,7 @@ package cds.core;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import cds.persistence.AbstractEntity;
+import java.util.List;
 
 
 /**
@@ -20,6 +21,8 @@ public class GroupUser extends AbstractEntity{
     @Column(nullable = false)
     private String pwd;
     private String adminuser;
+    
+    //private List<String> belongingTo;
     
     public GroupUser(){}
     

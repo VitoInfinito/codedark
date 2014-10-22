@@ -88,11 +88,11 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.pageSize = '4';
         $scope.currentPage = 0;
 
-
 //        DBProxy.createCourse({cc:'111', name:'FirstCourse'});
 //        DBProxy.createCourse({cc:'222', name:'SecCourse'});
 //        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
 //        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+
 
         DBProxy.countCourses()
                 .success(function (count) {
@@ -131,6 +131,9 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(searchCourses, 500);
 
+            },
+            select: function(course) {
+                $location.path('/course/' + course);
             }
         };
 
@@ -222,7 +225,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     
                 });
             }
-        }
+        };
         
         var enterCourse = function(code, cname) {
             var course = {
@@ -236,5 +239,5 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                             .error(function(){
                                 console.log("Error when adding" + course.cc);
                     });
-        }
+        };
     }]);
