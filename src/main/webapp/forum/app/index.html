@@ -34,7 +34,7 @@
                 <a ng-show="menu.showBreadcrumb()" class="navbar-brand" ng-bind="menu.getBreadcrumb()" ng-href="menu.getBreadcrumbRef"></a>
                 <a ng-click="menu.setBreadcrumb('Sign up')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" href="#/signup">Sign up</a>
                 <a ng-click="menu.setBreadcrumb('Login')" ng-hide="menu.loggedIn()" class="navbar-brand navbar-right" href="#/login">Log in</a>
-                <a ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" href="">Log out</a>
+                <a ng-click="menu.logout()" ng-show="menu.loggedIn()" class="navbar-brand navbar-right" href="#/login">Log out</a>
                 <div ng-bind="menu.getLoginName()" class="menu-box navbar-right"></div>
             </div>
         </nav>  

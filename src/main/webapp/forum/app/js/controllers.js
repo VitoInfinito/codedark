@@ -51,14 +51,14 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 //        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
         
 //        findGroups();
-        
+      
         function findGroups(){
             DBProxy.findGroups($scope.course.ccode)
                 .success(function(groups){
                      $scope.groups = groups;
             });
         }
-        
+               
 
     }]);
 
@@ -79,6 +79,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function(){
                             console.log("Group created" + $scope.group);
+                            //$location.path('/course/' + $scope.course.ccode);
                             //$scope.group.createGroup();
                 }).error(function(){
                     console.log("errorsomething");
@@ -94,10 +95,10 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.pageSize = '4';
         $scope.currentPage = 0;
 
-     /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-        DBProxy.createCourse({cc:'222', name:'SecCourse'});
-        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */
+     /*   DBProxy.createCourse({cc:'TDA111', name:'FirstCourse'});
+        DBProxy.createCourse({cc:'DAT222', name:'SecCourse'});
+        DBProxy.createCourse({cc:'PPU333', name:'ThirdCourse'});
+        DBProxy.createCourse({cc:'SWE444', name:'FourthCourse'});  */
 
 
         DBProxy.countCourses()
@@ -256,7 +257,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         };
         
         $scope.course = {
-            
+                    
             createNewCourse: function(){
                 var newCourse = {
                     cc: $scope.course.ccode,
@@ -265,8 +266,13 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 
                 DBProxy.createCourse(newCourse)
                         .success(function(){
-                            alert('New course created! Check DB.');
-                });
+                            $scope.course.status = 'Course ' + $scope.course.ccode +' created effectively.';
+                            console.log('Created course effectively '+ $scope.course.ccode);
+                        
+                        }).error(function(){
+                            $scope.course.status = 'ERROR! Course ' + $scope.course.ccode +' not created.';
+                            console.log('Could not create course '+ $scope.course.ccode);   
+                        });
                 
             }
         };

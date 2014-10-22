@@ -15,8 +15,7 @@ and open the template in the editor.
             <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" placeholder ="Maximum number of members" required />
         </div>
         <div class ="form-group">
-            
-            <button class="btn btn-default" ng-click="group.createGroup()">Submit</button>
+            <button class="btn btn-default" ng-click="group.createGroup()">Create</button>
             <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
         </div>
     </form>
