@@ -47,6 +47,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/frontTest/admin.html',
                     controller: 'AdminController'
                 }).
+                when('/hemligasidan/newcourse', {
+                    templateUrl: 'partials/courses/addCourse.html',
+                    controller: 'AdminController'
+                }).
                 when('/edituser', {
                     templateUrl: 'partials/frontTest/editUser.html',
                     controller: 'EditUserController'

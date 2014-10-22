@@ -240,4 +240,21 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                                 console.log("Error when adding" + course.cc);
                     });
         };
+        
+        $scope.course = {
+            
+            createNewCourse: function(){
+                var newCourse = {
+                    cc: $scope.course.ccode,
+                    name: $scope.course.name
+                };
+                
+                DBProxy.createCourse(newCourse)
+                        .success(function(){
+                            alert('New course created! Check DB.');
+                });
+                
+            }
+        };
+        
     }]);
