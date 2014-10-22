@@ -75,7 +75,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         /*  DBProxy.createCourse({cc:'111', name:'FirstCourse'});
          DBProxy.createCourse({cc:'222', name:'SecCourse'});
          DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */
+         DBProxy.createCourse({cc:'444', name:'FourthCourse'});*/  
 
         DBProxy.countCourses()
                 .success(function (count) {
@@ -114,6 +114,9 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(searchCourses, 500);
 
+            },
+            select: function(course) {
+                $location.path('/course/' + course);
             }
         };
 
