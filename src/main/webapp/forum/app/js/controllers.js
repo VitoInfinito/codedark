@@ -79,7 +79,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function(){
                             console.log("Group created" + $scope.group);
-                            //$location.path('/course/' + $scope.course.ccode);
+                            //$location.path('/course' + $scope.group.course);
                             //$scope.group.createGroup();
                 }).error(function(){
                     console.log("errorsomething");
@@ -275,6 +275,18 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                         });
                 
             }
+            
         };
+        
+        getUsers();
+        function getUsers() {
+            DBProxy.findAllUsers()
+                    .success(function(users) {
+                        $scope.users = users;
+                    }).error(function () {
+                console.log("findAllUsers: error");
+            });
+        }
+        
         
     }]);
