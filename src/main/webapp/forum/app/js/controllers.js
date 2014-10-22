@@ -205,7 +205,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     
                 });
             }
-        }
+        };
         
         var enterCourse = function(code, cname) {
             var course = {
@@ -219,5 +219,5 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                             .error(function(){
                                 console.log("Error when adding" + course.cc);
                     });
-        }
+        };
     }]);

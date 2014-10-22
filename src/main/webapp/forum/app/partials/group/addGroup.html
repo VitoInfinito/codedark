@@ -6,19 +6,21 @@ and open the template in the editor.
 -->
 <div>
     <!--Body content-->
-    <h2>New Group</h2>
+    <h2>Create and join new group </h2>
     
     <form role="form">
         <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" />
+            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" required />
         </div>
-        <div class="form-group">
+        <div class ="form-group">
+            <label>Maximum number of members</label>
+            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" required />
+        </div>
+        <div class ="form-group">
             <label>Course</label>
-            <select ng-model="course" ng-options="course.cc for course in courses"></select>
-        </div>
-        
+            <input type="text" class="form-control" ng-model="course.ccode" value="{{course.ccode}}" disabled />
         <button class="btn btn-default" ng-click="create()">Submit</button>
-        <button ng-controller="NavigationCtrl" ng-click="navigate('/forum')" class="btn btn-default">Cancel</button>
+        <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
     </form>
 </div>

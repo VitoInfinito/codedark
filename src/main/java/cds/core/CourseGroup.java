@@ -30,13 +30,16 @@ public class CourseGroup extends AbstractEntity {
     @Column(nullable = false)
     private String gName;
     
+    private int maxNbr;
+    
     public CourseGroup(){}
     
-    public CourseGroup(Course c, String n, GroupUser user){
+    public CourseGroup(Course c, String n, GroupUser user, int max){
         course = c;
         gName = n;
         members = new ArrayList<GroupUser>();
         owner = user;
+        maxNbr = max;
         members.add(owner);
     }
     

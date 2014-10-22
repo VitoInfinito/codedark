@@ -289,7 +289,8 @@ public class ForumResource {
         Course c = courseList.getByCC(j.getString("course"));
         String name = j.getString("name");
         GroupUser user = userList.find((long) j.getInt("user"));
-        CourseGroup cg = new CourseGroup(c, name, user);
+        int max = j.getInt("maxNbr");
+        CourseGroup cg = new CourseGroup(c, name, user, max);
         
         try {  
             groupList.create(cg);
