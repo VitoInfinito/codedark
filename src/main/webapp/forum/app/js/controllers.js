@@ -50,23 +50,26 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 //        DBProxy.createGroup({course:'111', name:'EFTER-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
         
-//        findGroups = function(ccode){
-//            DBProxy.findGroups(ccode)
-//                .success(function(groups){
-//                     $scope.groups = groups;
-//            });
-//        };
+//        findGroups();
+        
+        function findGroups(){
+            DBProxy.findGroups($scope.course.ccode)
+                .success(function(groups){
+                     $scope.groups = groups;
+            });
+        }
         
 
     }]);
 
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
-        alert(window.location.hash.substring(9,12));
-        DBProxy.findCourse(window.location.hash.substring(9,12))
+        
+        var wlh = window.location.hash;        
+        DBProxy.findCourse(wlh.substring(9,wlh.length-9))
             .success(function(course){
                 $scope.course = course;
-                alert($scope.course.name);
+//                alert($scope.course.name);
         });
         
         $scope.group = {

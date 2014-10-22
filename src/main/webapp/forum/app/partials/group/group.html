@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div>
+<div id="input">
     
     <div class="top">
         <h2>Groups in <span ng-bind="course.name"></span></h2>
@@ -12,19 +12,17 @@ and open the template in the editor.
     
     <a class="navbar-brand navbar-right" href="#/course/{{course.ccode}}/newgroup">Create New Group</a>
     
-<!--    <table class="table">
+    <table class="table">
         <thead>
-            <td>Group Number</td><td>Members</td><td>Course</td>
+            <td>Group Number</td><td>Name</td><td>Members</td>
         </thead>
     
         <tr ng-repeat="group in groups" ng-click="nav(group.id)">
             <td>{{group.id}}</td>
             <td>{{group.name}}</td>
-            <td>{{group.nbrOfMembers}}/5</td>
-            <td><a href="#/group/{{group.id}}">Edit</a></td>
-            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
+            <td>{{group.maxNbr}}/5</td>
         </tr>
         
-    </table>-->
+    </table>
    
 </div>
