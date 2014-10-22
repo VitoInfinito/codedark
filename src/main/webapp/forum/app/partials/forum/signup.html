@@ -6,15 +6,7 @@ and open the template in the editor.
 -->
 <div id="input">
     
-<!--    @Column(nullable = false)
-    private long ssnbr;
-    private String fname;
-
-    private String lname;
-    private String email;
-    @Column(nullable = false)
-    private String pwd;-->
-          
+        
     <h2> Sign up</h2>
 
     <form role="form">
@@ -26,7 +18,9 @@ and open the template in the editor.
             <input type="text" class="form-control input-sign" ng-model="user.ssnbr" placeholder="YYMMDDXXXX" required/>
             <input type="text" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
             <input type="text" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
-            <input type="text" class="form-control input-sign" ng-model="user.admin" placeholder="Code" required/>
+        </div>
+        <div class="form-group">
+                        <input type="text" class="form-control input-sign" ng-model="user.admin" placeholder="Admin code"/>
         </div>
         
         <button class="btn btn-default" ng-click="user.signUp()">Submit</button>

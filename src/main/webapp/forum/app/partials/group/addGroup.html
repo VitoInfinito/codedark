@@ -7,20 +7,18 @@ and open the template in the editor.
 <div>
     <!--Body content-->
     <h2>Create and join new group </h2>
+    for course: {{course.ccode}}  {{course.name}}
     
     <form role="form">
         <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" required />
+            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" placeholder="The awesome name of the group" required />
+            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" placeholder ="Maximum number of members" required />
+            <input type="text" class="form-control" ng-model="group.user" value="{{group.user}}" placeholder="YYMMDDXXXX" required/>
         </div>
         <div class ="form-group">
-            <label>Maximum number of members</label>
-            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" required />
+            
+            <button class="btn btn-default" ng-click="group.createGroup()">Submit</button>
+            <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
         </div>
-        <div class ="form-group">
-            <label>Course</label>
-            <input type="text" class="form-control" ng-model="course.ccode" value="{{course.ccode}}" disabled />
-        <button class="btn btn-default" ng-click="create()">Submit</button>
-        <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
     </form>
 </div>

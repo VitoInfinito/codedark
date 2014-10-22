@@ -40,17 +40,16 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
-                alert($scope.course.name);
         });
         
-//        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau'});
+//        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau', adminUser:'no'});
 //        DBProxy.createGroup({course:'111', name:'AP-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'BANAN-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'CITRON-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'DUMMY-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'EFTER-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
-//        
+        
 //        findGroups = function(ccode){
 //            DBProxy.findGroups(ccode)
 //                .success(function(groups){
@@ -61,21 +60,39 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 
     }]);
 
+controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
+        alert(window.location.hash.substring(9,12));
+        DBProxy.findCourse(window.location.hash.substring(9,12))
+            .success(function(course){
+                $scope.course = course;
+                alert($scope.course.name);
+        });
+        
+        $scope.group = {
+//            To be implemented
+//            createGroup: function(){
+//                DBProxy.createGroup()
+//                        .success(function(){
+//                            alert('Group created');
+//                });
+//                        
+//            }
+        };
+
+
+    }]);
+
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
         $scope.pageSize = '4';
         $scope.currentPage = 0;
 
-//        $scope.courses = [
-//            {cc:'tda111', name:'First course'},
-//            {cc:'tda222', name:'Second course'},
-//            {cc:'tda333', name:'Third course'},
-//            {cc:'tda444', name:'Fourth course'}
-//        ];
-//         DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-//         DBProxy.createCourse({cc:'222', name:'SecCourse'});
-//         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-//         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+//        DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+//        DBProxy.createCourse({cc:'222', name:'SecCourse'});
+//        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+//        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+
 
         DBProxy.countCourses()
                 .success(function (count) {
@@ -114,6 +131,9 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 clearTimeout(searchTimeout);
                 searchTimeout = setTimeout(searchCourses, 500);
 
+            },
+            select: function(course) {
+                $location.path('/course/' + course);
             }
         };
 
