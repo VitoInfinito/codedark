@@ -184,10 +184,10 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
             },
             signUp: function () {
                 DBProxy.createUser($scope.user)
-                        .success(function () {
-                            console.log("New user: " + $scope.user);
-                            $scope.user.login($scope.user.ssnbr, $scope.user.pwd);
-                        });
+                        .success(function(){
+                            console.log("New user: "+ $scope.user);
+                            $scope.user.login(); 
+                });
             }
 
         };

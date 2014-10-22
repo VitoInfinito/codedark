@@ -274,8 +274,9 @@ public class ForumResource {
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
             String lname = j.getString("lname");
+            String admin = j.getString("admin");
 
-            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname);
+            GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin);
             return Response.ok(new GroupUserWrapper(updatedUser)).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -317,7 +318,7 @@ public class ForumResource {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
         GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), j.getString("email"), j.getString("pwd"),
-            j.getString("fname"), j.getString("lname"));
+            j.getString("fname"), j.getString("lname"), j.getString("admin"));
         
         log.log(Level.INFO, "Logging ssnbr3: " + gu.toString());
         try{
