@@ -19,27 +19,27 @@ public class GroupUser extends AbstractEntity{
     private String email;
     @Column(nullable = false)
     private String pwd;
-    private String admin;
+    private String adminuser;
     
     public GroupUser(){}
     
-    public GroupUser(Long id, Long ssnbr, String email, String pwd, String fname, String lname, String admin) {
+    public GroupUser(Long id, Long ssnbr, String email, String pwd, String fname, String lname, String adminUser) {
         super(id);
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
-        this.admin = admin;
+        this.adminuser = adminUser;
     }
     
-    public GroupUser(Long ssnbr, String email, String pwd, String fname, String lname, String admin) {
+    public GroupUser(Long ssnbr, String email, String pwd, String fname, String lname, String adminUser) {
         this.ssnbr = ssnbr;
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
-        this.admin = admin;
+        this.adminuser = adminUser;
     }
     
 
@@ -63,12 +63,12 @@ public class GroupUser extends AbstractEntity{
         return lname;
     }
 
-    public String getAdmin() {
-        return admin;
+    public String getAdminuser() {
+        return adminuser;
     }
     @Override
     public String toString() {
-        return "GroupUser{" + "ssnbr=" + ssnbr + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + ", admin= " + admin + '}';
+        return "GroupUser{" + "ssnbr=" + ssnbr + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + ", admin= " + adminuser + '}';
     }
     
 

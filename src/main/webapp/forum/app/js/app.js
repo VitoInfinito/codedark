@@ -39,6 +39,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/addCourse.html',
                     controller: 'CourseController'
                 }).
+                when('/course/:ccode/newgroup', {
+                    templateUrl: 'partials/group/addGroup.html',
+                    controller: 'GroupAddController'
+                }).
                 when('/hemligasidan', {
                     templateUrl: 'partials/frontTest/admin.html',
                     controller: 'AdminController'
