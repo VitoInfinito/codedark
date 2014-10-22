@@ -6,19 +6,24 @@ and open the template in the editor.
 -->
 <div>
     <!--Body content-->
-    <h2>New Group</h2>
+    <h2>New Group </h2>
+    for course: {{course.ccode}}  {{course.name}}
+    
+<!--    @OneToMany
+    private List<GroupUser> members;
+    @ManyToOne
+    private GroupUser owner;
+    @ManyToOne
+    private Course course;
+    @Column(nullable = false)
+    private String gName;-->
     
     <form role="form">
         <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" />
+            <input type="text" class="form-control" ng-model="group.name" placeholder="The name of the awesome group" />
+            <input type="text" class="form-control" ng-model="group.user" placeholder="Your social security number" />
         </div>
-        <div class="form-group">
-            <label>Course</label>
-            <select ng-model="course" ng-options="course.cc for course in courses"></select>
-        </div>
-        
-        <button class="btn btn-default" ng-click="create()">Submit</button>
-        <button ng-controller="NavigationCtrl" ng-click="navigate('/forum')" class="btn btn-default">Cancel</button>
+               
+        <button class="btn btn-default" ng-click="group.createGroup()">Submit</button>
     </form>
 </div>

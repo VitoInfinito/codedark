@@ -68,6 +68,17 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 $scope.course = course;
                 alert($scope.course.name);
         });
+        
+        $scope.group = {
+//            To be implemented
+//            createGroup: function(){
+//                DBProxy.createGroup()
+//                        .success(function(){
+//                            alert('Group created');
+//                });
+//                        
+//            }
+        };
 
 
     }]);
