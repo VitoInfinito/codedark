@@ -82,9 +82,9 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 //GETRANGE
                 getRangeGroups();
         
-//                $scope.$watch('currentPage', function() {
-//                    getRange();
-//                });
+                $scope.$watch('currentPage', function() {
+                    getRangeGroups();
+                });
                 function getRangeGroups(){
                     var fst = $scope.currentPage * $scope.pageSize;
                     DBProxy.findRangeGroups($scope.course.ccode, fst, $scope.pageSize)
@@ -108,18 +108,24 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
         DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
                 .success(function (course) {
                     $scope.course = course;
+                    
 //                alert($scope.course.name);
                 });
 
         $scope.group = {
-            createGroup: function (test) {
+            createGroup: function () {
                 $scope.group.user = getCookie("_userssnbr");
                 $scope.group.course = $scope.course.ccode;
+                var cc = $scope.group.course;
                 DBProxy.createGroup($scope.group)
                         .success(function () {
-                            console.log("Group created" + $scope.group);
-                            //$location.path('/course' + $scope.group.course);
-                            //$scope.group.createGroup();
+                            console.log("Group created" + $scope.group.course);
+                            console.log($location.path());
+                           // console.log($location.path());
+                           // $location.path('/index').replace();
+                           // $scope.$apply();
+                            //console.log($location.path());
+                            
                         }).error(function () {
                     console.log("errorsomething");
                 });
