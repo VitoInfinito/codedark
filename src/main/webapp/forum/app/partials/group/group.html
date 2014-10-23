@@ -34,13 +34,13 @@ and open the template in the editor.
             ng-repeat="group in groups" 
             ng-click="$parent.group.toggle(group)" >
             <td>{{group.id}}
-                <p class="toggleable">Toggle</p>
             </td>
             <td>{{group.gName}}
-                <p class="toggleable">Toggle</p>
             </td>
-            <td>{{group.maxNbr}}/5
-                <p class="toggleable">Toggle</p>
+            <td>?/{{group.maxNbr}}
+                <div class="toggleable{{group.gName}}" hidden>
+                    {{group.gName}}
+                </div>
             </td>
 
         </tr>

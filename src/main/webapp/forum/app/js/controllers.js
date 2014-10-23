@@ -37,11 +37,13 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
 controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
 
+        
+        
         $scope.group = {
             toggle: function(group) {
                 console.log("in toggle group");
                 console.log("gName of clicked group: " + group.gName);
-                $('.toggleable').collapse('toggle');
+                $('.toggleable'+group.gName).collapse('toggle');
             }
         };
 
