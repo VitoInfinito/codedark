@@ -9,7 +9,8 @@ var forum = angular.module('Forum', [
 
 
 forum.config(['$routeProvider',
-    function($routeProvider) {  
+    function($routeProvider) { 
+        console.log("Locationpath");
         $routeProvider.
                 when('/course', {
                     templateUrl: 'partials/course/courses.html',

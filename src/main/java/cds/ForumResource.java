@@ -134,7 +134,7 @@ public class ForumResource {
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
         GroupUser user = userList.getBySsnbr(id);
-        log.log(Level.INFO, "Found user" + user.getFname() + " " + user.getLname());
+        log.log(Level.INFO, "Found user" + user.getFname() + " " + user.getLname() + " " + user.getSsnbr() +" "+user.getId());
         if (user != null) {
             return Response.ok(user).build();
         } else {
@@ -325,7 +325,9 @@ public class ForumResource {
             String lname = j.getString("lname");
             log.log(Level.INFO, j.getString("admin"));
             String admin = j.getString("admin");
+            //log.log(Level.INFO, ""+j.getInt("id"));
             Long id = (long) j.getInt("id");
+            //Long id = userList.getBySsnbr(ssnbr).getId();
 
             
             GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin.equals("admin"));
@@ -346,8 +348,11 @@ public class ForumResource {
         
         GroupUser user = userList.getBySsnbr(Long.parseLong(j.getString("user"),10));
         
-        
         int max = j.getInt("maxNbr");
+        log.log(Level.INFO, ""+groupList.getByNameAndCourse(name, c.getCcode()));
+        if(groupList.getByNameAndCourse(name, c.getCcode()) != null){
+            return Response.status(Response.Status.CONFLICT).build();
+        }
         
         CourseGroup cg = new CourseGroup(c, name, user, max);
         
