@@ -270,13 +270,15 @@ public class ForumResource {
     }
     
     @PUT
-    @Path(value = "course/{id}")
-    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Path(value = "courseEdit")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateCourse(JsonObject j, @PathParam(value= "id") Long id){
+    public Response updateCourse(JsonObject j){
         try{
-            String cc = j.getString("cc");
+            log.log(Level.INFO, "Updating course" + j);
+            String cc = j.getString("ccode");
             String name = j.getString("name");
+            Long id = (long) j.getInt("id");
+            log.log(Level.INFO, "Updating id: " + id);
             log.log(Level.INFO, "Updating: " + cc);
             Course updatedCourse = new Course(id, cc, name);
             log.log(Level.INFO, "updatedCourse: " + updatedCourse);
@@ -289,19 +291,23 @@ public class ForumResource {
         
     }
     @PUT
-    @Path(value = "user/{id}")
-    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Path(value = "user")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateUser(JsonObject j, @PathParam(value= "id") Long id){
+    public Response updateUser(JsonObject j){
         try{
-            Long ssnbr = Long.parseLong(j.getString("ssnbr"), 10);
+            Long ssnbr = (long) j.getInt("ssnbr");
             String email = j.getString("email");
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
             String lname = j.getString("lname");
+            log.log(Level.INFO, j.getString("admin"));
             String admin = j.getString("admin");
+            Long id = (long) j.getInt("id");
 
+            
             GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin.equals("admin"));
+            userList.update(updatedUser);
+            
             return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
