@@ -329,6 +329,16 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
             });
         }
         
+        getCourses();
+        function getCourses() {
+            DBProxy.findAllCourses()
+                    .success(function(courses) {
+                        $scope.courses = courses;
+                    }).error(function () {
+                        console.log("findAllUsers: error");
+            });
+        }
+        
         
     }]);
 
@@ -349,7 +359,7 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                     .success(function(){
                         alert('Updated!');
                         console.log('Updated ' + $scope.user.ssnbr);
-                        //$location.path('/hemligasidan');
+                        $location.path('/hemligasidan');
                     }).error(function () {
                         console.log("updateUser: error");
                 });

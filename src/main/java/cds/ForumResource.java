@@ -346,6 +346,12 @@ public class ForumResource {
     @Path(value = "user")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
+        log.log(Level.INFO, j.getString("ssnbr"));
+        log.log(Level.INFO, j.getString("email"));
+        log.log(Level.INFO, j.getString("pwd"));
+        log.log(Level.INFO, j.getString("fname"));
+        log.log(Level.INFO, j.getString("lname"));
+        log.log(Level.INFO, j.getString("admin"));
         GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), j.getString("email"), j.getString("pwd"),
             j.getString("fname"), j.getString("lname"), j.getString("admin").equals("admin"));
         
