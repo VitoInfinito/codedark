@@ -250,7 +250,7 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
                             if (angular.isDefined($scope.user.ssnbr)) {
                                 setCookie("_userssnbr", $scope.user.ssnbr, 365);
-                                console.log("User ok, attempting to find name");
+                                console.log("User ok, attempting to find name: " + $scope.user.ssnbr);
                                 DBProxy.findUser($scope.user.ssnbr)
                                         .success(function (response) {
                                             console.log("Found user: " + JSON.stringify(response));

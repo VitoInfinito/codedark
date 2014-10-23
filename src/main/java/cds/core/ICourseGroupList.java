@@ -15,7 +15,6 @@ import cds.persistence.IDAO;
 //Possibly use and rework
 @Local
 public interface ICourseGroupList extends IDAO<CourseGroup, Long> {
-    public CourseGroup getByName(String name);
-    
-    public List<CourseGroup> getByCourse(Course course);
+    public CourseGroup getByNameAndCourse(String name, String course);
+    public List<CourseGroup> getByCourse(String cc);
 }
