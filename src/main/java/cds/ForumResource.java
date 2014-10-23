@@ -51,6 +51,7 @@ public class ForumResource {
     @PersistenceContext(unitName = "jpa_forum_pu")
     @Default
     EntityManager em;
+    
     @Context
     private UriInfo uriInfo;
     
@@ -283,8 +284,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateUser(JsonObject j, @PathParam(value= "id") Long id){
         try{
-            Integer ssnbrInt = j.getInt("ssnbr");
-            Long ssnbr = ssnbrInt.longValue();
+            Long ssnbr = Long.parseLong(j.getString("ssnbr"), 10);
             String email = j.getString("email");
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");

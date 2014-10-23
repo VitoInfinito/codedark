@@ -76,3 +76,8 @@ footer {
     background-color:#f8f8f8;
     cursor:pointer;
 }
+
+.adminTableWrapper {
+    height: 300px !important;
+    overflow: auto;
+}

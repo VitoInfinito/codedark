@@ -15,7 +15,7 @@ and open the template in the editor.
 
     <div class="row">
 
-        <div class="col-md-6">
+        <div class="col-md-6 adminTableWrapper">
             <table class="table">
                 <thead> List of all users</thead>
                 <tbody>
@@ -30,13 +30,13 @@ and open the template in the editor.
         <!-- LIST OF ALL Courses -->
 
 
-        <div class="col-md-6">
+        <div class="col-md-6 adminTableWrapper">
             <table class="table">
                 <thead> List of all Courses</thead>
                 <tbody>
                     <tr ng-repeat="course in courses" >
-                        <td>{{course.cc}} {{course.name}}</td>
-                        <td><a href="#/hemligasidan/editCourse/{{course.cc}}">Edit Course</a></td>
+                        <td>{{course.ccode}} {{course.name}}</td>
+                        <td><a href="#/hemligasidan/editCourse/{{course.ccode}}">Edit</a></td>
                     </tr>
                 </tbody>
 
