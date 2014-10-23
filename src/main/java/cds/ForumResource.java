@@ -351,17 +351,23 @@ public class ForumResource {
     @GET
     @Path(value = "courses/search")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response searchInCourses(@QueryParam(value = "searchfield") String search) {
+    public Response searchInCoursesWithRange(@QueryParam(value = "searchfield") String search, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         search = search.toLowerCase();
         log.log(Level.INFO, "Searching courses with search: " + search);
         Collection<CourseWrapper> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
-        while(it.hasNext()) {
-            Course c = it.next();
-            if(c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) {
-                courses.add(new CourseWrapper(c));
+        int counter = 0;
+        int counterDone = 0;
+        while(it.hasNext() && counterDone < count) {
+            if(counter++ >= fst) {
+                Course c = it.next();
+                if(c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) {
+                    courses.add(new CourseWrapper(c));
+                    counterDone++;
+                }
             }
         }
+        
         GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
         };
         return Response.ok(ge).build();

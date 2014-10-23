@@ -125,7 +125,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
 
         var searchTimeout;
         var searchCourses = function () {
-            DBProxy.searchInCourses($scope.course.searchfield)
+            DBProxy.searchInCoursesWithRange($scope.course.searchfield, $scope.pageSize * $scope.currentPage, $scope.pageSize)
                     .success(function (courses) {
                         $scope.courses = courses;
                     }).error(function () {
