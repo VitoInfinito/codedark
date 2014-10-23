@@ -38,34 +38,34 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
     function ($scope, $location, $routeParams, DBProxy) {
 
         DBProxy.findCourse(window.location.hash.substring(9))
-            .success(function(course){
-                $scope.course = course;
-        });
-        
+                .success(function (course) {
+                    $scope.course = course;
+                });
+
         $scope.pageSize = '15';
         $scope.currentPage = 0;
-        
+
         DBProxy.countGroups()
-                .success(function(count){
+                .success(function (count) {
                     $scope.count = count.value;
                     console.log("groupCount: " + count.value);
-                }).error(function(){
-                    console.log("groupCount: error");
+                }).error(function () {
+            console.log("groupCount: error");
         });
-        
+
         getRange();
-        
-        $scope.$watch('currentPage', function() {
+
+        $scope.$watch('currentPage', function () {
             getRange();
         });
-        function getRange(){
+        function getRange() {
             var fst = $scope.currentPage * $scope.pageSize;
             DBProxy.findRangeGroups(fst, $scope.pageSize)
-                .success(function(groups){
-                    $scope.groups = groups;
-                }).error(function(){
-                    console.log("findRangeGroups: error");
-                });
+                    .success(function (groups) {
+                        $scope.groups = groups;
+                    }).error(function () {
+                console.log("findRangeGroups: error");
+            });
         }
 //        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau', adminUser:'no'});
 //        DBProxy.createGroup({course:'111', name:'AP-GRUPPEN', user:'9201015188'});
@@ -74,41 +74,41 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 //        DBProxy.createGroup({course:'111', name:'DUMMY-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'EFTER-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
-        
+
 //        findGroups();
-      
-        function findGroups(){
+
+        function findGroups() {
             DBProxy.findGroups($scope.course.ccode)
-                .success(function(groups){
-                     $scope.groups = groups;
-            });
+                    .success(function (groups) {
+                        $scope.groups = groups;
+                    });
         }
 
     }]);
 
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
-        
-        var wlh = window.location.hash;        
-        DBProxy.findCourse(wlh.substring(9,wlh.length-9))
-            .success(function(course){
-                $scope.course = course;
+
+        var wlh = window.location.hash;
+        DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
+                .success(function (course) {
+                    $scope.course = course;
 //                alert($scope.course.name);
-        });
-        
+                });
+
         $scope.group = {
-            createGroup: function(test){
-                $scope.group.user = getCookie("_userssnbr"); 
+            createGroup: function (test) {
+                $scope.group.user = getCookie("_userssnbr");
                 $scope.group.course = $scope.course.ccode;
                 DBProxy.createGroup($scope.group)
-                        .success(function(){
+                        .success(function () {
                             console.log("Group created" + $scope.group);
                             //$location.path('/course' + $scope.group.course);
                             //$scope.group.createGroup();
-                }).error(function(){
+                        }).error(function () {
                     console.log("errorsomething");
                 });
-                        
+
             }
         };
 
@@ -143,10 +143,10 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             searchfield: ""
         };
 
-     /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-        DBProxy.createCourse({cc:'222', name:'SecCourse'});
-        DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+        /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+         DBProxy.createCourse({cc:'222', name:'SecCourse'});
+         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
          DBProxy.createCourse({cc:'555', name:'FifthCourse'});*/
 
 
@@ -168,14 +168,38 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                         $scope.courses = courses;
                         $scope.currentPageSize = courses.length;
                         DBProxy.countSearchedCourses($scope.course.searchfield)
-                            .success(function (response) {
-                                $scope.count = response.value;
-                            }).error(function() {
-                                console.log("error with countSearch");
-                            });
+                                .success(function (response) {
+                                    $scope.count = response.value;
+                                }).error(function () {
+                            console.log("error with countSearch");
+                        });
                     }).error(function () {
+<<<<<<< HEAD
                 console.log("findRangeCourses: error");
             });
+=======
+                console.log("searchInCourses: error");
+            });
+        };
+
+        $scope.course = {
+            search: function () {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(searchCourses, 500);
+
+            },
+            select: function (course) {
+                $location.path('/course/' + course);
+            },
+            isCourseListEmpty: function () {
+                if (typeof $scope.courses !== 'undefined') {
+                    return $scope.courses.length === 0;
+                } else {
+                    return true;
+                }
+
+            }
+>>>>>>> FETCH_HEAD
         };
     }]);
 
@@ -205,9 +229,9 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
                 if (cbc === "course") {
                     return "";
                 } else if (cbc.substring(0, 7) === "course/") {
-                    if(endsWith(cbc, createGroupRef)) {
-                        return cbc.substring(7, cbc.length-createGroupRef.length);
-                    }else {
+                    if (endsWith(cbc, createGroupRef)) {
+                        return cbc.substring(7, cbc.length - createGroupRef.length);
+                    } else {
                         return cbc.substring(7);
                     }
                 } else {
@@ -219,7 +243,7 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
             }
         };
         var createGroupRef = "/newgroup";
-        var endsWith = function(str, suffix) {
+        var endsWith = function (str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
     }]);
@@ -251,101 +275,169 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
             },
             signUp: function () {
                 DBProxy.createUser($scope.user)
-                        .success(function(){
-                            console.log("New user: "+ $scope.user);
-                            $scope.user.login(); 
-                });
+                        .success(function () {
+                            console.log("New user: " + $scope.user);
+                            $scope.user.login();
+                        });
             }
 
         };
     }]);
 controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
+
+        DBProxy.isAdmin(getCookie("_userssnbr"))
+                .success(function () {
+                    
+                }).error(function () {
+                    $location.path("/course");
+                    //alert("Access Denied");
+                    
+        });
+
+
         $scope.scraper = {
             courseScraper: function () {
-                
+
                 var items = retScrapedItems();
                 //console.log("items: "+items.courseCode);
                 $.each(items, function (index, val) {
                     console.log("something");
                     enterCourse(val.courseCode, val.courseName);
-                    
+
                 });
             }
         };
-        
-        var enterCourse = function(code, cname) {
+
+        var enterCourse = function (code, cname) {
             var course = {
-                    cc: code,
-                    name: cname
-                };
+                cc: code,
+                name: cname
+            };
             DBProxy.createCourse(course)
-                            .success(function() {
-                                console.log("New Course: " + course.cc);
+                    .success(function () {
+                        console.log("New Course: " + course.cc);
                     })
-                            .error(function(){
-                                console.log("Error when adding" + course.cc);
+                    .error(function () {
+                        console.log("Error when adding" + course.cc);
                     });
         };
-        
+
         $scope.course = {
-                    
-            createNewCourse: function(){
+            createNewCourse: function () {
                 var newCourse = {
                     cc: $scope.course.ccode,
                     name: $scope.course.name
                 };
-                
+
                 DBProxy.createCourse(newCourse)
-                        .success(function(){
-                            $scope.course.status = 'Course ' + $scope.course.ccode +' created effectively.';
-                            console.log('Created course effectively '+ $scope.course.ccode);
-                        
-                        }).error(function(){
-                            $scope.course.status = 'ERROR! Course ' + $scope.course.ccode +' not created.';
-                            console.log('Could not create course '+ $scope.course.ccode);   
-                        });
-                
+                        .success(function () {
+                            $scope.course.status = 'Course ' + $scope.course.ccode + ' created effectively.';
+                            console.log('Created course effectively ' + $scope.course.ccode);
+
+                        }).error(function () {
+                    $scope.course.status = 'ERROR! Course ' + $scope.course.ccode + ' not created.';
+                    console.log('Could not create course ' + $scope.course.ccode);
+                });
+
             }
-            
+
         };
-        
+
         getUsers();
         function getUsers() {
             DBProxy.findAllUsers()
-                    .success(function(users) {
+                    .success(function (users) {
                         $scope.users = users;
                     }).error(function () {
-                        console.log("findAllUsers: error");
+                console.log("findAllUsers: error");
             });
         }
-        
-        
+
+        getCourses();
+        function getCourses() {
+            DBProxy.findAllCourses()
+                    .success(function (courses) {
+                        $scope.courses = courses;
+                    }).error(function () {
+                console.log("findAllUsers: error");
+            });
+        }
+
+
     }]);
 
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
+
+
+        DBProxy.isAdmin(getCookie("_userssnbr"))
+                .success(function () {
+                    console.log("Admin!");
+                }).error(function () {
+                    $location.path("/course");
+                    console.log("Access Denied!");
+                    
+        });
         
         var wlh = window.location.hash;
         DBProxy.findUser(wlh.substring(24))
-            .success(function(user){
-                $scope.user = user;
-                console.log('Editing ' + $scope.user.ssnbr);
-        });
-        
+                .success(function (user) {
+                    $scope.user = user;
+                    console.log('Editing ' + $scope.user.ssnbr);
+                });
+
         $scope.user = {
-            update: function(){
+            update: function () {
                 console.log('Inside user.update() in AdminController');
-                DBProxy.updateUser($scope.user, $scope.user.id)
-                    .success(function(){
-                        alert('Updated!');
-                        console.log('Updated ' + $scope.user.ssnbr);
-                        //$location.path('/hemligasidan');
-                    }).error(function () {
-                        console.log("updateUser: error");
+                //TODO: Possible the wrong order
+                DBProxy.updateUser($scope.user.id, $scope.user)
+                        .success(function () {
+                            alert('Updated!');
+                            console.log('Updated ' + $scope.user.ssnbr);
+                            $location.path('/hemligasidan');
+                        }).error(function () {
+                    console.log("updateUser: error");
                 });
             }
         };
-        
-        
+
+
+    }]);
+
+controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
+
+
+        DBProxy.isAdmin(getCookie("_userssnbr"))
+                .success(function () {
+                    console.log("Admin!");
+                }).error(function () {
+                    $location.path("/course");
+                    console.log("Access Denied!");
+                    
+        });
+        //TODO: solve this by using pathquery instead
+        var wlh = window.location.hash;
+        DBProxy.findCourse(wlh.substring(26))
+                .success(function (course) {
+                    $scope.course = course;
+                    console.log('Editing ' + $scope.course.cc);
+                });
+
+        $scope.course = {
+            update: function () {
+                console.log('Inside course.update() in AdminController');
+                DBProxy.updateCourse($scope.course.ccode, $scope.course)
+                        .success(function () {
+                            alert('Updated!');
+                            console.log('Updated ' + $scope.course.cc);
+                            $location.path('/hemligasidan');
+                        }).error(function () {
+                    console.log("updateUser: error");
+                });
+            }
+        };
+
+
     }]);

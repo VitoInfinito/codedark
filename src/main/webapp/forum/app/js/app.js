@@ -59,8 +59,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/user/editUser.html',
                     controller: 'EditUserController'
                 }).
-               
-             
+                when('/hemligasidan/editCourse/:cc', {
+                    templateUrl: 'partials/course/editCourse.html',
+                    controller: 'EditCourseController'
+                }).
                 otherwise({
                     redirectTo: '/course'
                 });

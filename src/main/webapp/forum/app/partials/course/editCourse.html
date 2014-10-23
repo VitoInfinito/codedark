@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div id="input">
+    
+    <div class="top">
+        <h2>Edit User</h2>
+        ID: {{course.ccode}}
+    </div>
+    <br>
+    <form role="form">
+        <div class="form-group">
+            <input type="text" class="form-control input-sign" ng-model="course.ccode" placeholder="{{course.ccode}}" required/>
+            <input type="text" class="form-control input-sign" ng-model="course.name" placeholder="{{course.name}}" required/> 
+        </div>
+        
+        <button class="btn btn-default" ng-click="course.update()">Update</button>
+        <button class="btn btn-default" ng-click="course.delete()">Delete</button>
+    </form>
+</div>
