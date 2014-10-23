@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 /**
  *
- * @author HForsvall
  */
 @Entity
 public class CourseGroup extends AbstractEntity {
@@ -80,6 +79,27 @@ public class CourseGroup extends AbstractEntity {
     public String toString() {
         return "CourseGroup{" + "members=" + members.toString() + ", owner=" + owner.toString() + ", course=" + course.toString() + ", gName=" + gName + '}';
     }
+
+    public void setMembers(List<GroupUser> members) {
+        this.members = members;
+    }
+
+    public void setOwner(GroupUser owner) {
+        this.owner = owner;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public void setgName(String gName) {
+        this.gName = gName;
+    }
+
+    public void setMaxNbr(int maxNbr) {
+        this.maxNbr = maxNbr;
+    }
+    
     
     
 }
