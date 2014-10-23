@@ -15,9 +15,9 @@ and open the template in the editor.
 
     <div class="row">
 
-        <div class="col-md-6 adminTableWrapper">
+        <div class="col-md-6">
             <table class="table">
-                <thead> List of all users</thead>
+                <thead> <h3>List of all users</h3></thead>
                 <tbody>
                     <tr ng-repeat="user in users" >
                         <td>{{user.fname}} {{user.lname}} {{user.ssnbr}}</td>
@@ -30,10 +30,10 @@ and open the template in the editor.
         <!-- LIST OF ALL Courses -->
 
 
-        <div class="col-md-6 adminTableWrapper">
+        <div class="col-md-6 ">
             <table class="table">
-                <thead> List of all Courses</thead>
-                <tbody>
+                <thead> <h3>List of all Courses</h3></thead>
+                <tbody class="adminTableWrapper">
                     <tr ng-repeat="course in courses" >
                         <td>{{course.ccode}} {{course.name}}</td>
                         <td><a href="#/hemligasidan/editCourse/{{course.ccode}}">Edit</a></td>

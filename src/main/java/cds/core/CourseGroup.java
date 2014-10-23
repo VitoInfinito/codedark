@@ -75,6 +75,10 @@ public class CourseGroup extends AbstractEntity {
     public GroupUser getOwner() {
         return owner;
     }
+    
+    public int getmaxNbr(){
+        return maxNbr;
+    }
 
     @Override
     public String toString() {
@@ -97,7 +101,7 @@ public class CourseGroup extends AbstractEntity {
         this.gName = gName;
     }
 
-    public void setMaxNbr(int maxNbr) {
+    public void setmaxNbr(int maxNbr) {
         this.maxNbr = maxNbr;
     }
     

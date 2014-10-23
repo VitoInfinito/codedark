@@ -140,11 +140,11 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             searchfield: ""
         };
 
-        /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-         DBProxy.createCourse({cc:'222', name:'SecCourse'});
-         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
-         DBProxy.createCourse({cc:'555', name:'FifthCourse'});*/
+//           DBProxy.createCourse({cc:'111', name:'FirstCourse'});
+//         DBProxy.createCourse({cc:'222', name:'SecCourse'});
+//         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
+//         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+//         DBProxy.createCourse({cc:'555', name:'FifthCourse'});
 
 
         DBProxy.countCourses()
@@ -343,13 +343,15 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
 
+        console.log("inside userEdit");
 
-
-        $scope.user = {
+        $scope.userEdit = {
+            
+            
             update: function () {
                 console.log('Inside user.update() in AdminController');
                 //TODO: Possible the wrong order
-                DBProxy.updateUser($scope.user.id, $scope.user)
+                DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');
                             console.log('Updated ' + $scope.user.ssnbr);
@@ -382,17 +384,18 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
             console.log(6);
         }
         $scope.test3 = function() {
-          console.log(8);  
+          console.log(8); 
+          console.log($scope.course);
         };
         
         console.log(1);
-        $scope.course = {
+        $scope.courseEdit = {
             test2: function() {
                 console.log(7);
             },
             update: function () {
                 console.log('Inside course.update() in AdminController');
-                DBProxy.updateCourse($scope.course.ccode, $scope.course)
+                DBProxy.updateCourse($scope.course)
                         .success(function () {
                             alert('Updated!');
                             console.log('Updated ' + $scope.course.ccode);
