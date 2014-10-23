@@ -116,7 +116,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
 
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
-        $scope.pageSize = '4';
+        $scope.pageSize = '15';
         $scope.currentPage = 0;
 
      /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
