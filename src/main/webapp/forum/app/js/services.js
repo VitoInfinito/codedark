@@ -43,14 +43,17 @@ dbService.factory('DBProxy', ['$http',
             findUser: function(id){
                 return $http.get(url + "/user/" + id);
             },
-            updateCourse: function(id, object) {
-                return $http.put(url + "/course/" + id, object);
+            updateCourse: function(object) {
+                return $http.put(url + "/courseEdit", object);
             },
             updateGroup: function(id, object){
                 return $http.put(url + "/group/" + id, object);
             },
-            updateUser: function(id, object){
-                return $http.put(url + "/user/" + id, object);
+            joinGroup: function(ccode, gName, user){
+                return $http.get(url + "/join/" + ccode + "/"+ gName + "/" + user);
+            },
+            updateUser: function(object){
+                return $http.put(url + "/user/", object);
             },
             createCourse: function(object) {
                 return $http.post(url + "/course", object);

@@ -93,7 +93,7 @@ public class TestPersistence {
         forum.getCourseList().create(c);
         CourseGroup g = new CourseGroup(c, "Code Dark", null, 2);
         forum.getGroupList().create(g);
-        List<CourseGroup> gs = forum.getGroupList().getByCourse(c);
+        List<CourseGroup> gs = forum.getGroupList().getByCourse(c.getCcode());
         assertTrue(gs.size() > 0);
         assertTrue(gs.get(0).getCourse().equals(c));
     }
@@ -134,7 +134,7 @@ public class TestPersistence {
         CourseGroup u = new CourseGroup(c, "Testgrupp", null, 2);
         forum.getGroupList().create(u);
         
-        CourseGroup u1 = forum.getGroupList().getByName("Testgrupp");
+        CourseGroup u1 = forum.getGroupList().getByNameAndCourse(u.getgName(), c.getCcode());
         
         assertTrue(u.equals(u1));
     }

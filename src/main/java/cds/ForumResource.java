@@ -107,14 +107,28 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value = "join/{ccode}/{gName}/{user}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response joinGroup(@PathParam(value= "ccode") String ccode, 
+            @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
+        log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
+        
+        
+        
+        return Response.ok().build();    
+    }    
+    
+    @GET
     @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
         GroupUser user = userList.getBySsnbr(id);
-        log.log(Level.INFO, "Found user" + user.getFname() + " " + user.getLname());
+
         if (user != null) {
+            log.log(Level.INFO, "Found user: " + user.getFname() + " " + user.getLname());
             return Response.ok(user).build();
         } else {
+            log.log(Level.INFO, "Did not find user");
             return Response.noContent().build();
         }
     
@@ -270,13 +284,15 @@ public class ForumResource {
     }
     
     @PUT
-    @Path(value = "course/{id}")
-    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Path(value = "courseEdit")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateCourse(JsonObject j, @PathParam(value= "id") Long id){
+    public Response updateCourse(JsonObject j){
         try{
-            String cc = j.getString("cc");
+            log.log(Level.INFO, "Updating course" + j);
+            String cc = j.getString("ccode");
             String name = j.getString("name");
+            Long id = (long) j.getInt("id");
+            log.log(Level.INFO, "Updating id: " + id);
             log.log(Level.INFO, "Updating: " + cc);
             Course updatedCourse = new Course(id, cc, name);
             log.log(Level.INFO, "updatedCourse: " + updatedCourse);
@@ -289,19 +305,25 @@ public class ForumResource {
         
     }
     @PUT
-    @Path(value = "user/{id}")
-    @Consumes(value = {MediaType.APPLICATION_JSON})
+    @Path(value = "user")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response updateUser(JsonObject j, @PathParam(value= "id") Long id){
+    public Response updateUser(JsonObject j){
         try{
-            Long ssnbr = Long.parseLong(j.getString("ssnbr"), 10);
+            Long ssnbr = (long) j.getInt("ssnbr");
             String email = j.getString("email");
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
             String lname = j.getString("lname");
+            log.log(Level.INFO, j.getString("admin"));
             String admin = j.getString("admin");
+            //log.log(Level.INFO, ""+j.getInt("id"));
+            Long id = (long) j.getInt("id");
+            //Long id = userList.getBySsnbr(ssnbr).getId();
 
+            
             GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin.equals("admin"));
+            userList.update(updatedUser);
+            
             return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -318,8 +340,11 @@ public class ForumResource {
         
         GroupUser user = userList.getBySsnbr(Long.parseLong(j.getString("user"),10));
         
-        
         int max = j.getInt("maxNbr");
+        log.log(Level.INFO, ""+groupList.getByNameAndCourse(name, c.getCcode()));
+        if(groupList.getByNameAndCourse(name, c.getCcode()) != null){
+            return Response.status(Response.Status.CONFLICT).build();
+        }
         
         CourseGroup cg = new CourseGroup(c, name, user, max);
         

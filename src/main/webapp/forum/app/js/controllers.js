@@ -37,6 +37,32 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
 controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
 
+        
+        
+        $scope.group = {
+            toggle: function(group) {
+                console.log("in toggle group");
+                console.log("gName of clicked group: " + group.gName);
+                $('#toggleable'+group.gName).collapse('toggle');
+                
+//                DBProxy.findMembers(group.gName)
+//                        .success(function(members){
+//                        console.log("Found members: " + members);
+//                });
+                $scope.members = group.members;
+            },
+            join: function(e, group){
+                console.log('Join! ' + group.gName);
+                e.stopPropagation();
+                
+                var user = getCookie("_userssnbr");
+                DBProxy.joinGroup(group.course.ccode, group.gName, user)
+                    .success(function(){
+                            
+                });
+            }
+        };
+
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
@@ -69,25 +95,9 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                             console.log("findRangeGroups: error");
                         });
                 }
-        
-//                console.log("About to findGroups in GroupController");
-//                DBProxy.findGroups($scope.course.ccode)
-//                    .success(function(groups){
-//                        $scope.groups = groups;
-//                        console.log("groups: " + groups);
-//                });
+                
         });
         
-//        $scope.pageSize = '15';
-//        $scope.currentPage = 0;
-//        
-//        DBProxy.countGroups()
-//                .success(function(count){
-//                    $scope.count = count.value;
-//                    console.log("groupCount: " + count.value);
-//                }).error(function(){
-//                    console.log("groupCount: error");
-//        });
        
     }]);
 
@@ -246,7 +256,7 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                             console.log($scope.user.ssnbr + " " + $scope.user.pwd);
                             if (angular.isDefined($scope.user.ssnbr)) {
                                 setCookie("_userssnbr", $scope.user.ssnbr, 365);
-                                console.log("User ok, attempting to find name");
+                                console.log("User ok, attempting to find name: " + $scope.user.ssnbr);
                                 DBProxy.findUser($scope.user.ssnbr)
                                         .success(function (response) {
                                             console.log("Found user: " + JSON.stringify(response));
@@ -357,13 +367,15 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
 
+        console.log("inside userEdit");
 
-
-        $scope.user = {
+        $scope.userEdit = {
+            
+            
             update: function () {
                 console.log('Inside user.update() in AdminController');
                 //TODO: Possible the wrong order
-                DBProxy.updateUser($scope.user.id, $scope.user)
+                DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');
                             console.log('Updated ' + $scope.user.ssnbr);
@@ -396,17 +408,18 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
             console.log(6);
         }
         $scope.test3 = function() {
-          console.log(8);  
+          console.log(8); 
+          console.log($scope.course);
         };
         
         console.log(1);
-        $scope.course = {
+        $scope.courseEdit = {
             test2: function() {
                 console.log(7);
             },
             update: function () {
                 console.log('Inside course.update() in AdminController');
-                DBProxy.updateCourse($scope.course.ccode, $scope.course)
+                DBProxy.updateCourse($scope.course)
                         .success(function () {
                             alert('Updated!');
                             console.log('Updated ' + $scope.course.ccode);
