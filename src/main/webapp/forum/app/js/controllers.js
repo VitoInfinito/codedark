@@ -117,6 +117,10 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
         $scope.pageSize = '15';
+<<<<<<< Updated upstream
+=======
+        $scope.currentPageSize = $scope.pageSize;
+>>>>>>> Stashed changes
         $scope.currentPage = 0;
 
      /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
@@ -153,9 +157,16 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             DBProxy.searchInCoursesWithRange($scope.course.searchfield, $scope.pageSize * $scope.currentPage, $scope.pageSize)
                     .success(function (courses) {
                         $scope.courses = courses;
+                        $scope.currentPageSize = courses.length;
+                        DBProxy.countSearchedCourses($scope.course.searchfield)
+                            .success(function (response) {
+                                $scope.count = response.value;
+                            }).error(function() {
+                                console.log("error with countSearch");
+                            });
                     }).error(function () {
-                console.log("searchInCourses: error");
-            });
+                        console.log("searchInCourses: error");
+                    });
         };
 
         $scope.course = {
@@ -166,6 +177,14 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             },
             select: function(course) {
                 $location.path('/course/' + course);
+            },
+            isCourseListEmpty: function() {
+                if(typeof $scope.courses !== 'undefined') {
+                    return $scope.courses.length === 0;
+                }else {
+                    return true;
+                }
+                
             }
         };
 

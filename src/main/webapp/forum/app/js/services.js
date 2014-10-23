@@ -73,6 +73,9 @@ dbService.factory('DBProxy', ['$http',
             countCourses: function() {
                 return $http.get(url + "/countCourses");
             },
+            countSearchedCourses: function(search) {
+                return $http.get(url + "/countSearchedCourses/?searchfield=" + search);
+            },
             countGroups: function() {
                 return $http.get(url + "/countGroups");
             },

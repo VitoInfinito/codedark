@@ -184,6 +184,21 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value = "countSearchedCourses")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countSearchedCourses(@QueryParam(value = "searchfield") String search){
+        int c = 0;
+        log.log(Level.INFO, "Got in");
+        for(Course course : courseList.findAll()) {
+            if(course.getCcode().toLowerCase().contains(search) || course.getName().toLowerCase().contains(search)) {
+                c++;
+            }
+        }
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+    
+    @GET
     @Path(value = "countUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countUsers(){
