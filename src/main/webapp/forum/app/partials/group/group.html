@@ -12,6 +12,18 @@ and open the template in the editor.
     
     <a class="navbar-brand navbar-right" href="#/course/{{course.ccode}}/newgroup">Create New Group</a>
     
+    
+    <div class="btn-group">
+        <button class="btn btn-default" ng-disabled="currentPage===0" 
+            ng-click="currentPage = currentPage - 1">
+            Previous
+        </button>
+        <button class="btn btn-group" ng-disabled="currentPage >= count/pageSize-1"
+            ng-click="currentPage = currentPage + 1">
+            Next
+        </button>
+    </div>
+    
     <table class="table">
         <thead>
             <td>Group Number</td><td>Name</td><td>Members</td>
@@ -24,15 +36,5 @@ and open the template in the editor.
         </tr>
         
     </table>
-    <div class="btn-group">
-        <button class="btn btn-default" ng-disabled="currentPage===0" 
-            ng-click="currentPage = currentPage - 1">
-            Previous
-        </button>
-        <button class="btn btn-group" ng-disabled="currentPage >= count/pageSize-1"
-            ng-click="currentPage = currentPage + 1">
-            Next
-        </button>
-    </div>
    
 </div>

@@ -8,41 +8,63 @@ and open the template in the editor.
     <div class="top">
         <h2>Almighty Admin</h2>
     </div>
-        
-        <!-- LIST OF ALL USERS-->
-        <hr>
-        <h3>List of all users</h3>
-        
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table">
 
+    <!-- LIST OF ALL USERS-->
+    <hr>
+
+
+    <div class="row">
+
+        <div class="col-md-6 adminTableWrapper">
+            <table class="table">
+                <thead> List of all users</thead>
+                <tbody>
                     <tr ng-repeat="user in users" >
                         <td>{{user.fname}} {{user.lname}} {{user.ssnbr}}</td>
                         <td><a href="#/hemligasidan/editUser/{{user.ssnbr}}">Edit User</a></td>
                     </tr>
+                </tbody>
 
-                </table>
-            </div>
+            </table>
         </div>
-        
-        <!-- ADD NEW COURSE-->
-        <hr>
-        <h3>Add new course</h3>
-        <form role="form">
-            <div class="form-group">
-                <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" />
-                <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
-            </div>
-               
-            <button class="btn btn-default" ng-click="course.createNewCourse()">Add course</button>
-        </form>
-        <br>
-        <span ng-bind="course.status" style="color:green"></span>
-        
-        <!-- SCRAPE CHALMERS COURSES-->
-        <br><hr>
-        <h3>Scrape Chalmers courses</h3>
-        <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape</button>
+        <!-- LIST OF ALL Courses -->
+
+
+        <div class="col-md-6 adminTableWrapper">
+            <table class="table">
+                <thead> List of all Courses</thead>
+                <tbody>
+                    <tr ng-repeat="course in courses" >
+                        <td>{{course.ccode}} {{course.name}}</td>
+                        <td><a href="#/hemligasidan/editCourse/{{course.ccode}}">Edit</a></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- ADD NEW COURSE-->
+    <hr>
+    <h3>Add new course</h3>
+    <form role="form">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" />
+            <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
+        </div>
+
+        <button class="btn btn-default" ng-click="course.createNewCourse()">Add course</button>
+    </form>
+    <br>
+    <span ng-bind="course.status" style="color:green"></span>
+
+    <!-- SCRAPE CHALMERS COURSES-->
+    <br><hr>
+    <h3>Scrape Chalmers courses</h3>
+    <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape</button>
 
 </div>

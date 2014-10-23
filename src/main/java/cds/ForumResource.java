@@ -51,6 +51,7 @@ public class ForumResource {
     @PersistenceContext(unitName = "jpa_forum_pu")
     @Default
     EntityManager em;
+    
     @Context
     private UriInfo uriInfo;
     
@@ -191,6 +192,21 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value = "countSearchedCourses")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response countSearchedCourses(@QueryParam(value = "searchfield") String search){
+        int c = 0;
+        log.log(Level.INFO, "Got in");
+        for(Course course : courseList.findAll()) {
+            if(course.getCcode().toLowerCase().contains(search) || course.getName().toLowerCase().contains(search)) {
+                c++;
+            }
+        }
+        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+        return Response.ok(value).build();
+    }
+    
+    @GET
     @Path(value = "countUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countUsers(){
@@ -275,8 +291,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateUser(JsonObject j, @PathParam(value= "id") Long id){
         try{
-            Integer ssnbrInt = j.getInt("ssnbr");
-            Long ssnbr = ssnbrInt.longValue();
+            Long ssnbr = Long.parseLong(j.getString("ssnbr"), 10);
             String email = j.getString("email");
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
@@ -338,6 +353,12 @@ public class ForumResource {
     @Path(value = "user")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
+        log.log(Level.INFO, j.getString("ssnbr"));
+        log.log(Level.INFO, j.getString("email"));
+        log.log(Level.INFO, j.getString("pwd"));
+        log.log(Level.INFO, j.getString("fname"));
+        log.log(Level.INFO, j.getString("lname"));
+        log.log(Level.INFO, j.getString("admin"));
         GroupUser gu = new GroupUser(Long.parseLong(j.getString("ssnbr"), 10), j.getString("email"), j.getString("pwd"),
             j.getString("fname"), j.getString("lname"), j.getString("admin").equals("admin"));
         
@@ -364,14 +385,11 @@ public class ForumResource {
         Collection<CourseWrapper> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         int counter = 0;
-        int counterDone = 0;
-        while(it.hasNext() && counterDone < count) {
-            if(counter++ >= fst) {
-                Course c = it.next();
-                if(c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) {
-                    courses.add(new CourseWrapper(c));
-                    counterDone++;
-                }
+        while(it.hasNext() && count > 0) {
+            Course c = it.next();
+            if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) && counter++ >= fst) {
+                courses.add(new CourseWrapper(c));
+                count--;
             }
         }
         

@@ -40,7 +40,7 @@ function scrape(){
         
 }
 
-//var items = scrape();
+var items = scrape();
 
 function retScrapedItems(){
     return items;
