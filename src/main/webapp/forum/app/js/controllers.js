@@ -50,6 +50,16 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 //                        console.log("Found members: " + members);
 //                });
                 $scope.members = group.members;
+            },
+            join: function(e, group){
+                console.log('Join! ' + group.gName);
+                e.stopPropagation();
+                
+                var user = getCookie("_userssnbr");
+                DBProxy.joinGroup(group.gName, user)
+                    .success(function(){
+                            
+                });
             }
         };
 
