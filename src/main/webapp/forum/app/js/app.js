@@ -19,6 +19,10 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
                 }).
+                when('/group/:gName', {
+                    templateUrl: 'partials/group/editGroup.html',
+                    controller: 'GroupEditController'
+                }).
                 when('/group', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'

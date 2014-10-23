@@ -29,12 +29,22 @@ and open the template in the editor.
             <td>Group Number</td><td>Name</td><td>Members</td>
         </thead>
     
-        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
-            <td>{{group.id}}</td>
-            <td>{{group.name}}</td>
-            <td>{{group.maxNbr}}/5</td>
+        <tr class="selectableCourse" 
+            id="collapsible" 
+            ng-repeat="group in groups" 
+            ng-click="$parent.group.toggle(group)" >
+            <td>{{group.id}}
+                <p class="toggleable">Toggle</p>
+            </td>
+            <td>{{group.gName}}
+                <p class="toggleable">Toggle</p>
+            </td>
+            <td>{{group.maxNbr}}/5
+                <p class="toggleable">Toggle</p>
+            </td>
         </tr>
         
     </table>
+
    
 </div>

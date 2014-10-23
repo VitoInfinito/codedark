@@ -34,6 +34,7 @@ public class CourseGroup extends AbstractEntity {
     public CourseGroup(){}
     
     public CourseGroup(Course c, String n, GroupUser user, int max){
+        super();
         course = c;
         gName = n;
         members = new ArrayList<GroupUser>();

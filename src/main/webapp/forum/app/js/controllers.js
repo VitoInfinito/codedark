@@ -37,6 +37,14 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
 controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
 
+        $scope.group = {
+            toggle: function(group) {
+                console.log("in toggle group");
+                console.log("gName of clicked group: " + group.gName);
+                $('.toggleable').collapse('toggle');
+            }
+        };
+
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
@@ -69,25 +77,9 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                             console.log("findRangeGroups: error");
                         });
                 }
-        
-//                console.log("About to findGroups in GroupController");
-//                DBProxy.findGroups($scope.course.ccode)
-//                    .success(function(groups){
-//                        $scope.groups = groups;
-//                        console.log("groups: " + groups);
-//                });
+                
         });
         
-//        $scope.pageSize = '15';
-//        $scope.currentPage = 0;
-//        
-//        DBProxy.countGroups()
-//                .success(function(count){
-//                    $scope.count = count.value;
-//                    console.log("groupCount: " + count.value);
-//                }).error(function(){
-//                    console.log("groupCount: error");
-//        });
        
     }]);
 
