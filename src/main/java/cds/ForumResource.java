@@ -484,6 +484,19 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value= "{user}/groups")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findUserGroups(@PathParam("ssnbr") String ssnbr){
+        
+        Long ssNbr = Long.parseLong(ssnbr);
+        List<CourseGroup> groups = groupList.getByUser(ssNbr);
+        
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups){
+        };
+        return Response.ok(ge).build();
+    }
+    
+    @GET
     @Path(value = "login")
     public Response login(@QueryParam("ssnbr") String ssnbr, @QueryParam("pwd") String pwd) {
         GroupUser u = userList.getBySsnbr(Long.parseLong(ssnbr, 10));
