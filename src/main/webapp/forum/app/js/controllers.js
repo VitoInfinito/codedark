@@ -174,32 +174,8 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                             console.log("error with countSearch");
                         });
                     }).error(function () {
-<<<<<<< HEAD
                 console.log("findRangeCourses: error");
             });
-=======
-                console.log("searchInCourses: error");
-            });
-        };
-
-        $scope.course = {
-            search: function () {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(searchCourses, 500);
-
-            },
-            select: function (course) {
-                $location.path('/course/' + course);
-            },
-            isCourseListEmpty: function () {
-                if (typeof $scope.courses !== 'undefined') {
-                    return $scope.courses.length === 0;
-                } else {
-                    return true;
-                }
-
-            }
->>>>>>> FETCH_HEAD
         };
     }]);
 
