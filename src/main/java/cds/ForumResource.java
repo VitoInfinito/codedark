@@ -258,7 +258,7 @@ public class ForumResource {
             Course c = groupList.find(id).getCourse();
             CourseGroup cg1 = groupList.find(id);
             List<GroupUser> list = cg1.getMembers();
-     
+            
             list.add(userList.find((long)j.getInt("userId")));
             CourseGroup cg = new CourseGroup(id, c, name, list, cg1.getOwner());
             groupList.update(cg);
@@ -277,7 +277,9 @@ public class ForumResource {
         try{
             String cc = j.getString("cc");
             String name = j.getString("name");
+            log.log(Level.INFO, "Updating: " + cc);
             Course updatedCourse = new Course(id, cc, name);
+            log.log(Level.INFO, "updatedCourse: " + updatedCourse);
             courseList.update(updatedCourse);
         
             return Response.ok(new CourseWrapper(updatedCourse)).build();

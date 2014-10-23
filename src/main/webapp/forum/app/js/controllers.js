@@ -269,11 +269,11 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
                 .success(function () {
-                    
+
                 }).error(function () {
-                    $location.path("/course");
-                    //alert("Access Denied");
-                    
+            $location.path("/course");
+            //alert("Access Denied");
+
         });
 
 
@@ -352,21 +352,6 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
 
 
-        DBProxy.isAdmin(getCookie("_userssnbr"))
-                .success(function () {
-                    console.log("Admin!");
-                }).error(function () {
-                    $location.path("/course");
-                    console.log("Access Denied!");
-                    
-        });
-        
-        var wlh = window.location.hash;
-        DBProxy.findUser(wlh.substring(24))
-                .success(function (user) {
-                    $scope.user = user;
-                    console.log('Editing ' + $scope.user.ssnbr);
-                });
 
         $scope.user = {
             update: function () {
@@ -382,43 +367,69 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 });
             }
         };
-
-
-    }]);
-
-controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
-
+        var wlh = window.location.hash;
+        DBProxy.findUser(wlh.substring(24))
+                .success(function (user) {
+                    $scope.user = user;
+                    console.log('Editing ' + $scope.user.ssnbr);
+                });
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
                 .success(function () {
                     console.log("Admin!");
                 }).error(function () {
-                    $location.path("/course");
-                    console.log("Access Denied!");
-                    
-        });
-        //TODO: solve this by using pathquery instead
-        var wlh = window.location.hash;
-        DBProxy.findCourse(wlh.substring(26))
-                .success(function (course) {
-                    $scope.course = course;
-                    console.log('Editing ' + $scope.course.cc);
-                });
+            $location.path("/course");
+            console.log("Access Denied!");
 
+        });
+    }]);
+
+controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
+        function test() {
+            console.log(6);
+        }
+        $scope.test3 = function() {
+          console.log(8);  
+        };
+        
+        console.log(1);
         $scope.course = {
+            test2: function() {
+                console.log(7);
+            },
             update: function () {
                 console.log('Inside course.update() in AdminController');
                 DBProxy.updateCourse($scope.course.ccode, $scope.course)
                         .success(function () {
                             alert('Updated!');
-                            console.log('Updated ' + $scope.course.cc);
+                            console.log('Updated ' + $scope.course.ccode);
                             $location.path('/hemligasidan');
                         }).error(function () {
                     console.log("updateUser: error");
                 });
             }
         };
+        console.log(2);
+        //TODO: solve this by using pathquery instead
+        var wlh = window.location.hash;
+        console.log(3);
+        DBProxy.findCourse(wlh.substring(26))
+                .success(function (course) {
+                    $scope.course = course;
+                    console.log('Editing ' + $scope.course.ccode);
+                });
+        console.log(4);
+        DBProxy.isAdmin(getCookie("_userssnbr"))
+                .success(function () {
+                    console.log("Admin!");
+                }).error(function () {
+            $location.path("/course");
+            console.log("Access Denied!");
+
+        });
+        console.log(5);
+
 
 
     }]);
