@@ -43,7 +43,13 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
             toggle: function(group) {
                 console.log("in toggle group");
                 console.log("gName of clicked group: " + group.gName);
-                $('.toggleable'+group.gName).collapse('toggle');
+                $('#toggleable'+group.gName).collapse('toggle');
+                
+//                DBProxy.findMembers(group.gName)
+//                        .success(function(members){
+//                        console.log("Found members: " + members);
+//                });
+                $scope.members = group.members;
             }
         };
 

@@ -107,6 +107,29 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value = "group/members/{gName}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response findMembers(@PathParam(value= "gName") String gName){
+        log.log(Level.INFO, "INUTI FINDMEMBERS");
+        log.log(Level.INFO, "gName: " + gName);
+        
+        List<GroupUser> gus = new ArrayList<>();
+        CourseGroup cg = groupList.getByName(gName);
+        log.log(Level.INFO, "Find members in group: " + cg);
+        log.log(Level.INFO, "Members: " + cg.getMembers().toString());
+        
+//        for(GroupUser gu: userList.findAll()){
+//            if(cg.getMembers().contains(gu)){
+//                gus.add(gu);
+//            }
+//        }
+//        log.log(Level.INFO, "members in group created: " + gus.toString());
+//        
+        return Response.ok().build();    
+    }
+    
+    
+    @GET
     @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){

@@ -33,13 +33,16 @@ and open the template in the editor.
             id="collapsible" 
             ng-repeat="group in groups" 
             ng-click="$parent.group.toggle(group)" >
-            <td>{{group.id}}
-            </td>
-            <td>{{group.gName}}
-            </td>
+            <td>{{group.id}}</td>
+            <td>{{group.gName}}</td>
+            
             <td>?/{{group.maxNbr}}
-                <div class="toggleable{{group.gName}}" hidden>
-                    {{group.gName}}
+                <div id="toggleable{{group.gName}}" hidden>
+                    <table class="table">
+                        <tr ng-repeat="member in members">
+                            <td>{{member.fname}} {{member.lname}}</td>
+                        </tr>
+                    </table>
                 </div>
             </td>
 
