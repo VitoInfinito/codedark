@@ -119,6 +119,29 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.pageSize = '15';
         $scope.currentPageSize = $scope.pageSize;
         $scope.currentPage = 0;
+        
+        
+        var searchTimeout;
+
+        $scope.course = {
+            search: function () {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(function() {$scope.currentPage = 0; getRange();}, 500);
+
+            },
+            select: function(course) {
+                $location.path('/course/' + course);
+            },
+            isCourseListEmpty: function() {
+                if(typeof $scope.courses !== 'undefined') {
+                    return $scope.courses.length === 0;
+                }else {
+                    return true;
+                }
+                
+            },
+            searchfield: ""
+        };
 
      /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
         DBProxy.createCourse({cc:'222', name:'SecCourse'});
@@ -135,23 +158,12 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             console.log("courseCount: error");
         });
 
-        getRange();
         $scope.$watch('currentPage', function() {
             getRange();
         });
         function getRange() {
             var fst = $scope.pageSize * $scope.currentPage;
-            DBProxy.findRangeCourses(fst, $scope.pageSize)
-                    .success(function (courses) {
-                        $scope.courses = courses;
-                    }).error(function () {
-                console.log("findRangeCourses: error");
-            });
-        }
-
-        var searchTimeout;
-        var searchCourses = function () {
-            DBProxy.searchInCoursesWithRange($scope.course.searchfield, $scope.pageSize * $scope.currentPage, $scope.pageSize)
+            DBProxy.searchInCoursesWithRange($scope.course.searchfield, fst, $scope.pageSize)
                     .success(function (courses) {
                         $scope.courses = courses;
                         $scope.currentPageSize = courses.length;
@@ -162,30 +174,9 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                                 console.log("error with countSearch");
                             });
                     }).error(function () {
-                        console.log("searchInCourses: error");
-                    });
+                console.log("findRangeCourses: error");
+            });
         };
-
-        $scope.course = {
-            search: function () {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(searchCourses, 500);
-
-            },
-            select: function(course) {
-                $location.path('/course/' + course);
-            },
-            isCourseListEmpty: function() {
-                if(typeof $scope.courses !== 'undefined') {
-                    return $scope.courses.length === 0;
-                }else {
-                    return true;
-                }
-                
-            }
-        };
-
-
     }]);
 
 controllers.controller('TestController', ['$scope', '$location', 'DBProxy',

@@ -372,14 +372,11 @@ public class ForumResource {
         Collection<CourseWrapper> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         int counter = 0;
-        int counterDone = 0;
-        while(it.hasNext() && counterDone < count) {
-            if(counter++ >= fst) {
-                Course c = it.next();
-                if(c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) {
-                    courses.add(new CourseWrapper(c));
-                    counterDone++;
-                }
+        while(it.hasNext() && count > 0) {
+            Course c = it.next();
+            if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) && counter++ >= fst) {
+                courses.add(new CourseWrapper(c));
+                count--;
             }
         }
         
