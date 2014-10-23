@@ -311,6 +311,7 @@ public class ForumResource {
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
+        log.log(Level.INFO, "Här är jao");
         Course c = courseList.getByCC(j.getString("course"));
         
         String name = j.getString("name");
@@ -405,28 +406,20 @@ public class ForumResource {
     public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
         log.log(Level.INFO, "ccode: " + ccode);
+        log.log(Level.INFO, "fst: " + fst);
+        log.log(Level.INFO, "count: " + count);
         Course c = courseList.getByCC(ccode);
         log.log(Level.INFO, "1");
         Collection<CourseGroup> groups = new ArrayList<>();
-        log.log(Level.INFO, "2");
-        for(CourseGroup cg: groupList.findAll()){
-            log.log(Level.INFO, "3");
-            if(cg.getCourse().equals(c)){
-                log.log(Level.INFO, "4");
-                groups.add(cg);
-                log.log(Level.INFO, "5");
-                log.log(Level.INFO, cg.getgName());
-                log.log(Level.INFO, (cg.getOwner()).toString());
-                
-            }
-        }
+        List<CourseGroup> oldGroups = groupList.getByCourse(c);
         
-//        Iterator<CourseGroup> it = groups.findRange(fst, count).iterator();
-//        while(it.hasNext()) {
-//            CourseGroup g = it.next();
-//            groups.add(g);
-//        }
-//        
+        int i = fst;
+        
+        while(i >= fst && i < fst+count && i < groupList.getByCourse(c).size()){
+            groups.add(oldGroups.get(i));
+            i++;
+        }
+
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
         log.log(Level.INFO, "1");
