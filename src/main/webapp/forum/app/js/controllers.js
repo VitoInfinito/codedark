@@ -76,14 +76,14 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 //        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
         
 //        findGroups();
-        
+      
         function findGroups(){
             DBProxy.findGroups($scope.course.ccode)
                 .success(function(groups){
                      $scope.groups = groups;
             });
         }
-        
+
     }]);
 
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
@@ -103,6 +103,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function(){
                             console.log("Group created" + $scope.group);
+                            //$location.path('/course' + $scope.group.course);
                             //$scope.group.createGroup();
                 }).error(function(){
                     console.log("errorsomething");
@@ -123,6 +124,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
          DBProxy.createCourse({cc:'555', name:'FifthCourse'});*/
+
 
         DBProxy.countCourses()
                 .success(function (count) {
@@ -148,7 +150,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
 
         var searchTimeout;
         var searchCourses = function () {
-            DBProxy.searchInCourses($scope.course.searchfield)
+            DBProxy.searchInCoursesWithRange($scope.course.searchfield, $scope.pageSize * $scope.currentPage, $scope.pageSize)
                     .success(function (courses) {
                         $scope.courses = courses;
                     }).error(function () {
@@ -280,7 +282,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         };
         
         $scope.course = {
-            
+                    
             createNewCourse: function(){
                 var newCourse = {
                     cc: $scope.course.ccode,
@@ -289,10 +291,54 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 
                 DBProxy.createCourse(newCourse)
                         .success(function(){
-                            alert('New course created! Check DB.');
-                });
+                            $scope.course.status = 'Course ' + $scope.course.ccode +' created effectively.';
+                            console.log('Created course effectively '+ $scope.course.ccode);
+                        
+                        }).error(function(){
+                            $scope.course.status = 'ERROR! Course ' + $scope.course.ccode +' not created.';
+                            console.log('Could not create course '+ $scope.course.ccode);   
+                        });
                 
             }
+            
         };
+        
+        getUsers();
+        function getUsers() {
+            DBProxy.findAllUsers()
+                    .success(function(users) {
+                        $scope.users = users;
+                    }).error(function () {
+                        console.log("findAllUsers: error");
+            });
+        }
+        
+        
+    }]);
+
+controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
+        
+        var wlh = window.location.hash;
+        DBProxy.findUser(wlh.substring(24))
+            .success(function(user){
+                $scope.user = user;
+                console.log('Editing ' + $scope.user.ssnbr);
+        });
+        
+        $scope.user = {
+            update: function(){
+                console.log('Inside user.update() in AdminController');
+                DBProxy.updateUser($scope.user, $scope.user.id)
+                    .success(function(){
+                        alert('Updated!');
+                        console.log('Updated ' + $scope.user.ssnbr);
+                        //$location.path('/hemligasidan');
+                    }).error(function () {
+                        console.log("updateUser: error");
+                });
+            }
+        };
+        
         
     }]);
