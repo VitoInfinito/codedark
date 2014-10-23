@@ -111,10 +111,11 @@ public class ForumResource {
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
         GroupUser user = userList.getBySsnbr(id);
-        log.log(Level.INFO, "Found user" + user.getFname() + " " + user.getLname());
         if (user != null) {
+            log.log(Level.INFO, "Found user: " + user.getFname() + " " + user.getLname());
             return Response.ok(user).build();
         } else {
+            log.log(Level.INFO, "Did not find user");
             return Response.noContent().build();
         }
     
