@@ -106,16 +106,27 @@ public class ForumResource {
         return Response.ok(ge).build();
     }
     
-    @GET
+    @PUT
     @Path(value = "join/{ccode}/{gName}/{user}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response joinGroup(@PathParam(value= "ccode") String ccode, 
             @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
         log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
-        
-        
-        
-        return Response.ok().build();    
+        CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
+
+        Long ssnbr = Long.parseLong(user);
+        log.log(Level.INFO, "Ssnbr: " + ssnbr);
+        GroupUser gu = userList.getBySsnbr(ssnbr);
+        log.log(Level.INFO, "User: " + gu);
+//        List<GroupUser> members = cg.getMembers();
+//        log.log(Level.INFO, "Members: " + members);
+//           cg.getMembers().add(userList.getBySsnbr(ssnbr));
+//           log.log(Level.INFO, "members: " + cg.getMembers().toString());
+           return Response.ok().build(); 
+//        }catch(Exception e){
+//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+//        }
+            
     }    
     
     @GET
