@@ -25,8 +25,8 @@ dbService.factory('DBProxy', ['$http',
             findRangeCourses: function(first, count) {
                 return $http.get(url + "/courses/range?fst=" + first + "&count=" + count);
             },
-            findRangeGroups: function(first, count){
-                return $http.get(url + "/groups/range?fst=" + first + "&count=" + count);
+            findRangeGroups: function(ccode, first, count){
+                return $http.get(url + "/groups/"+ccode+"/range?fst=" + first + "&count=" + count);
             },
             findRangeUsers: function(first, count){
                 return $http.get(url + "/users/range?fst=" + first + "&count=" + count);
@@ -73,8 +73,8 @@ dbService.factory('DBProxy', ['$http',
             countCourses: function() {
                 return $http.get(url + "/countCourses");
             },
-            countGroups: function() {
-                return $http.get(url + "/countGroups");
+            countGroups: function(ccode) {
+                return $http.get(url + "/countGroups/" + ccode);
             },
             countUsers: function() {
                 return $http.get(url + "/countUsers");

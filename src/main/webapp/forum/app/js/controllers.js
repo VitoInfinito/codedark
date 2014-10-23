@@ -40,49 +40,55 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
         DBProxy.findCourse(window.location.hash.substring(9))
             .success(function(course){
                 $scope.course = course;
-        });
         
-        $scope.pageSize = '15';
-        $scope.currentPage = 0;
+                $scope.pageSize = '5';
+                $scope.currentPage = 0;
         
-        DBProxy.countGroups()
-                .success(function(count){
-                    $scope.count = count.value;
-                    console.log("groupCount: " + count.value);
-                }).error(function(){
-                    console.log("groupCount: error");
-        });
-        
-        getRange();
-        
-        $scope.$watch('currentPage', function() {
-            getRange();
-        });
-        function getRange(){
-            var fst = $scope.currentPage * $scope.pageSize;
-            DBProxy.findRangeGroups(fst, $scope.pageSize)
-                .success(function(groups){
-                    $scope.groups = groups;
-                }).error(function(){
-                    console.log("findRangeGroups: error");
+                //COUNT
+                DBProxy.countGroups($scope.course.ccode)
+                    .success(function(count){
+                        $scope.count = count.value;
+                        console.log("groupCount: " + count.value);
+                    }).error(function(){
+                        console.log("groupCount: error");
                 });
-        }
-//        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau', adminUser:'no'});
-//        DBProxy.createGroup({course:'111', name:'AP-GRUPPEN', user:'9201015188'});
-//        DBProxy.createGroup({course:'111', name:'BANAN-GRUPPEN', user:'9201015188'});
-//        DBProxy.createGroup({course:'111', name:'CITRON-GRUPPEN', user:'9201015188'});
-//        DBProxy.createGroup({course:'111', name:'DUMMY-GRUPPEN', user:'9201015188'});
-//        DBProxy.createGroup({course:'111', name:'EFTER-GRUPPEN', user:'9201015188'});
-//        DBProxy.createGroup({course:'111', name:'FRÄLSAR-GRUPPEN', user:'9201015188'});
+                
+                //GETRANGE
+                getRange();
         
-//        findGroups();
-      
-        function findGroups(){
-            DBProxy.findGroups($scope.course.ccode)
-                .success(function(groups){
-                     $scope.groups = groups;
-            });
-        }
+//                $scope.$watch('currentPage', function() {
+//                    getRange();
+//                });
+                function getRange(){
+                    var fst = $scope.currentPage * $scope.pageSize;
+                    DBProxy.findRangeGroups($scope.course.ccode, fst, $scope.pageSize)
+                        .success(function(groups){
+                            $scope.groups = groups;
+                            console.log("groups: " + groups);
+                        }).error(function(){
+                            console.log("findRangeGroups: error");
+                        });
+                }
+        
+//                console.log("About to findGroups in GroupController");
+//                DBProxy.findGroups($scope.course.ccode)
+//                    .success(function(groups){
+//                        $scope.groups = groups;
+//                        console.log("groups: " + groups);
+//                });
+        });
+        
+//        $scope.pageSize = '15';
+//        $scope.currentPage = 0;
+//        
+//        DBProxy.countGroups()
+//                .success(function(count){
+//                    $scope.count = count.value;
+//                    console.log("groupCount: " + count.value);
+//                }).error(function(){
+//                    console.log("groupCount: error");
+//        });
+       
 
     }]);
 

@@ -166,11 +166,18 @@ public class ForumResource {
     }    
 
     @GET
-    @Path(value = "countGroups")
+    @Path(value = "countGroups/{ccode}")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response countGroups() {
-        int c = groupList.count();
-        JsonObject value = Json.createObjectBuilder().add("value", c).build();
+    public Response countGroups(@PathParam(value= "ccode") String ccode) {
+        Course c = courseList.getByCC(ccode);
+        
+        int count = 0;
+        for(CourseGroup cg: groupList.findAll()){
+            if(cg.getCourse().equals(c)){
+                count++;
+            }
+        }
+        JsonObject value = Json.createObjectBuilder().add("value", count).build();
         return Response.ok(value).build();
     }
     
@@ -374,19 +381,23 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "groups/range")
+    @Path(value = "groups/{ccode}/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findGroupRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        Collection<CourseGroupWrapper> groups = new ArrayList<>();
-        Iterator<CourseGroup> it = groupList.findRange(fst, count).iterator();
-        while(it.hasNext()) {
-            CourseGroup g = it.next();
-            groups.add(new CourseGroupWrapper(g));
-        }
-        
-        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
-        };
-        return Response.ok(ge).build();
+    public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+        log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
+        log.log(Level.INFO, "ccode: " + ccode);
+        Course c = courseList.getByCC(ccode);
+//        Collection<CourseGroupWrapper> groups = new ArrayList<>();
+//        Iterator<CourseGroup> it = groupList.findRange(fst, count).iterator();
+//        while(it.hasNext()) {
+//            CourseGroup g = it.next();
+//            groups.add(new CourseGroupWrapper(g));
+//        }
+//        
+//        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
+//        };
+//        return Response.ok(ge).build();
+          return Response.ok().build();
     }
     
     @GET
