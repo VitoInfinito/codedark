@@ -117,10 +117,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
 controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
         $scope.pageSize = '15';
-<<<<<<< Updated upstream
-=======
         $scope.currentPageSize = $scope.pageSize;
->>>>>>> Stashed changes
         $scope.currentPage = 0;
 
      /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
