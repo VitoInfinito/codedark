@@ -28,7 +28,9 @@ and open the template in the editor.
     <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
     <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>
     <table class="table">
-        <tr class="selectableCourse" ng-repeat="course in courses" ng-click="$parent.course.select(course.ccode)" >
+        <tr class="selectableCourse" 
+            ng-repeat="course in courses" 
+            ng-click="$parent.course.select(course.ccode)" >
             <td>{{course.ccode}}</td>
             <td>{{course.name}}</td>
         </tr>

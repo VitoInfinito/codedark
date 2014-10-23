@@ -57,7 +57,7 @@ public class GroupUser extends AbstractEntity{
     }
     
 
-    public long getSsnbr() {
+    public Long getSsnbr() {
         return ssnbr;
     }
 
@@ -76,6 +76,7 @@ public class GroupUser extends AbstractEntity{
     public String getLname() {
         return lname;
     }
+    
 
     public List<String> getBelongingTo() {
         return belongingTo;

@@ -9,7 +9,8 @@ var forum = angular.module('Forum', [
 
 
 forum.config(['$routeProvider',
-    function($routeProvider) {  
+    function($routeProvider) { 
+        console.log("Locationpath");
         $routeProvider.
                 when('/course', {
                     templateUrl: 'partials/course/courses.html',
@@ -18,6 +19,10 @@ forum.config(['$routeProvider',
                 when('/course/:cc', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
+                }).
+                when('/group/:gName', {
+                    templateUrl: 'partials/group/editGroup.html',
+                    controller: 'GroupEditController'
                 }).
                 when('/group', {
                     templateUrl: 'partials/group/group.html',
