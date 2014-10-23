@@ -42,6 +42,31 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 $scope.course = course;
         });
         
+        $scope.pageSize = '15';
+        $scope.currentPage = 0;
+        
+        DBProxy.countGroups()
+                .success(function(count){
+                    $scope.count = count.value;
+                    console.log("groupCount: " + count.value);
+                }).error(function(){
+                    console.log("groupCount: error");
+        });
+        
+        getRange();
+        
+        $scope.$watch('currentPage', function() {
+            getRange();
+        });
+        function getRange(){
+            var fst = $scope.currentPage * $scope.pageSize;
+            DBProxy.findRangeGroups(fst, $scope.pageSize)
+                .success(function(groups){
+                    $scope.groups = groups;
+                }).error(function(){
+                    console.log("findRangeGroups: error");
+                });
+        }
 //        DBProxy.createUser({ssnbr:'9201015188', email:'chorriballong@gmail.com', pwd:'password', fname:'Pat', lname:'Pau', adminUser:'no'});
 //        DBProxy.createGroup({course:'111', name:'AP-GRUPPEN', user:'9201015188'});
 //        DBProxy.createGroup({course:'111', name:'BANAN-GRUPPEN', user:'9201015188'});
@@ -59,7 +84,6 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
             });
         }
         
-
     }]);
 
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
@@ -97,21 +121,21 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
      /*   DBProxy.createCourse({cc:'111', name:'FirstCourse'});
         DBProxy.createCourse({cc:'222', name:'SecCourse'});
         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  */
-
+        DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
+         DBProxy.createCourse({cc:'555', name:'FifthCourse'});*/
 
         DBProxy.countCourses()
                 .success(function (count) {
                     $scope.count = count.value;
-                    console.log("count: " + count.value);
+                    console.log("courseCount: " + count.value);
                 }).error(function () {
-            console.log("count: error");
+            console.log("courseCount: error");
         });
 
         getRange();
-//        $scope.$watch('currentPage', function() {
-//            getRange();
-//        });
+        $scope.$watch('currentPage', function() {
+            getRange();
+        });
         function getRange() {
             var fst = $scope.pageSize * $scope.currentPage;
             DBProxy.findRangeCourses(fst, $scope.pageSize)

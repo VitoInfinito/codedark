@@ -24,5 +24,15 @@ and open the template in the editor.
         </tr>
         
     </table>
+    <div class="btn-group">
+        <button class="btn btn-default" ng-disabled="currentPage===0" 
+            ng-click="currentPage = currentPage - 1">
+            Previous
+        </button>
+        <button class="btn btn-group" ng-disabled="currentPage >= count/pageSize-1"
+            ng-click="currentPage = currentPage + 1">
+            Next
+        </button>
+    </div>
    
 </div>
