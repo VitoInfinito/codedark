@@ -433,14 +433,13 @@ public class ForumResource {
         log.log(Level.INFO, "ccode: " + ccode);
         log.log(Level.INFO, "fst: " + fst);
         log.log(Level.INFO, "count: " + count);
-        Course c = courseList.getByCC(ccode);
         log.log(Level.INFO, "1");
         Collection<CourseGroup> groups = new ArrayList<>();
-        List<CourseGroup> oldGroups = groupList.getByCourse(c);
+        List<CourseGroup> oldGroups = groupList.getByCourse(ccode);
         
         int i = fst;
         
-        while(i >= fst && i < fst+count && i < groupList.getByCourse(c).size()){
+        while(i >= fst && i < fst+count && i < groupList.getByCourse(ccode).size()){
             groups.add(oldGroups.get(i));
             i++;
         }
