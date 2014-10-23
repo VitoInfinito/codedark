@@ -49,8 +49,8 @@ dbService.factory('DBProxy', ['$http',
             updateGroup: function(id, object){
                 return $http.put(url + "/group/" + id, object);
             },
-            joinGroup: function(gName, user){
-                return $http.get(url + "/join/" + gName + "/" + user);
+            joinGroup: function(ccode, gName, user){
+                return $http.get(url + "/join/" + ccode + "/"+ gName + "/" + user);
             },
             updateUser: function(object){
                 return $http.put(url + "/user/", object);

@@ -107,9 +107,10 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value = "join/{gName}/{user}")
+    @Path(value = "join/{ccode}/{gName}/{user}")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response joinGroup(@PathParam(value= "gName") String gName){
+    public Response joinGroup(@PathParam(value= "ccode") String ccode, 
+            @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
         log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
         
         

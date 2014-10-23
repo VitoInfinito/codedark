@@ -56,7 +56,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 e.stopPropagation();
                 
                 var user = getCookie("_userssnbr");
-                DBProxy.joinGroup(group.gName, user)
+                DBProxy.joinGroup(group.course.ccode, group.gName, user)
                     .success(function(){
                             
                 });
