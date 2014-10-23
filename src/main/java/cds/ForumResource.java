@@ -294,20 +294,14 @@ public class ForumResource {
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
-        log.log(Level.INFO, "createGroup" + j.getString("course"));
         Course c = courseList.getByCC(j.getString("course"));
-        log.log(Level.INFO, j.getString("course"));
-        log.log(Level.INFO, "2");
         
         String name = j.getString("name");
         
-        log.log(Level.INFO, "3: " + j.getString("user"));
-        log.log(Level.INFO, "3+1: " + Long.parseLong(j.getString("user"), 10));
         GroupUser user = userList.getBySsnbr(Long.parseLong(j.getString("user"),10));
-        log.log(Level.INFO, "4: " + user);
+        
         
         int max = j.getInt("maxNbr");
-        log.log(Level.INFO, "5");
         
         CourseGroup cg = new CourseGroup(c, name, user, max);
         
@@ -392,11 +386,18 @@ public class ForumResource {
         log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
         log.log(Level.INFO, "ccode: " + ccode);
         Course c = courseList.getByCC(ccode);
-        
+        log.log(Level.INFO, "1");
         Collection<CourseGroup> groups = new ArrayList<>();
+        log.log(Level.INFO, "2");
         for(CourseGroup cg: groupList.findAll()){
+            log.log(Level.INFO, "3");
             if(cg.getCourse().equals(c)){
+                log.log(Level.INFO, "4");
                 groups.add(cg);
+                log.log(Level.INFO, "5");
+                log.log(Level.INFO, cg.getgName());
+                log.log(Level.INFO, (cg.getOwner()).toString());
+                
             }
         }
         
@@ -408,7 +409,7 @@ public class ForumResource {
 //        
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
-        
+        log.log(Level.INFO, "1");
         return Response.ok(ge).build();
 //          return Response.ok().build();
     }
