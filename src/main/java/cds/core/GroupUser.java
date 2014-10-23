@@ -84,7 +84,31 @@ public class GroupUser extends AbstractEntity{
     public String toString() {
         return "GroupUser{" + "ssnbr=" + ssnbr + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + ", belongingTo= " + belongingTo.toString() + '}';
     }
-    
 
+    public void setSsnbr(Long ssnbr) {
+        this.ssnbr = ssnbr;
+    }
+
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public void setBelongingTo(List<String> belongingTo) {
+        this.belongingTo = belongingTo;
+    }
+    
+    
 
 }

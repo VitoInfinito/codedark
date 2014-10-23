@@ -66,13 +66,13 @@ public class ForumResource {
     @Path(value = "allGroups")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllGroups() {
-        Collection<CourseGroupWrapper> groups = new ArrayList<>();
+        Collection<CourseGroup> groups = new ArrayList<>();
         Iterator<CourseGroup> it = groupList.findAll().iterator();
         while (it.hasNext()) {
-            groups.add(new CourseGroupWrapper(it.next()));
+            groups.add(it.next());
         }
         
-        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
         return Response.ok(ge).build();
     }
@@ -81,13 +81,13 @@ public class ForumResource {
     @Path(value = "allUsers")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllUsers() {
-        Collection<GroupUserWrapper> users = new ArrayList<>();
+        Collection<GroupUser> users = new ArrayList<>();
         Iterator<GroupUser> it = userList.findAll().iterator();
         while (it.hasNext()) {
-            users.add(new GroupUserWrapper(it.next()));
+            users.add(it.next());
         }
         
-        GenericEntity<Collection<GroupUserWrapper>> ge = new GenericEntity<Collection<GroupUserWrapper>>(users) {
+        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(users) {
         };
         return Response.ok(ge).build();
     }
@@ -110,7 +110,7 @@ public class ForumResource {
     @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") Long id){
-        GroupUserWrapper user = new GroupUserWrapper(userList.getBySsnbr(id));
+        GroupUser user = userList.getBySsnbr(id);
         log.log(Level.INFO, "Found user" + user.getFname() + " " + user.getLname());
         if (user != null) {
             return Response.ok(user).build();
@@ -126,7 +126,7 @@ public class ForumResource {
     public Response findGroup( @PathParam(value= "id")Long id) {
         CourseGroup cg = groupList.find(id);
         if (cg != null) {
-            return Response.ok(new CourseGroupWrapper(cg)).build();
+            return Response.ok(cg).build();
         } else {
             return Response.noContent().build();
         }
@@ -146,25 +146,25 @@ public class ForumResource {
         }
     }
     
-    @GET
-    @Path(value = "groups/{ccode}")
-    @Produces(value={MediaType.APPLICATION_JSON})
-    public Response findGroups(@PathParam(value= "ccode") String ccode) {
-        log.log(Level.INFO, "JAG ÄR I FINDGROUPS");
-        log.log(Level.INFO, ccode);
-        Course c = courseList.getByCC(ccode);
-    
-        Collection<CourseGroupWrapper> groups = new ArrayList<>();
-        for(CourseGroup g: groupList.findAll()){
-            if(g.getCourse().equals(c)){
-                groups.add(new CourseGroupWrapper(g));
-            }
-        }
-        
-        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
-        };
-        return Response.ok(ge).build();
-    }    
+//    @GET
+//    @Path(value = "groups/{ccode}")
+//    @Produces(value={MediaType.APPLICATION_JSON})
+//    public Response findGroups(@PathParam(value= "ccode") String ccode) {
+//        log.log(Level.INFO, "JAG ÄR I FINDGROUPS");
+//        log.log(Level.INFO, ccode);
+//        Course c = courseList.getByCC(ccode);
+//    
+//        Collection<CourseGroupWrapper> groups = new ArrayList<>();
+//        for(CourseGroup g: groupList.findAll()){
+//            if(g.getCourse().equals(c)){
+//                groups.add(new CourseGroupWrapper(g));
+//            }
+//        }
+//        
+//        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
+//        };
+//        return Response.ok(ge).build();
+//    }    
 
     @GET
     @Path(value = "countGroups/{ccode}")
@@ -263,11 +263,12 @@ public class ForumResource {
             CourseGroup cg = new CourseGroup(id, c, name, list, cg1.getOwner());
             groupList.update(cg);
             // Convert old to HTTP response
-            return Response.ok(new CourseGroupWrapper(cg)).build();
+            return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
     @PUT
     @Path(value = "course/{id}")
     @Consumes(value = {MediaType.APPLICATION_JSON})
@@ -299,7 +300,7 @@ public class ForumResource {
             String admin = j.getString("admin");
 
             GroupUser updatedUser = new GroupUser(id, ssnbr, email, pwd, fname, lname, admin.equals("admin"));
-            return Response.ok(new GroupUserWrapper(updatedUser)).build();
+            return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -308,17 +309,15 @@ public class ForumResource {
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
-        log.log(Level.INFO, "createGroup" + j.getString("course"));
         Course c = courseList.getByCC(j.getString("course"));
-        log.log(Level.INFO, j.getString("course"));
-        log.log(Level.INFO, "2");
+        
         String name = j.getString("name");
-        log.log(Level.INFO, "3: " + j.getString("user"));
-        log.log(Level.INFO, "3+1: " + Long.parseLong(j.getString("user"), 10));
+        
         GroupUser user = userList.getBySsnbr(Long.parseLong(j.getString("user"),10));
-        log.log(Level.INFO, "4: " + user);
+        
+        
         int max = j.getInt("maxNbr");
-        log.log(Level.INFO, "5");
+        
         CourseGroup cg = new CourseGroup(c, name, user, max);
         
         log.log(Level.INFO, c.toString());
@@ -405,17 +404,32 @@ public class ForumResource {
         log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
         log.log(Level.INFO, "ccode: " + ccode);
         Course c = courseList.getByCC(ccode);
-//        Collection<CourseGroupWrapper> groups = new ArrayList<>();
-//        Iterator<CourseGroup> it = groupList.findRange(fst, count).iterator();
+        log.log(Level.INFO, "1");
+        Collection<CourseGroup> groups = new ArrayList<>();
+        log.log(Level.INFO, "2");
+        for(CourseGroup cg: groupList.findAll()){
+            log.log(Level.INFO, "3");
+            if(cg.getCourse().equals(c)){
+                log.log(Level.INFO, "4");
+                groups.add(cg);
+                log.log(Level.INFO, "5");
+                log.log(Level.INFO, cg.getgName());
+                log.log(Level.INFO, (cg.getOwner()).toString());
+                
+            }
+        }
+        
+//        Iterator<CourseGroup> it = groups.findRange(fst, count).iterator();
 //        while(it.hasNext()) {
 //            CourseGroup g = it.next();
-//            groups.add(new CourseGroupWrapper(g));
+//            groups.add(g);
 //        }
 //        
-//        GenericEntity<Collection<CourseGroupWrapper>> ge = new GenericEntity<Collection<CourseGroupWrapper>>(groups) {
-//        };
-//        return Response.ok(ge).build();
-          return Response.ok().build();
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        };
+        log.log(Level.INFO, "1");
+        return Response.ok(ge).build();
+//          return Response.ok().build();
     }
     
     @GET
@@ -438,14 +452,14 @@ public class ForumResource {
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        Collection<GroupUserWrapper> user = new ArrayList<>();
+        Collection<GroupUser> user = new ArrayList<>();
         Iterator<GroupUser> it = userList.findRange(fst, count).iterator();
         while(it.hasNext()) {
             GroupUser gu = it.next();
-            user.add(new GroupUserWrapper(gu));
+            user.add(gu);
         }
         
-        GenericEntity<Collection<GroupUserWrapper>> ge = new GenericEntity<Collection<GroupUserWrapper>>(user) {
+        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(user) {
         };
         return Response.ok(ge).build();
     }

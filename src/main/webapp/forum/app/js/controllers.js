@@ -54,12 +54,12 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 });
                 
                 //GETRANGE
-                getRange();
+                getRangeGroups();
         
 //                $scope.$watch('currentPage', function() {
 //                    getRange();
 //                });
-                function getRange(){
+                function getRangeGroups(){
                     var fst = $scope.currentPage * $scope.pageSize;
                     DBProxy.findRangeGroups($scope.course.ccode, fst, $scope.pageSize)
                         .success(function(groups){
