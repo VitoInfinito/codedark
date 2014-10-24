@@ -43,7 +43,7 @@ and open the template in the editor.
                             <td>{{member.fname}} {{member.lname}}</td>
                         </tr>
                     </table>
-                    <button ng-click="$parent.group.join($event, group)">Join</button>
+                    <button ng-click="members = $parent.group.join($event, group)">Join</button>
                 </div>
             </td>
 
