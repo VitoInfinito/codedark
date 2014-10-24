@@ -37,7 +37,7 @@ and open the template in the editor.
             <td>{{group.gName}}</td>
             
             <td>{{group.members.length}}/{{group.maxNbr}}
-                <div id="toggleable{{group.gName}}" hidden>
+                <div id="toggleable{{group.id.value}}" hidden>
                     <table class="table">
                         <tr ng-repeat="member in members">
                             <td>{{member.fname}} {{member.lname}}</td>
