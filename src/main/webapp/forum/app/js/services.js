@@ -28,6 +28,9 @@ dbService.factory('DBProxy', ['$http',
             searchInUsers: function(search) {
                 return $http.get(url + "/users/search?searchfield=" + search);
             },
+            searchInGroups: function(search) {
+                return $http.get(url + "/groups/search?searchfield=" + search);
+            },
             findRangeCourses: function(first, count) {
                 return $http.get(url + "/courses/range?fst=" + first + "&count=" + count);
             },
