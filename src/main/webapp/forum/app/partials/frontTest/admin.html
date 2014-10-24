@@ -7,7 +7,8 @@ and open the template in the editor.
 <div id="input" style="margin-bottom: 20px">
     <div class="top">
         <h1 style="text-align: center">Almighty Admin</h1>
-
+    </div>
+    <div class="row">
         <hr>
         <div class="col-md-6">
              <h3>Add new course</h3>
@@ -17,7 +18,7 @@ and open the template in the editor.
                 <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
             </div>
 
-            <button class="btn btn-default" ng-click="course.createNewCourse()">Add course</button>
+            <button class="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
             <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape All Courses</button>
             </form>
             <br>
@@ -28,15 +29,17 @@ and open the template in the editor.
             <h3>Add new Group</h3>
              <form role="form">
              <div class="form-group">
-                <input type="text" class="form-control" ng-model="group.owner" placeholder="Course Code" />
-                <input type="text" class="form-control" ng-model="group.name" placeholder="Name" />
+                <input type="text" class="form-control" ng-model="group.owner.id.value" placeholder="Owner UserName" />
+                <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" />
+                <input type="number" class="form-control" ng-model="group.maxNbr" placeholder="Max number of members" />
+                <input type="text" class="form-control" ng-model="group.course" placeholder="Course" />
             </div>
 
-            <button class="btn btn-default" ng-click="course.createNewCourse()">Add course</button>
+            <button class="btn btn-default" ng-click="group.createNewGroup()">Create Group</button>
             </form>
             <br>
             <!--TODO: Change to class -->
-            <span ng-bind="course.status" style="color:green"></span>
+            <span ng-bind="group.status" style="color:green"></span>
         </div>
         <hr>
     </div>
@@ -45,7 +48,7 @@ and open the template in the editor.
 
 
     <div class="row">
-
+        <hr>
         <div class="col-md-6 adminTableWrapper">
             <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search Course"/>
             <table class="table">
