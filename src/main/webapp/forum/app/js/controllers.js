@@ -120,6 +120,8 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
                             console.log($location.path("/index"));
+                            $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
+//                            console.log($location.path());
                             // console.log($location.path());
                             // $location.path('/index').replace();
                             // $scope.$apply();
