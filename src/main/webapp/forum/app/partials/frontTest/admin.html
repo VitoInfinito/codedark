@@ -31,7 +31,7 @@ and open the template in the editor.
              <div class="form-group">
                 <input type="text" class="form-control" ng-model="group.owner.id.value" placeholder="Owner UserName" />
                 <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" />
-                <input type="number" class="form-control" ng-model="group.maxNbr" placeholder="Max number of members" />
+                <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" />
                 <input type="text" class="form-control" ng-model="group.course" placeholder="Course" />
             </div>
 
@@ -50,10 +50,10 @@ and open the template in the editor.
     <div class="row">
         <hr>
         <div class="col-md-6 adminTableWrapper">
-            <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search Course"/>
+            
             <table class="table">
                 <thead><h3>List of all users</h3></thead>
-
+                <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search User"/>
                 <tbody>
                     <tr ng-repeat="user in users" >
                         <td>{{user.fname}} {{user.lname}} {{user.id.value}}</td>
@@ -67,8 +67,9 @@ and open the template in the editor.
 
 
         <div class="col-md-6">
-            <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
+            
             <h3>List of all Courses</h3>
+            <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
             <div class="adminTableWrapper">
                 <!-- <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>-->
                 <table class="table">
@@ -90,8 +91,9 @@ and open the template in the editor.
     <div class="row">
 
         <div class="col-md-6">
-            <input type="text" class="form-control input-sign" ng-change="group.search()" ng-value="" ng-model="group.searchfield" placeholder="Search Group"/>
+            
             <h3>List of all Groups</h3>
+            <input type="text" class="form-control input-sign" ng-change="group.search()" ng-value="" ng-model="group.searchfield" placeholder="Search Group"/>
             <div class="adminTableWrapper">
                 <table class="table">
                     <tbody>

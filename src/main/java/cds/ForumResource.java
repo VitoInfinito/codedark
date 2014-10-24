@@ -108,10 +108,10 @@ public class ForumResource {
     }
     
     @PUT
-    @Path(value = "join/{ccode}/{gName}/{user}")
+    @Path(value = "join")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response joinGroup(@PathParam(value= "ccode") String ccode, 
-            @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
+    public Response joinGroup(@QueryParam(value= "ccode") String ccode, 
+            @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
         log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
 

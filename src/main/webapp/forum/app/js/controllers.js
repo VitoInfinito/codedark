@@ -55,13 +55,14 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 console.log('Join! ' + group.gName);
                 e.stopPropagation();
 
+                //NEEDS FIXING - DOESN'T KEEP UPDATE & LENGTHPROBLEM
                 var user = getCookie("_userssnbr");
                 DBProxy.joinGroup(group.course.id.value, group.gName, user)
                         .success(function (group) {
                            console.log("New members: " + group.members);
                            console.log("Old members: " + $scope.members);
                            $scope.members = group.members;
-                           
+                           updateMemberNbr($scope.members);
                         });
             },
             updateMemberNbr: function(members){
