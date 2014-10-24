@@ -339,7 +339,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         
         var searchUserTimeout;
         var getUsers = function() {
-            DBProxy.findAllUsers()
+            DBProxy.searchInUsers($scope.user.searchfield)
                     .success(function (users) {
                         $scope.users = users;
                     }).error(function () {
@@ -351,10 +351,9 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         var getCourses = function() {
             DBProxy.searchInCourses($scope.course.searchfield)
                     .success(function (courses) {
-                        console.log(JSON.stringify(courses));
                         $scope.courses = courses;
                     }).error(function () {
-                console.log("findAllUsers: error");
+                console.log("findSearchedCourses: error");
             });
         };
 
@@ -386,7 +385,8 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         $scope.user = {
             searchfield: "",
             search: function() {
-                
+                clearTimeout(searchUserTimeout);
+                searchUserTimeout = setTimeout(getUsers, delay);
             }
         };
         

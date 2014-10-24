@@ -462,19 +462,18 @@ public class ForumResource {
     public Response searchInUsers(@QueryParam(value = "searchfield") String search) {
         search = search.toLowerCase();
         log.log(Level.INFO, "Searching users with search: " + search);
-        /*Collection<Course> courses = new ArrayList<>();
-        Iterator<Course> it = courseList.findAll().iterator();
+        Collection<GroupUser> users = new ArrayList<>();
+        Iterator<GroupUser> it = userList.findAll().iterator();
         while(it.hasNext()) {
-            Course c = it.next();
-            if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search))) {
-                courses.add(c);
+            GroupUser u = it.next();
+            if((u.getFname().toLowerCase().contains(search) || u.getLname().toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getSsnbr().toString().contains(search))) {
+                users.add(u);
             }
         }
         
-        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
+        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(users) {
         };
-        return Response.ok(ge).build();*/
-        return Response.ok().build();
+        return Response.ok(ge).build();
     }
     
     @GET
