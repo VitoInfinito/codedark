@@ -397,7 +397,9 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 
 controllers.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
-        
+        $scope.user = {
+            
+        };
     }]);
 
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
