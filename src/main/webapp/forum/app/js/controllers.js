@@ -103,6 +103,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
 
+               
         var wlh = window.location.hash;
         DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
                 .success(function (course) {
@@ -117,7 +118,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
-                            console.log($location.path("/index"));
+//                            console.log($location.path("/index"));
                             $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
 //                            console.log($location.path());
                             // console.log($location.path());

@@ -28,7 +28,6 @@ public class CourseGroup extends AbstractEntity<Long> {
     private Course course;
     @Column(nullable = false)
     private String gName;
-    
     private int maxNbr;
     
     public CourseGroup(){}

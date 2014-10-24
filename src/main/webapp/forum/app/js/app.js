@@ -48,7 +48,7 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/addCourse.html',
                     controller: 'CourseController'
                 }).
-                when('/course/:ccode/newgroup', {
+                when('/course/:id/newgroup', {
                     templateUrl: 'partials/group/addGroup.html',
                     controller: 'GroupAddController'
                 }).
