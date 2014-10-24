@@ -362,11 +362,11 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         var getGroups = function() {
             DBProxy.searchInGroups($scope.group.searchfield)
                     .success(function (groups){
-                        $scope.group = group;
+                        $scope.groups = groups;
             }).error(function () {
                 console.log("findSearchedGroups: error");
-            })
-        }
+            });
+        };
         $scope.course = {
             searchfield: "",
             createNewCourse: function () {
@@ -395,10 +395,13 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         $scope.group = {
             searchfield: "",
             search: function() {
+                
+                console.log("groupsearch");
                 clearTimeout(searchGroupTimeout);
                 searchGroupTimeout = setTimeout(getGroups, delay);
             }
-        }
+        };
+        
         $scope.user = {
             searchfield: "",
             search: function() {
@@ -409,6 +412,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         
         getUsers();
         getCourses();
+        getGroups();
     }]);
 
 controllers.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'DBProxy',
@@ -483,7 +487,7 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
                 });
             },
             delete: function () {
-                DBProxy.deleteUser
+                //DBProxy.deleteUser
             }
         };
 

@@ -466,7 +466,8 @@ public class ForumResource {
         Iterator<GroupUser> it = userList.findAll().iterator();
         while(it.hasNext()) {
             GroupUser u = it.next();
-            if((u.getFname().toLowerCase().contains(search) || u.getLname().toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getSsnbr().toString().contains(search))) {
+            String lAndFName = u.getFname() + " " + u.getLname();
+            if(lAndFName.toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getSsnbr().toString().contains(search)) {
                 users.add(u);
             }
         }
@@ -476,6 +477,25 @@ public class ForumResource {
         return Response.ok(ge).build();
     }
     
+    @GET
+    @Path(value = "groups/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInGroups(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching users with search: " + search);
+        Collection<CourseGroup> groups = new ArrayList<>();
+        Iterator<CourseGroup> it = groupList.findAll().iterator();
+        while(it.hasNext()) {
+            CourseGroup g = it.next();
+            if(g.getgName().toLowerCase().contains(search) || g.getCourse().getCcode().toLowerCase().contains(search) || g.getCourse().getName().toLowerCase().contains(search)) {
+                groups.add(g);
+            }
+        }
+        
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        };
+        return Response.ok(ge).build();
+    }
     @GET
     @Path(value = "groups/{ccode}/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
