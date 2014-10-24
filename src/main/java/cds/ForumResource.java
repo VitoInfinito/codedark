@@ -405,7 +405,7 @@ public class ForumResource {
     }
             
     @GET
-    @Path(value = "courses/search")
+    @Path(value = "courses/searchWithRange")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInCoursesWithRange(@QueryParam(value = "searchfield") String search, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         search = search.toLowerCase();
@@ -416,6 +416,7 @@ public class ForumResource {
         while(it.hasNext() && count > 0) {
             Course c = it.next();
             if((c.getId().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) && counter++ >= fst) {
+
                 courses.add(c);
                 count--;
             }
@@ -427,14 +428,71 @@ public class ForumResource {
     }
     
     @GET
+    @Path(value = "courses/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInCourses(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching courses with search: " + search);
+        Collection<Course> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
+        while(it.hasNext()) {
+            Course c = it.next();
+            if((c.getId().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search))) {
+                courses.add(c);
+            }
+        }
+        
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
+        };
+        return Response.ok(ge).build();
+    }
+    
+    @GET
+    @Path(value = "users/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInUsers(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching users with search: " + search);
+        Collection<GroupUser> users = new ArrayList<>();
+        Iterator<GroupUser> it = userList.findAll().iterator();
+        while(it.hasNext()) {
+            GroupUser u = it.next();
+            String lAndFName = u.getFname() + " " + u.getLname();
+            if(lAndFName.toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getId().toString().contains(search)) {
+                users.add(u);
+            }
+        }
+        
+        GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(users) {
+        };
+        return Response.ok(ge).build();
+    }
+    
+    @GET
+    @Path(value = "groups/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInGroups(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching users with search: " + search);
+        Collection<CourseGroup> groups = new ArrayList<>();
+        Iterator<CourseGroup> it = groupList.findAll().iterator();
+        while(it.hasNext()) {
+            CourseGroup g = it.next();
+            if(g.getgName().toLowerCase().contains(search) || g.getCourse().getId().toLowerCase().contains(search) || g.getCourse().getName().toLowerCase().contains(search)) {
+                groups.add(g);
+            }
+        }
+        
+        GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
+        };
+        return Response.ok(ge).build();
+    }
+    @GET
     @Path(value = "groups/{ccode}/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
-        log.log(Level.INFO, "ccode: " + ccode);
-        log.log(Level.INFO, "fst: " + fst);
-        log.log(Level.INFO, "count: " + count);
-        log.log(Level.INFO, "1");
+        
         Collection<CourseGroup> groups = new ArrayList<>();
         List<CourseGroup> oldGroups = groupList.getByCourse(ccode);
         
@@ -485,7 +543,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value= "{user}/groups")
+    @Path(value= "groups/{ssnbr}")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserGroups(@PathParam("id") String id){
         List<CourseGroup> groups = groupList.getByUser(id);

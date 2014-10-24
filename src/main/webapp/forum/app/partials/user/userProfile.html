@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div id="input">
+    
+    <div class="top">
+        <h2>Profile</h2>
+    
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6 adminTableWrapper">
+            <h3>{{user.fname}} {{user.lname}}</h3>
+            pretty picture
+            <br>
+            pretty picture
+            <br>
+            pretty picture
+            <br>
+            pretty picture
+            <br>
+            pretty picture
+            <br>
+        </div>
+        <div class="col-md-6 adminTableWrapper">
+            <table class="table">
+                <thead><h3>List of groups</h3></thead>
+                <thead>
+                    <td>Group</td>
+                    <td>Course</td>
+                    <td>Members</td>
+                </thead>
+                <tbody>
+                    <tr class ="selectableCourse" 
+                        id="collapsible"
+                        ng-repeat="group in groups" 
+                        ng-click="$parent.group.toggle(group)">
+                        <td>{{group.gName}}</td>
+                        <td>{{group.course.id}}</td>
+                        <td>?/{{group.maxNbr}}
+                            <div id="toggleable{{group.gName}}" hidden>
+                                <table class="table">
+                                    <tr ng-repeat="member in members">
+                                    <td>{{member.fname}} {{member.lname}}</td>
+                                    </tr>
+                                </table>  
+                           </div>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="col-md-6 adminTableWrapper">
+            <h3>User Information</h3>
+            <h5>First name: {{user.fname}}
+                <br>
+                Last name: {{user.lname}}
+                <br>
+                Email address: {{user.email}}
+                <br>
+                About: x
+                <br>
+            </h5
+            <div class="form-group">
+                <button ng-controller="NavigationCtrl" ng-click="navigate('/editUserProfile')" class="btn btn-default">Add presentation</button>
+            </div>
+        </div>        
+    </div>
+    
+</div>
+
