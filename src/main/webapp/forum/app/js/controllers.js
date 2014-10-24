@@ -427,25 +427,19 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
 
 controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
-        function test() {
-            console.log(6);
-        }
         $scope.test3 = function () {
-            console.log(8);
+
             console.log($scope.course);
         };
 
         console.log(1);
         $scope.courseEdit = {
-            test2: function () {
-                console.log(7);
-            },
             update: function () {
                 console.log('Inside course.update() in AdminController');
                 DBProxy.updateCourse($scope.course)
                         .success(function () {
                             alert('Updated!');
-                            console.log('Updated ' + $scope.course.ccode);
+                            console.log('Updated ' + $scope.course.id.value);
                             $location.path('/hemligasidan');
                         }).error(function () {
                     console.log("updateUser: error");
@@ -461,7 +455,7 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
         DBProxy.findCourse(wlh.substring(26))
                 .success(function (course) {
                     $scope.course = course;
-                    console.log('Editing ' + $scope.course.ccode);
+                    console.log('Editing ' + $scope.course.id.value);
                 });
 
         DBProxy.isAdmin(getCookie("_userssnbr"))

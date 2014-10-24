@@ -26,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -282,7 +283,13 @@ public class ForumResource {
         try{
             log.log(Level.INFO, "Updating course" + j);
             String name = j.getString("name");
-            String id = j.getString("id");
+            log.log(Level.INFO, "JSON: " + j.toString());
+            
+
+            
+            String id = j.getJsonObject("id").getString("value");
+            
+            //String id = j.getString("id.value");
             log.log(Level.INFO, "Updating id: " + id);
             Course updatedCourse = new Course(id, name);
             log.log(Level.INFO, "updatedCourse: " + updatedCourse);
