@@ -1,11 +1,6 @@
 'use strict';
 
 
-
-/*
- * Controllers
- */
-
 var setCookie = function (cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -26,7 +21,12 @@ var getCookie = function (cname) {
     return "";
 };
 
-var newlyLoggedIn = false;
+var newlyLoggedIn = true;
+var delay = 300;
+
+/*
+ * Controllers
+ */
 
 var controllers = angular.module('Controllers', []);
 
@@ -146,11 +146,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.course = {
             search: function () {
                 clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(function () {
-                    $scope.currentPage = 0;
-                    getRange();
-                }, 500);
-
+                searchTimeout = setTimeout(function() {$scope.currentPage = 0; getRange();}, delay);
             },
             select: function (course) {
                 $location.path('/course/' + course);
@@ -178,7 +174,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.$watch('currentPage', function () {
             getRange();
         });
-        function getRange() {
+        var getRange = function() {
             var fst = $scope.pageSize * $scope.currentPage;
             DBProxy.searchInCoursesWithRange($scope.course.searchfield, fst, $scope.pageSize)
                     .success(function (courses) {
@@ -221,7 +217,6 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
 
         $scope.menu = {
             isAdmin: function () {
-                console.log("Admin: " + admin);
                 if(newlyLoggedIn) {
                     checkIfAdmin();
                     newlyLoggedIn = false;
@@ -302,6 +297,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
     }]);
 controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
+        
+        $scope.count = 0;
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
                 .success(function () {
@@ -339,8 +336,39 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                         console.log("Error when adding" + course.cc);
                     });
         };
+        
+        
+        var searchUserTimeout;
+        var getUsers = function() {
+            DBProxy.searchInUsers($scope.user.searchfield)
+                    .success(function (users) {
+                        $scope.users = users;
+                    }).error(function () {
+                console.log("findAllUsers: error");
+            });
+        };
 
+        var searchCourseTimeout;
+        var getCourses = function() {
+            DBProxy.searchInCourses($scope.course.searchfield)
+                    .success(function (courses) {
+                        $scope.courses = courses;
+                    }).error(function () {
+                console.log("findSearchedCourses: error");
+            });
+        };
+        
+        var searchGroupTimeout;
+        var getGroups = function() {
+            DBProxy.searchInGroups($scope.group.searchfield)
+                    .success(function (groups){
+                        $scope.groups = groups;
+            }).error(function () {
+                console.log("findSearchedGroups: error");
+            });
+        };
         $scope.course = {
+            searchfield: "",
             createNewCourse: function () {
                 var newCourse = {
                     cc: $scope.course.ccode,
@@ -357,30 +385,34 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     console.log('Could not create course ' + $scope.course.ccode);
                 });
 
+            },
+            search: function() {
+                clearTimeout(searchCourseTimeout);
+                searchCourseTimeout = setTimeout(getCourses, delay);
             }
-
         };
-
+        
+        $scope.group = {
+            searchfield: "",
+            search: function() {
+                
+                console.log("groupsearch");
+                clearTimeout(searchGroupTimeout);
+                searchGroupTimeout = setTimeout(getGroups, delay);
+            }
+        };
+        
+        $scope.user = {
+            searchfield: "",
+            search: function() {
+                clearTimeout(searchUserTimeout);
+                searchUserTimeout = setTimeout(getUsers, delay);
+            }
+        };
+        
         getUsers();
-        function getUsers() {
-            DBProxy.findAllUsers()
-                    .success(function (users) {
-                        $scope.users = users;
-                    }).error(function () {
-                console.log("findAllUsers: error");
-            });
-        }
-
         getCourses();
-        function getCourses() {
-            DBProxy.findAllCourses()
-                    .success(function (courses) {
-                        $scope.courses = courses;
-                    }).error(function () {
-                console.log("findAllCourses: error");
-            });
-        }
-
+        getGroups();
 
     }]);
 
@@ -429,7 +461,9 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
         $scope.userEdit = {
             update: function () {
                 console.log('Inside user.update() in AdminController');
-                //TODO: Possible the wrong order
+                if(typeof $scope.user.admin === 'undefined') {
+                    $scope.user.admin = "";
+                }
                 DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');
@@ -484,7 +518,7 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
                 });
             },
             delete: function () {
-                DBProxy.deleteUser
+                //DBProxy.deleteUser
             }
         };
 
