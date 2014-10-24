@@ -112,8 +112,6 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
         DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
                 .success(function (course) {
                     $scope.course = course;
-
-//                alert($scope.course.name);
                 });
 
         $scope.group = {
@@ -171,13 +169,6 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             },
             searchfield: ""
         };
-
-//           DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-//         DBProxy.createCourse({cc:'222', name:'SecCourse'});
-//         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-//         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
-//         DBProxy.createCourse({cc:'555', name:'FifthCourse'});
-
 
         DBProxy.countCourses()
                 .success(function (count) {
