@@ -41,7 +41,8 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
 controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
 
-
+        $scope.pageSize = '5';
+        $scope.currentPage = 0;
 
         $scope.group = {
             toggle: function (group) {
@@ -56,49 +57,45 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 var user = getCookie("_userssnbr");
                 DBProxy.joinGroup(group.course.id.value, group.gName, user)
                         .success(function (group) {
-                            $scope.group = group;
-                            $scope.group.members = group.members;
-                            console.log($scope.group);
+                           console.log(group.members);
+                           return group.members;
                         });
             }
+        };
+        
+        var getRangeGroups = function() {
+            var fst = $scope.currentPage * $scope.pageSize;
+            DBProxy.findRangeGroups($scope.course.id.value, fst, $scope.pageSize)
+                    .success(function (groups) {
+                        $scope.groups = groups;
+                        console.log("groups: " + groups);
+                    }).error(function () {
+                console.log("findRangeGroups: error");
+            });
         };
 
         DBProxy.findCourse(window.location.hash.substring(9))
                 .success(function (course) {
                     $scope.course = course;
-
-                    $scope.pageSize = '5';
-                    $scope.currentPage = 0;
-
-                    //COUNT
+                    getRangeGroups();
+                    //Updating count of total groups of course in database
                     DBProxy.countGroups($scope.course.id.value)
                             .success(function (count) {
                                 $scope.count = count.value;
                                 console.log("groupCount: " + count.value);
+                                $scope.$watch('currentPage', function () {
+                                    getRangeGroups();
+                                });
                             }).error(function () {
                         console.log("groupCount: error");
                     });
-
-                    //GETRANGE
-                    getRangeGroups();
-
-                    $scope.$watch('currentPage', function () {
-                        getRangeGroups();
-                    });
-                    function getRangeGroups() {
-                        var fst = $scope.currentPage * $scope.pageSize;
-                        DBProxy.findRangeGroups($scope.course.id.value, fst, $scope.pageSize)
-                                .success(function (groups) {
-                                    $scope.groups = groups;
-                                    console.log("groups: " + groups);
-                                }).error(function () {
-                            console.log("findRangeGroups: error");
-                        });
-                    }
-
+                }).error(function() {
+                    console.log("Error when finding course");
                 });
 
+        
 
+        
     }]);
 
 controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
@@ -237,21 +234,21 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
                 return getCookie("_username");
             },
             getBreadcrumb: function () {
-                var cbc = window.location.hash.substring(2);
-                if (cbc === "course") {
+                var cbc = $location.url();
+                if (cbc === "/course") {
                     return "";
-                } else if (cbc.substring(0, 7) === "course/") {
+                } else if (cbc.substring(0, 8) === "course/") {
                     if (endsWith(cbc, createGroupRef)) {
-                        return cbc.substring(7, cbc.length - createGroupRef.length);
+                        return cbc.substring(8, cbc.length - createGroupRef.length);
                     } else {
-                        return cbc.substring(7);
+                        return cbc.substring(8);
                     }
                 } else {
-                    return cbc;
+                    return cbc.substring(1);
                 }
             },
             showBreadcrumb: function () {
-                return window.location.hash.substring(2) !== "course";
+                return $location.url() !== "/course";
             }
         };
         var createGroupRef = "/newgroup";
