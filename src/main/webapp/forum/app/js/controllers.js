@@ -48,11 +48,6 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 console.log("in toggle group");
                 console.log("gName of clicked group: " + group.gName);
                 $('#toggleable' + group.gName).collapse('toggle');
-
-//                DBProxy.findMembers(group.gName)
-//                        .success(function(members){
-//                        console.log("Found members: " + members);
-//                });
                 $scope.members = group.members;
             },
             join: function (e, group) {
@@ -112,8 +107,6 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
         DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
                 .success(function (course) {
                     $scope.course = course;
-
-//                alert($scope.course.name);
                 });
 
         $scope.group = {
@@ -124,7 +117,9 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
-                            console.log($location.path());
+                            console.log($location.path("/index"));
+                            $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
+//                            console.log($location.path());
                             // console.log($location.path());
                             // $location.path('/index').replace();
                             // $scope.$apply();
@@ -170,13 +165,6 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             },
             searchfield: ""
         };
-
-//           DBProxy.createCourse({cc:'111', name:'FirstCourse'});
-//         DBProxy.createCourse({cc:'222', name:'SecCourse'});
-//         DBProxy.createCourse({cc:'333', name:'ThirdCourse'});
-//         DBProxy.createCourse({cc:'444', name:'FourthCourse'});  
-//         DBProxy.createCourse({cc:'555', name:'FifthCourse'});
-
 
         DBProxy.countCourses()
                 .success(function (count) {
