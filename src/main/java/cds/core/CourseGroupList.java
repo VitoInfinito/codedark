@@ -55,4 +55,18 @@ public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements I
         }
         return found;
     }
+    
+    @Override
+    public List<CourseGroup> getByUser(Long ssNbr){
+        List<CourseGroup> found = new ArrayList<>();
+        for(CourseGroup g : findRange(0, count())){
+            for(GroupUser u: g.getMembers()){
+                if(u.getSsnbr().equals(ssNbr)){
+                    found.add(g);
+                }
+            }
+        }
+        
+        return found;
+    }
 }

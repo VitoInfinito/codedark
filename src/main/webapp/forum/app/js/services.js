@@ -46,6 +46,9 @@ dbService.factory('DBProxy', ['$http',
             findGroups: function(ccode){
                 return $http.get(url + "/groups/" + ccode);
             },
+            findUserGroups: function(id){
+                return $http.get(url + id + "/groups/");
+            },
             findUser: function(id){
                 return $http.get(url + "/user/" + id);
             },
@@ -56,7 +59,7 @@ dbService.factory('DBProxy', ['$http',
                 return $http.put(url + "/group/" + id, object);
             },
             joinGroup: function(ccode, gName, user){
-                return $http.get(url + "/join/" + ccode + "/"+ gName + "/" + user);
+                return $http.put(url + "/join/" + ccode + "/"+ gName + "/" + user);
             },
             updateUser: function(object){
                 return $http.put(url + "/user/", object);
