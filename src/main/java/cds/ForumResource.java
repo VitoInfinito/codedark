@@ -323,25 +323,24 @@ public class ForumResource {
     @Path(value = "group")
     public Response createGroup(JsonObject j){
         log.log(Level.INFO, "INUTI CREATEGROUP");
-        Course c = courseList.getById(j.getString("course"));
-        
+        Course c = courseList.find(j.getString("course"));
         String name = j.getString("name");
-        
-        GroupUser user = userList.getById(j.getString("user"));
-        
+        GroupUser user = userList.find(j.getString("user"));
         int max = j.getInt("maxNbr");
-        log.log(Level.INFO, ""+groupList.getByNameAndCourse(name, c.getId()));
+        
+        //Check if group already exists
+        log.log(Level.INFO, "Ska va null: "+groupList.getByNameAndCourse(name, c.getId()));
         if(groupList.getByNameAndCourse(name, c.getId()) != null){
             return Response.status(Response.Status.CONFLICT).build();
         }
         
         CourseGroup cg = new CourseGroup(c, name, user, max);
-        
-        log.log(Level.INFO, c.toString());
-        log.log(Level.INFO, name);
-        log.log(Level.INFO, user.toString());
-        log.log(Level.INFO, "" + max);
-        log.log(Level.INFO, cg.toString());
+//        log.log(Level.INFO, cg.toString());
+          log.log(Level.INFO, cg.getCourse().toString());
+          log.log(Level.INFO, cg.getgName());
+          log.log(Level.INFO, cg.getOwner().toString());
+          log.log(Level.INFO, cg.getMembers().toString());
+
         
         try {  
             groupList.create(cg);
@@ -350,6 +349,7 @@ public class ForumResource {
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+//        return Response.ok().build();
     }
     
     @POST

@@ -70,7 +70,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                     $scope.currentPage = 0;
 
                     //COUNT
-                    DBProxy.countGroups($scope.course.ccode)
+                    DBProxy.countGroups($scope.course.id.value)
                             .success(function (count) {
                                 $scope.count = count.value;
                                 console.log("groupCount: " + count.value);
@@ -86,7 +86,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                     });
                     function getRangeGroups() {
                         var fst = $scope.currentPage * $scope.pageSize;
-                        DBProxy.findRangeGroups($scope.course.ccode, fst, $scope.pageSize)
+                        DBProxy.findRangeGroups($scope.course.id.value, fst, $scope.pageSize)
                                 .success(function (groups) {
                                     $scope.groups = groups;
                                     console.log("groups: " + groups);
@@ -113,7 +113,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
         $scope.group = {
             createGroup: function () {
                 $scope.group.user = getCookie("_userssnbr");
-                $scope.group.course = $scope.course.ccode;
+                $scope.group.course = $scope.course.id.value;
                 var cc = $scope.group.course;
                 DBProxy.createGroup($scope.group)
                         .success(function () {
