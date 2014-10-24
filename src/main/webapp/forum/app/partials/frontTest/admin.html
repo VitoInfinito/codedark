@@ -20,8 +20,8 @@ and open the template in the editor.
                 <thead> <h3>List of all users</h3></thead>
                 <tbody>
                     <tr ng-repeat="user in users" >
-                        <td>{{user.fname}} {{user.lname}} {{user.ssnbr}}</td>
-                        <td><a href="#/hemligasidan/editUser/{{user.ssnbr}}">Edit User</a></td>
+                        <td>{{user.fname}} {{user.lname}} {{user.id.value}}</td>
+                        <td><a href="#/hemligasidan/editUser/{{user.id.value}}">Edit User</a></td>
                     </tr>
                 </tbody>
 
@@ -35,8 +35,8 @@ and open the template in the editor.
                 <thead> <h3>List of all Courses</h3></thead>
                 <tbody>
                     <tr ng-repeat="course in courses" >
-                        <td>{{course.ccode}} {{course.name}}</td>
-                        <td><a href="#/hemligasidan/editCourse/{{course.ccode}}">Edit</a></td>
+                        <td>{{course.id.value}} {{course.name}}</td>
+                        <td><a href="#/hemligasidan/editCourse/{{course.id.value}}">Edit</a></td>
                     </tr>
                 </tbody>
 
