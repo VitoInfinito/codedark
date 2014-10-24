@@ -93,8 +93,8 @@ and open the template in the editor.
                 <table class="table">
                     <tbody>
                         <tr ng-repeat="group in groups" >
-                            <td>{{group.id}} {{group.gName}} {{group.owner.fname}}</td>
-                            <td><a href="#/hemligasidan/editGroup/{{group.id}}">Edit</a></td>
+                            <td>{{group.id.value}} {{group.gName}} {{group.owner.fname}}</td>
+                            <td><a href="#/hemligasidan/editGroup/{{group.id.value}}">Edit</a></td>
                         </tr>
                     </tbody>
 
