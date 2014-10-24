@@ -165,7 +165,8 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
             },
             searchfield: ""
         };
-
+       
+        
         DBProxy.countCourses()
                 .success(function (count) {
                     $scope.count = count.value;
@@ -376,7 +377,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     .success(function (courses) {
                         $scope.courses = courses;
                     }).error(function () {
-                console.log("findAllUsers: error");
+                console.log("findAllCourses: error");
             });
         }
 
@@ -385,9 +386,39 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 
 controllers.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
-        $scope.user = {
-            
+        $scope.ssnbr = getCookie("_userssnbr");
+        
+        findUser();
+        function findUser(){
+            DBProxy.findUser($scope.ssnbr)
+                    .success(function(user){
+                        $scope.user = user;
+                    }).error(function(){
+                console.log("findUser userprofilecontr: error");
+            });
+        }
+      //  DBProxy.findUser($scope.user.ssnbr);
+       
+        getUserGroups();
+        function getUserGroups() {
+            DBProxy.findUserGroups($scope.ssnbr)
+                    .success(function (groups) {
+                        $scope.groups = groups;
+                    }).error(function () {
+                console.log("findUserGroups: error");
+            });
+        }
+        
+        $scope.group = {
+            toggle: function (group) {
+                console.log("in toggle group - profile");
+                console.log("gName of clicked group: " + group.gName);
+                $('#toggleable' + group.gName).collapse('toggle');
+                $scope.members = group.members;
+            }
         };
+        
+        
     }]);
 
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',

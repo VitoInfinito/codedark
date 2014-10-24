@@ -52,8 +52,12 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/group/addGroup.html',
                     controller: 'GroupAddController'
                 }).
-                when('/user/:ssNbr', {
+                when('/user', {
                     templateUrl: 'partials/user/userProfile.html',
+                    controller: 'UserProfileController'
+                }).
+                when('/editUserProfile', {
+                    templateUrl: 'partials/user/editUserProfile.html',
                     controller: 'UserProfileController'
                 }).
                 when('/hemligasidan', {

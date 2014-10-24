@@ -441,10 +441,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
-        log.log(Level.INFO, "ccode: " + ccode);
-        log.log(Level.INFO, "fst: " + fst);
-        log.log(Level.INFO, "count: " + count);
-        log.log(Level.INFO, "1");
+        
         Collection<CourseGroup> groups = new ArrayList<>();
         List<CourseGroup> oldGroups = groupList.getByCourse(ccode);
         
@@ -495,7 +492,7 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value= "{user}/groups")
+    @Path(value= "groups/{ssnbr}")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserGroups(@PathParam("ssnbr") String ssnbr){
         
