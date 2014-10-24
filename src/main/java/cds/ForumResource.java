@@ -129,7 +129,32 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
        
-    }    
+    }   
+    
+    
+    
+    @PUT
+    @Path(value = "leave/{ccode}/{gName}/{user}")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response leaveGroup(@PathParam(value= "ccode") String ccode, 
+            @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
+        log.log(Level.INFO, "INUTI LEAVEGROUP i ForumResource");
+        CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
+
+        log.log(Level.INFO, "Username: " + user);
+        GroupUser gu = userList.find(user);
+        log.log(Level.INFO, "User: " + gu);
+        List<GroupUser> members = cg.getMembers();
+        log.log(Level.INFO, "Members: " + members);
+        cg.getMembers().remove(gu);
+        log.log(Level.INFO, "Members: " + members);
+        
+        try{
+            return Response.ok(cg).build();
+        }catch(Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
     @GET
     @Path(value = "user/{id}")
@@ -359,6 +384,10 @@ public class ForumResource {
 //        return Response.ok().build();
     }
     
+    public Response leaveGroup(){
+        return null;
+    }
+    
     @POST
     @Path(value = "course")
     public Response createCourse(JsonObject j){
@@ -398,10 +427,6 @@ public class ForumResource {
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-    }
-    //TODO: Fix this implementation
-    private static <T extends AbstractEntity, K extends IDAO> Response createHelpMethod(T c, K utilList){
-        return null;
     }
             
     @GET

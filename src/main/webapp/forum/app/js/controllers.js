@@ -564,7 +564,13 @@ controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
         });
         $scope.groupEdit = {
             kick: function (member) {
-
+                DBProxy.leaveGroup($scope.group.course.id.value, $scope.group.gName, member)
+                        .success(function (group) {
+                           console.log("Del: " +group.members);
+                           
+                        }).error(function(){
+                            console.log("Deletion did not work");
+                        });
             },
             update: function () {
                 console.log("Update!")
