@@ -51,13 +51,37 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 $scope.members = group.members;
             },
             join: function (e, group) {
-                console.log('Join! ' + group.gName);
+                console.log('Join! ' + group.members.length);
                 e.stopPropagation();
 
                 var user = getCookie("_userssnbr");
-                DBProxy.joinGroup(group.course.ccode, group.gName, user)
-                        .success(function () {
+                DBProxy.joinGroup(group.course.id.value, group.gName, user)
+                        .success(function (group) {
+                                                DBProxy.countGroups($scope.course.id.value)
+                            .success(function (count) {
+                                $scope.count = count.value;
+                                console.log("groupCount: " + count.value);
+                            }).error(function () {
+                        console.log("groupCount: error");
+                    });
 
+                    //GETRANGE
+                    getRangeGroups();
+
+                    $scope.$watch('currentPage', function () {
+                        getRangeGroups();
+                    });
+                    function getRangeGroups() {
+                        var fst = $scope.currentPage * $scope.pageSize;
+                        DBProxy.findRangeGroups($scope.course.id.value, fst, $scope.pageSize)
+                                .success(function (groups) {
+                                    $scope.groups = groups;
+                                    console.log("groups: " + groups);
+                                }).error(function () {
+                            console.log("findRangeGroups: error");
+                        });
+                    }
+                    
                         });
             }
         };

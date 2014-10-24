@@ -115,19 +115,20 @@ public class ForumResource {
         log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
 
-        Long ssnbr = Long.parseLong(user);
         log.log(Level.INFO, "Username: " + user);
-        GroupUser gu = userList.getById(user);
+        GroupUser gu = userList.find(user);
         log.log(Level.INFO, "User: " + gu);
-//        List<GroupUser> members = cg.getMembers();
-//        log.log(Level.INFO, "Members: " + members);
-//           cg.getMembers().add(userList.getBySsnbr(ssnbr));
-//           log.log(Level.INFO, "members: " + cg.getMembers().toString());
-           return Response.ok().build(); 
-//        }catch(Exception e){
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-//        }
-            
+        List<GroupUser> members = cg.getMembers();
+        log.log(Level.INFO, "Members: " + members);
+        cg.getMembers().add(gu);
+        log.log(Level.INFO, "Members: " + members);
+        
+        try{
+            return Response.ok(cg).build();
+        }catch(Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+       
     }    
     
     @GET
