@@ -21,7 +21,7 @@ var getCookie = function (cname) {
     return "";
 };
 
-var newlyLoggedIn = false;
+var newlyLoggedIn = true;
 var delay = 300;
 
 /*
@@ -216,7 +216,6 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
 
         $scope.menu = {
             isAdmin: function () {
-                console.log("Admin: " + admin);
                 if(newlyLoggedIn) {
                     checkIfAdmin();
                     newlyLoggedIn = false;
