@@ -124,7 +124,8 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
-                            console.log($location.path());
+                            $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
+//                            console.log($location.path());
                             // console.log($location.path());
                             // $location.path('/index').replace();
                             // $scope.$apply();
