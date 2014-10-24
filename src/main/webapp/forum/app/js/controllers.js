@@ -152,8 +152,8 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
                 }, 500);
 
             },
-            select: function (course) {
-                $location.path('/course/' + course);
+            select: function (courseId) {
+                $location.path('/course/' + courseId);
             },
             isCourseListEmpty: function () {
                 if (typeof $scope.courses !== 'undefined') {
@@ -269,13 +269,12 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
 
         $scope.user = {
             login: function () {
-                DBProxy.login($scope.user.ssnbr, $scope.user.pwd)
+                DBProxy.login($scope.user.id, $scope.user.pwd)
                         .success(function () {
-                            console.log($scope.user.ssnbr + " " + $scope.user.pwd);
-                            if (angular.isDefined($scope.user.ssnbr)) {
-                                setCookie("_userssnbr", $scope.user.ssnbr, 365);
-                                console.log("User ok, attempting to find name: " + $scope.user.ssnbr);
-                                DBProxy.findUser($scope.user.ssnbr)
+                            if (angular.isDefined($scope.user.id)) {
+                                setCookie("_userssnbr", $scope.user.id, 365);
+                                console.log("User ok, attempting to find name: " + $scope.user.id);
+                                DBProxy.findUser($scope.user.id)
                                         .success(function (response) {
                                             console.log("Found user: " + JSON.stringify(response));
                                             setCookie("_username", response.fname + " " + response.lname, 365);
@@ -289,7 +288,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                     console.log("login failed");
                 });
             },
-            signUp: function () {
+            signUp: function () { 
+                console.log($scope.user);
                 DBProxy.createUser($scope.user)
                         .success(function () {
                             console.log("New user: " + $scope.user);
@@ -400,7 +400,7 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');
-                            console.log('Updated ' + $scope.user.ssnbr);
+                            console.log('Updated ' + $scope.user.id);
                             $location.path('/hemligasidan');
                         }).error(function () {
                     console.log("updateUser: error");
@@ -411,7 +411,7 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
         DBProxy.findUser(wlh.substring(24))
                 .success(function (user) {
                     $scope.user = user;
-                    console.log('Editing ' + $scope.user.ssnbr);
+                    console.log('Editing ' + $scope.user.id);
                 });
 
         DBProxy.isAdmin(getCookie("_userssnbr"))

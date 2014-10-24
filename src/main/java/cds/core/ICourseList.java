@@ -14,9 +14,9 @@ import cds.persistence.IDAO;
  * @author Patricia
  */
 @Local
-public interface ICourseList extends IDAO<Course, Long>{
+public interface ICourseList extends IDAO<Course, String>{
     
-    public Course getByCC(String cc);
+    public Course getById(String cc);
     
     public List<Course> getByName(String name);
     

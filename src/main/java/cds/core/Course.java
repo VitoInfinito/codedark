@@ -15,39 +15,34 @@ import cds.persistence.AbstractEntity;
  * @author sofiaedstrom
  */
 @Entity
-public class Course extends AbstractEntity{
+public class Course extends AbstractEntity<String>{
     
-    @Column(nullable = false, unique = true)
-    private String ccode;
     private String name;
-    
     
     public Course(){
         
     }
     
-    public Course(Long id, String ccode, String name){
-        super(id);
-        this.ccode = ccode;
+    public Course(String ccode, String name){
+        super(ccode);
         this.name = name;
     }
     
-    public Course(String ccode, String name){
-        this.ccode = ccode;
+    public Course(String name){
         this.name = name;
-    }
-
-    public String getCcode(){
-        return ccode;
     }
     
     public String getName(){
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     
     @Override
     public String toString(){
-        return "Course{ ccode = " + ccode + ", name = " + name + "}";
+        return "Course{ ccode = " + getId() + ", name = " + name + "}";
     }
     
     @Override
@@ -59,7 +54,7 @@ public class Course extends AbstractEntity{
             return false;
         }
         final Course other = (Course) obj;
-        if (!Objects.equals(this.ccode, other.ccode) || !Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         

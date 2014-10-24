@@ -12,24 +12,21 @@ import java.util.List;
  * @author
  */
 @Entity
-public class GroupUser extends AbstractEntity{
+public class GroupUser extends AbstractEntity<String>{
 
-    @Column(nullable = false, unique = true)
-    private Long ssnbr;
     private String fname;
     private String lname;
     private String email;
     @Column(nullable = false)
     private String pwd;
-   // private String adminuser;
     
     private List<String> belongingTo;
     
     public GroupUser(){}
     
-    public GroupUser(Long id, Long ssnbr, String email, String pwd, String fname, String lname, boolean isAdmin) {
-        super(id);
-        this.ssnbr = ssnbr;
+    public GroupUser(String username, String email, String pwd, 
+            String fname, String lname, boolean isAdmin) {
+        super(username);
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
@@ -40,8 +37,7 @@ public class GroupUser extends AbstractEntity{
         }
     }
     
-    public GroupUser(Long ssnbr, String email, String pwd, String fname, String lname, boolean isAdmin) {
-        this.ssnbr = ssnbr;
+    public GroupUser(String email, String pwd, String fname, String lname, boolean isAdmin) {
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
@@ -54,11 +50,6 @@ public class GroupUser extends AbstractEntity{
     
     public void addUserBelongingToGroup(String group) {
         belongingTo.add(group);
-    }
-    
-
-    public Long getSsnbr() {
-        return ssnbr;
     }
 
     public String getEmail() {
@@ -77,17 +68,12 @@ public class GroupUser extends AbstractEntity{
         return lname;
     }
     
-
     public List<String> getBelongingTo() {
         return belongingTo;
     }
     @Override
     public String toString() {
-        return "GroupUser{" + "ssnbr=" + ssnbr + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + ", belongingTo= " + belongingTo.toString() + '}';
-    }
-
-    public void setSsnbr(Long ssnbr) {
-        this.ssnbr = ssnbr;
+        return "GroupUser{" + "username=" + getId() + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", pwd=" + pwd + ", belongingTo= " + belongingTo.toString() + '}';
     }
 
     public void setFname(String fname) {

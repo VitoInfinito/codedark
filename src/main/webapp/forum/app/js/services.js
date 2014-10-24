@@ -88,11 +88,11 @@ dbService.factory('DBProxy', ['$http',
             countUsers: function() {
                 return $http.get(url + "/countUsers");
             },
-            login: function(ssnbr, pwd) {
-                return $http.get(url + "/login?ssnbr=" + ssnbr + "&pwd=" + pwd);
+            login: function(id, pwd) {
+                return $http.get(url + "/login?id=" + id + "&pwd=" + pwd);
             },
-            isAdmin: function(ssnbr) {
-                return $http.get(url + "/isadmin?ssnbr=" + ssnbr);
+            isAdmin: function(id) {
+                return $http.get(url + "/isadmin?id=" + id);
             }
         };
     }]);

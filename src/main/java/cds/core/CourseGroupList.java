@@ -16,7 +16,6 @@ import cds.persistence.AbstractDAO;
 
 /**
  *
- * @author HForsvall
  */
 @Stateless
 public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements ICourseGroupList {
@@ -49,7 +48,7 @@ public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements I
     public List<CourseGroup> getByCourse(String cc) {
        List<CourseGroup> found = new ArrayList<>();
         for (CourseGroup g : findRange(0, count())) {
-            if (g.getCourse().getCcode().equals(cc)) {
+            if (g.getCourse().getId().equals(cc)) {
                 found.add(g);
             }
         }
@@ -57,11 +56,11 @@ public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements I
     }
     
     @Override
-    public List<CourseGroup> getByUser(Long ssNbr){
+    public List<CourseGroup> getByUser(String uName){
         List<CourseGroup> found = new ArrayList<>();
         for(CourseGroup g : findRange(0, count())){
             for(GroupUser u: g.getMembers()){
-                if(u.getSsnbr().equals(ssNbr)){
+                if(u.getId().equals(uName)){
                     found.add(g);
                 }
             }

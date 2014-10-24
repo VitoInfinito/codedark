@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  */
 @Entity
-public class CourseGroup extends AbstractEntity {
+public class CourseGroup extends AbstractEntity<Long> {
    
     @OneToMany
     private List<GroupUser> members;
