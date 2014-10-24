@@ -48,11 +48,6 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 console.log("in toggle group");
                 console.log("gName of clicked group: " + group.gName);
                 $('#toggleable' + group.gName).collapse('toggle');
-
-//                DBProxy.findMembers(group.gName)
-//                        .success(function(members){
-//                        console.log("Found members: " + members);
-//                });
                 $scope.members = group.members;
             },
             join: function (e, group) {
@@ -124,7 +119,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                 DBProxy.createGroup($scope.group)
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
-                            console.log($location.path());
+                            console.log($location.path("/index"));
                             // console.log($location.path());
                             // $location.path('/index').replace();
                             // $scope.$apply();
