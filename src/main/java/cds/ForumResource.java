@@ -266,8 +266,7 @@ public class ForumResource {
             Course c = groupList.find(id).getCourse();
             CourseGroup cg1 = groupList.find(id);
             List<GroupUser> list = cg1.getMembers();
-            
-            list.add(userList.find(j.getString("userId")));
+            log.log(Level.INFO, "Updating: " + cg1);
             CourseGroup cg = new CourseGroup(id, c, name, list, cg1.getOwner());
             groupList.update(cg);
             // Convert old to HTTP response
@@ -333,7 +332,7 @@ public class ForumResource {
         log.log(Level.INFO, "INUTI CREATEGROUP");
         Course c = courseList.find(j.getString("course"));
         String name = j.getString("name");
-        GroupUser user = userList.find(j.getString("user"));
+        GroupUser owner = userList.find(j.getString("owner"));
         int max = j.getInt("maxNbr");
         
         //Check if group already exists
@@ -342,7 +341,7 @@ public class ForumResource {
             return Response.status(Response.Status.CONFLICT).build();
         }
         
-        CourseGroup cg = new CourseGroup(c, name, user, max);
+        CourseGroup cg = new CourseGroup(c, name, owner, max);
 //        log.log(Level.INFO, cg.toString());
           log.log(Level.INFO, cg.getCourse().toString());
           log.log(Level.INFO, cg.getgName());

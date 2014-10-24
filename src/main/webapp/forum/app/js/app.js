@@ -75,6 +75,11 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/course/editCourse.html',
                     controller: 'EditCourseController'
                 }).
+                when('/hemligasidan/editGroup/:id', {
+                    templateUrl: 'partials/group/editGroup.html',
+                    controller: 'EditGroupController'
+                }).
+                        
                 otherwise({
                     redirectTo: '/course'
                 });

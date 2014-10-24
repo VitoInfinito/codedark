@@ -9,6 +9,29 @@ and open the template in the editor.
     <div class="top">
         <h2>Group Details</h2>
     </div>
-    
-    
+    <div class="row">
+        <hr>
+        <div class="col-md-6">
+            <input type="text" class="form-control" ng-model="group.gName" value="{{group.gName}}"/>
+            <input type="text" class="form-control" ng-model="group.course.id.value" value="{{group.course.id.value}}"/>
+            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}"/>
+        </div>
+        <div class="col-md-6">
+            <h3>Members</h3>
+            <div class="adminTableWrapper">
+                <table class="table">
+                    <tbody>
+                        <tr ng-repeat="member in group.members" >
+                            <td>{{member.fname}} {{member.lname}}</td>
+                            <td><button class="btn btn-default" ng-click="group.kick(member)">Kick</button></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>    
+    </div>
+    <div class="row">
+        <button class="btn btn-default" ng-click="groupEdit.update()">Update</button>
+    </div>   
 </div>
