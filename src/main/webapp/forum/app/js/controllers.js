@@ -1,8 +1,6 @@
 'use strict';
 
-/*
- * Controllers
- */
+
 
 var setCookie = function (cname, cvalue, exdays) {
     var d = new Date();
@@ -23,6 +21,12 @@ var getCookie = function (cname) {
     }
     return "";
 };
+
+var delay = 300;
+
+/*
+ * Controllers
+ */
 
 var controllers = angular.module('Controllers', []);
 
@@ -147,7 +151,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.course = {
             search: function () {
                 clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(function() {$scope.currentPage = 0; getRange();}, 500);
+                searchTimeout = setTimeout(function() {$scope.currentPage = 0; getRange();}, delay);
 
             },
             select: function(course) {
@@ -182,7 +186,7 @@ controllers.controller('CourseController', ['$scope', '$location', 'DBProxy',
         $scope.$watch('currentPage', function() {
             getRange();
         });
-        function getRange() {
+        var getRange = function() {
             var fst = $scope.pageSize * $scope.currentPage;
             DBProxy.searchInCoursesWithRange($scope.course.searchfield, fst, $scope.pageSize)
                     .success(function (courses) {
@@ -282,6 +286,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
     }]);
 controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
+        
+        $scope.count = 0;
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
                 .success(function () {
@@ -319,8 +325,30 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                         console.log("Error when adding" + course.cc);
                     });
         };
+        
+        var searchUserTimeout;
+        var getUsers = function() {
+            DBProxy.findAllUsers()
+                    .success(function (users) {
+                        $scope.users = users;
+                    }).error(function () {
+                console.log("findAllUsers: error");
+            });
+        };
+
+        var searchCourseTimeout;
+        var getCourses = function() {
+            DBProxy.searchInCourses($scope.course.searchfield)
+                    .success(function (courses) {
+                        console.log(JSON.stringify(courses));
+                        $scope.courses = courses;
+                    }).error(function () {
+                console.log("findAllUsers: error");
+            });
+        };
 
         $scope.course = {
+            searchfield: "",
             createNewCourse: function () {
                 var newCourse = {
                     cc: $scope.course.ccode,
@@ -337,31 +365,22 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                     console.log('Could not create course ' + $scope.course.ccode);
                 });
 
+            },
+            search: function() {
+                clearTimeout(searchCourseTimeout);
+                searchCourseTimeout = setTimeout(getCourses, delay);
             }
-
         };
-
+        
+        $scope.user = {
+            searchfield: "",
+            search: function() {
+                
+            }
+        };
+        
         getUsers();
-        function getUsers() {
-            DBProxy.findAllUsers()
-                    .success(function (users) {
-                        $scope.users = users;
-                    }).error(function () {
-                console.log("findAllUsers: error");
-            });
-        }
-
         getCourses();
-        function getCourses() {
-            DBProxy.findAllCourses()
-                    .success(function (courses) {
-                        $scope.courses = courses;
-                    }).error(function () {
-                console.log("findAllUsers: error");
-            });
-        }
-
-
     }]);
 
 controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
@@ -374,7 +393,9 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
             
             update: function () {
                 console.log('Inside user.update() in AdminController');
-                //TODO: Possible the wrong order
+                if(typeof $scope.user.admin === 'undefined') {
+                    $scope.user.admin = "";
+                }
                 DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');

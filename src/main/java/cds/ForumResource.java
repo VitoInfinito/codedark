@@ -95,13 +95,13 @@ public class ForumResource {
     @Path(value = "allCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllCourses() {
-        Collection<CourseWrapper> courses = new ArrayList<>();
+        Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         while (it.hasNext()) {
-            courses.add(new CourseWrapper(it.next()));
+            courses.add(it.next());
         }
         
-        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
     }
@@ -154,7 +154,7 @@ public class ForumResource {
         log.log(Level.INFO, ccode);
         Course c = courseList.getByCC(ccode);
         if (c != null) {
-            return Response.ok(new CourseWrapper(c)).build();
+            return Response.ok(c).build();
         } else {
             return Response.noContent().build();
         }
@@ -298,7 +298,7 @@ public class ForumResource {
             log.log(Level.INFO, "updatedCourse: " + updatedCourse);
             courseList.update(updatedCourse);
         
-            return Response.ok(new CourseWrapper(updatedCourse)).build();
+            return Response.ok(updatedCourse).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
@@ -404,25 +404,66 @@ public class ForumResource {
     }
             
     @GET
-    @Path(value = "courses/search")
+    @Path(value = "courses/searchWithRange")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInCoursesWithRange(@QueryParam(value = "searchfield") String search, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         search = search.toLowerCase();
         log.log(Level.INFO, "Searching courses with search: " + search);
-        Collection<CourseWrapper> courses = new ArrayList<>();
+        Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         int counter = 0;
         while(it.hasNext() && count > 0) {
             Course c = it.next();
             if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search)) && counter++ >= fst) {
-                courses.add(new CourseWrapper(c));
+                courses.add(c);
                 count--;
             }
         }
         
-        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
+    }
+    
+    @GET
+    @Path(value = "courses/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInCourses(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching courses with search: " + search);
+        Collection<Course> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
+        while(it.hasNext()) {
+            Course c = it.next();
+            if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search))) {
+                courses.add(c);
+            }
+        }
+        
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
+        };
+        return Response.ok(ge).build();
+    }
+    
+    @GET
+    @Path(value = "users/search")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response searchInUsers(@QueryParam(value = "searchfield") String search) {
+        search = search.toLowerCase();
+        log.log(Level.INFO, "Searching users with search: " + search);
+        /*Collection<Course> courses = new ArrayList<>();
+        Iterator<Course> it = courseList.findAll().iterator();
+        while(it.hasNext()) {
+            Course c = it.next();
+            if((c.getCcode().toLowerCase().contains(search) || c.getName().toLowerCase().contains(search))) {
+                courses.add(c);
+            }
+        }
+        
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
+        };
+        return Response.ok(ge).build();*/
+        return Response.ok().build();
     }
     
     @GET
@@ -456,13 +497,13 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         log.log(Level.INFO, "Entered findCourseRange with values: " + fst + " " + count);
-        Collection<CourseWrapper> courses = new ArrayList<>();
+        Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findRange(fst, count).iterator();
         while(it.hasNext()) {
             Course c = it.next();
-            courses.add(new CourseWrapper(c));
+            courses.add(c);
         }
-        GenericEntity<Collection<CourseWrapper>> ge = new GenericEntity<Collection<CourseWrapper>>(courses) {
+        GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
     }

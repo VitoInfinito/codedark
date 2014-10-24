@@ -16,8 +16,10 @@ and open the template in the editor.
     <div class="row">
 
         <div class="col-md-6 adminTableWrapper">
+            <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search Course"/>
             <table class="table">
-                <thead> <h3>List of all users</h3></thead>
+                <thead><h3>List of all users</h3></thead>
+                
                 <tbody>
                     <tr ng-repeat="user in users" >
                         <td>{{user.fname}} {{user.lname}} {{user.ssnbr}}</td>
@@ -29,10 +31,12 @@ and open the template in the editor.
         </div>
         <!-- LIST OF ALL Courses -->
 
-
-        <div class="col-md-6 adminTableWrapper">
+        <div class="col-md-6">
+        <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
+        <h3>List of all Courses</h3>
+        <div class="adminTableWrapper">
+           <!-- <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>-->
             <table class="table">
-                <thead> <h3>List of all Courses</h3></thead>
                 <tbody>
                     <tr ng-repeat="course in courses" >
                         <td>{{course.ccode}} {{course.name}}</td>
@@ -41,6 +45,7 @@ and open the template in the editor.
                 </tbody>
 
             </table>
+        </div>
         </div>
     </div>
 

@@ -44,6 +44,15 @@ public class Course extends AbstractEntity{
     public String getName(){
         return name;
     }
+
+    public void setCcode(String ccode) {
+        this.ccode = ccode;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     
     @Override
     public String toString(){
