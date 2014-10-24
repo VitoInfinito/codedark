@@ -40,7 +40,7 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
 
 controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
     function ($scope, $location, $routeParams, DBProxy) {
-
+        
         $scope.pageSize = '5';
         $scope.currentPage = 0;
 
@@ -49,6 +49,7 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                 console.log("gName of clicked group: " + group.gName);
                 $('#toggleable' + group.id.value).collapse('toggle');
                 $scope.members = group.members;
+                console.log("");
             },
             join: function (e, group) {
                 console.log('Join! ' + group.gName);
@@ -60,7 +61,11 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                            console.log("New members: " + group.members);
                            console.log("Old members: " + $scope.members);
                            $scope.members = group.members;
+                           
                         });
+            },
+            updateMemberNbr: function(members){
+                $parent.group.members.length = members.length;
             }
         };
         
@@ -94,7 +99,6 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
                     console.log("Error when finding course");
                 });
 
-        
 
         
     }]);

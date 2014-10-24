@@ -118,10 +118,12 @@ public class ForumResource {
         log.log(Level.INFO, "Username: " + user);
         GroupUser gu = userList.find(user);
         log.log(Level.INFO, "User: " + gu);
+        
         List<GroupUser> members = cg.getMembers();
-        log.log(Level.INFO, "Members: " + members);
+        log.log(Level.INFO, "Members: " + members.toString());
+        
         cg.getMembers().add(gu);
-        log.log(Level.INFO, "Members: " + members);
+        log.log(Level.INFO, "Members: " + members.toString());
         
         try{
             return Response.ok(cg).build();

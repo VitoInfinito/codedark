@@ -81,3 +81,8 @@ footer {
     height: 300px !important;
     overflow: auto;
 }
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}

@@ -39,9 +39,9 @@ and open the template in the editor.
             <td>{{group.members.length}}/{{group.maxNbr}}
                 <div id="toggleable{{group.id.value}}" hidden>
                     <table class="table">
-                        <tr ng-repeat="member in members">
-                            <td>{{member.fname}} {{member.lname}}</td>
-                        </tr>
+                        <ul ng-repeat="member in members">
+                            <li>{{member.fname}} {{member.lname}}</li>
+                        </ul>
                     </table>
                     <button ng-click="$parent.group.join($event, group)">Join</button>
                     
