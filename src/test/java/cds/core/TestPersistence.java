@@ -80,6 +80,24 @@ public class TestPersistence {
     }
     // --- GROUPTESTS --- //
     @Test
+    public void testGroupFindAllGroups(){
+        Course c = new Course("DAT998", "Testkursen");
+        forum.getCourseList().create(c);
+        GroupUser user = new GroupUser("t", "a@a.se", "1", "test", "er");
+        forum.getUserList().create(user);
+        CourseGroup u = new CourseGroup(c, "Testgruppen", user, 2);
+        forum.getGroupList().create(u);
+        
+        Course c2 = new Course("DAT997", "Testkursen1");
+        forum.getCourseList().create(c2);
+        GroupUser user2 = new GroupUser("t2", "a@a.se", "1", "test", "er");
+        forum.getUserList().create(user2);
+        CourseGroup u2 = new CourseGroup(c2, "Testgruppen2", user2, 2);
+        forum.getGroupList().create(u2);
+        
+        assertTrue(forum.getGroupList().findAll().size() == 2);
+    }
+    @Test
     public void testGroupGetByNameAndCourse(){
         Course c = new Course("DAT998", "Testkursen2");
         forum.getCourseList().create(c);
@@ -147,6 +165,15 @@ public class TestPersistence {
     }
     // --- USERTESTS --- //
     @Test
+    public void testUserFindAll(){
+        GroupUser u = new GroupUser("tester", "aaa@a.a", "pwd", "a", "b");
+        forum.getUserList().create(u);
+        GroupUser u2 = new GroupUser("tester2", "aaa@a.a", "pwd", "a", "b");
+        forum.getUserList().create(u2);
+        assertTrue(forum.getUserList().findAll().size() == 2);
+    }
+    
+    @Test
     public void testUserDelete(){
         GroupUser u = new GroupUser("tester", "aaa@a.a", "pwd", "a", "b");
         forum.getUserList().create(u);
@@ -172,6 +199,16 @@ public class TestPersistence {
         assertTrue(u2.getId() == u.getId());
     }
     // --- COURSETESTS --- //
+    @Test
+    public void testCourseFindAll(){
+        Course c = new Course("AAA000","Test");
+        forum.getCourseList().create(c);
+        Course c1 = new Course("AAA001","Test1");
+        forum.getCourseList().create(c1);
+        Course c2 = new Course("AAA002","Test2");
+        forum.getCourseList().create(c2);
+        assertTrue(forum.getCourseList().findAll().size() == 3);
+    }
     @Test
     public void testPersistACourse(){
         Course c = new Course("1234", "testCourse");
