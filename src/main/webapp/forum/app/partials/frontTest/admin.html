@@ -18,7 +18,7 @@ and open the template in the editor.
                 <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
             </div>
 
-            <button class="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
+            <button cllist ass="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
             <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape All Courses</button>
             </form>
             <br>
@@ -43,10 +43,8 @@ and open the template in the editor.
         </div>
         <hr>
     </div>
-    <!-- LIST OF ALL USERS-->
     
-
-
+    <!-- LIST OF ALL USERS-->
     <div class="row">
         <hr>
         <div class="col-md-6 adminTableWrapper">
@@ -56,18 +54,16 @@ and open the template in the editor.
                 <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search User"/>
                 <tbody>
                     <tr ng-repeat="user in users" >
-                        <td>{{user.fname}} {{user.lname}} {{user.id.value}}</td>
+                        <td>{{user.fname}} {{user.lname}} {{user.id.value}} {{user.isAdmin}}</td>
                         <td><a href="#/hemligasidan/editUser/{{user.id.value}}">Edit User</a></td>
                     </tr>
                 </tbody>
 
             </table>
         </div>
+        
         <!-- LIST OF ALL Courses -->
-
-
         <div class="col-md-6">
-            
             <h3>List of all Courses</h3>
             <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
             <div class="adminTableWrapper">

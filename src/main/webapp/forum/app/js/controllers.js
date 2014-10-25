@@ -305,8 +305,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         $scope.count = 0;
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
-                .success(function () {
-
+                .success(function () {   
                 }).error(function () {
             $location.path("/course");
             //alert("Access Denied");
@@ -316,7 +315,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 
         $scope.scraper = {
             courseScraper: function () {
-
+                
                 var items = retScrapedItems();
                 //console.log("items: "+items.courseCode);
                 $.each(items, function (index, val) {
@@ -347,9 +346,16 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
             DBProxy.searchInUsers($scope.user.searchfield)
                     .success(function (users) {
                         $scope.users = users;
+                
+                        $scope.users.forEach( function(user){
+                            if( $.inArray('admin', user.belongingTo) !== -1 ){
+                                user.isAdmin = "admin";
+                            }
+                        });
+                
                     }).error(function () {
-                console.log("findAllUsers: error");
-            });
+                        console.log("findAllUsers: error");
+                    });
         };
 
         var searchCourseTimeout;
@@ -516,7 +522,6 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
         $scope.userEdit = {
             
             update: function () {
-                console.log('Inside user.update() in AdminController');
                 if (typeof $scope.user.admin === 'undefined') {
                     $scope.user.admin = "";
                 }
@@ -532,16 +537,12 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 });
             },
             isAdmin: function() {
-                
                 DBProxy.isAdmin(getCookie("_userssnbr"))
                 .success(function () {
                     console.log("Admin!");
-                    $('.isAdmin').prop('checked', true);
-                   //$scope.user.isAdmin = true;
                 }).error(function () {
                     $location.path("/course");
-                console.log("Access Denied!");
-
+                    console.log("Access Denied!");
                 });
             }
         };
@@ -550,17 +551,12 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 .success(function (user) {
                     $scope.user = user;
                     console.log('Editing ' + $scope.user.id);
+                    
+                    if( $.inArray('admin', $scope.user.belongingTo) !== -1 ){
+                        $('.isAdmin').prop('checked', true);
+                    }
                 });
 
-//        DBProxy.isAdmin(getCookie("_userssnbr"))
-//                .success(function () {
-//                    console.log("Admin!");
-//                    $scope.user.isAdmin = true;
-//                }).error(function () {
-//            $location.path("/course");
-//            console.log("Access Denied!");
-//
-//        });
             $scope.userEdit.isAdmin();
     }]);
 
@@ -574,7 +570,6 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
         console.log(1);
         $scope.courseEdit = {
             update: function () {
-                console.log('Inside course.update() in AdminController');
                 DBProxy.updateCourse($scope.course)
                         .success(function () {
                             alert('Updated!');
