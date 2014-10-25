@@ -326,11 +326,8 @@ public class ForumResource {
             String name = j.getString("name");
             log.log(Level.INFO, "JSON: " + j.toString());
             
-
-            
             String id = j.getJsonObject("id").getString("value");
             
-            //String id = j.getString("id.value");
             log.log(Level.INFO, "Updating id: " + id);
             Course updatedCourse = new Course(id, name);
             log.log(Level.INFO, "updatedCourse: " + updatedCourse);
