@@ -19,18 +19,6 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
                 }).
-                when('/group/:gName', {
-                    templateUrl: 'partials/group/editGroup.html',
-                    controller: 'GroupEditController'
-                }).
-                when('/group', {
-                    templateUrl: 'partials/group/group.html',
-                    controller: 'GroupController'
-                }).
-                when('/addGroup', {
-                    templateUrl: 'partials/group/addGroup.html',
-                    controller: 'GroupAddController'
-                }).
                 when('/test', {
                     templateUrl: 'partials/frontTest/test.html',
                     controller: 'TestController'
@@ -42,10 +30,6 @@ forum.config(['$routeProvider',
                 when('/signup', {
                     templateUrl: 'partials/forum/signup.html',
                     controller: 'LoginController'
-                }).
-                when('/addCourse', {
-                    templateUrl: 'partials/course/addCourse.html',
-                    controller: 'CourseController'
                 }).
                 when('/course/:id/newgroup', {
                     templateUrl: 'partials/group/addGroup.html',

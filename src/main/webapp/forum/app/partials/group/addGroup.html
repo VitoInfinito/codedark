@@ -16,7 +16,7 @@ and open the template in the editor.
         </div>
         <div class ="form-group">
             <button class="btn btn-default" ng-click="group.createGroup()">Create</button>
-            <button ng-controller="NavigationCtrl" ng-click="navigate('/course/{{course.id.value}}')" class="btn btn-default">Back</button>
+            <button ng-controller="NavigationCtrl" ng-click="navigate('/course/'+{{course.id.value}})" class="btn btn-default">Back</button>
         </div>
     </form>
     <br>
