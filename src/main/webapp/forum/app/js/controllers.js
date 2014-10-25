@@ -636,8 +636,8 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
             $scope.userEdit.isAdmin();
     }]);
 
-controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
+controllers.controller('EditCourseController', ['$scope', '$location', '$routeParams', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
         $scope.courseEdit = {
             update: function () {
                 DBProxy.updateCourse($scope.course)
@@ -653,8 +653,8 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
                 //DBProxy.deleteUser
             }
         };
-
-        DBProxy.findCourse($location.url().substring(25))
+        
+        DBProxy.findCourse($routeParams.cc)
                 .success(function (course) {
                     $scope.course = course;
                     console.log('Editing ' + $scope.course.id.value);
@@ -670,22 +670,22 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
         });
     }]);
 
-controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
-        var wlh = $location.url();
-        console.log("id: "+wlh.substring(24));
-        DBProxy.findGroup(wlh.substring(24))
+controllers.controller('EditGroupController', ['$scope', '$location', '$routeParams', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
+        console.log("Finding group with " + $routeParams.id);
+        DBProxy.findGroup($routeParams.id)
                 .success(function (group) {
                     $scope.group = group;
-                    console.log('Editing ' + $scope.group.gName);
+                    console.log('Successfully edited ' + $scope.group.gName);
                 }).error(function () {
             console.log('Unable to get group');
         });
         $scope.groupEdit = {
             kick: function (member) {
-                DBProxy.leaveGroup($scope.group.course.id.value, $scope.group.gName, member)
+                DBProxy.leaveGroup($scope.group.course.id.value, $scope.group.gName, member.id.value)
                         .success(function (group) {
                            console.log("Del: " +group.members);
+                           $scope.group.members = group.members;
                            
                         }).error(function(){
                             console.log("Deletion did not work");
@@ -694,11 +694,12 @@ controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
             update: function () {
                 console.log("Update!");
                 
-                DBProxy.updateGroup($scope.group.id.value,$scope.group).success(function () {
-                    console.log("Successfuly update: " + $scope.group);
+                DBProxy.updateGroup($scope.group.id.value,$scope.group)
+                        .success(function () {
+                    console.log("Successfuly updated " + $scope.group);
                     
                 }).error(function () {
-                    console.log("Error when updating: " + $scope.group);
+                    console.log("Error when updating " + $scope.group);
                 });
             }
         };
