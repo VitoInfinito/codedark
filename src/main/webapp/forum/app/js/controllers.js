@@ -626,6 +626,7 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
                 DBProxy.deleteUser($scope.user.id.value)
                         .success(function(){
                             console.log("User deleted");
+                            $location.path('/hemligasidan');
                         }).error(function(){
                             console.log("ERROR IN DELETE USER");
                         });    
@@ -666,7 +667,13 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
                 });
             },
             delete: function () {
-                //DBProxy.deleteUser
+                DBProxy.deleteCourse($scope.course.id.value)
+                    .success(function(){
+                        console.log("Deleted the course!");
+                        $location.path('/hemligasidan');
+                    }).error(function(){
+                        console.log("ERROR in delete course");
+                    });
             }
         };
 
