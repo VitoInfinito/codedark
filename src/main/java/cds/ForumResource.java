@@ -355,22 +355,41 @@ public class ForumResource {
             String fname = j.getString("fname");
             String lname = j.getString("lname");
             
-            String admin = j.getString("admin");
-            log.log(Level.INFO, admin);
-            //log.log(Level.INFO, ""+j.getInt("id"));
-            //Long id = userList.getBySsnbr(ssnbr).getId();
-
-            
             GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
-            if(admin.equals("admin")){
-                updatedUser.addUserBelongingToGroup(admin);
-            }  
             userList.update(updatedUser);
             
             return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    @PUT
+    @Path(value="admin/add/{id}")
+    public Response addAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In add admin");
+        GroupUser user = userList.find(id);
+        
+        if(!user.getBelongingTo().contains("admin")){
+                user.addUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+            
+        return Response.ok(user).build();
+    }
+    
+    @PUT
+    @Path(value="admin/rem/{id}")
+    public Response removeAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In remove admin");
+        GroupUser user = userList.find(id);
+        
+        if(user.getBelongingTo().contains("admin")){
+                user.remUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+        
+        return Response.ok(user).build();
     }
  
     @POST
@@ -428,20 +447,15 @@ public class ForumResource {
         log.log(Level.INFO, j.getString("pwd"));
         log.log(Level.INFO, j.getString("fname"));
         log.log(Level.INFO, j.getString("lname"));
-        log.log(Level.INFO, j.getString("admin"));
         
         String username = j.getString("id");
         String email = j.getString("email");
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
         String lname = j.getString("lname");
-        String admin = j.getString("admin");
         
         GroupUser newUser = new GroupUser(username, email, pwd, fname, lname);
-        if(admin.equals("admin")){
-            newUser.addUserBelongingToGroup(admin);
-        }
-             
+                     
         try{
             userList.create(newUser);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(newUser.getId()).build(newUser);
