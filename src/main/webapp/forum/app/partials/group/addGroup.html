@@ -7,16 +7,16 @@ and open the template in the editor.
 <div id="input">
     <!--Body content-->
     <h2>Create and join new group </h2>
-    for course: {{course.ccode}}  {{course.name}}
+    for course: {{course.id.value}}  {{course.name}}
     
     <form role="form">
         <div class="form-group">
             <input type="text" class="form-control" ng-model="group.name" value="{{group.name}}" placeholder="The awesome name of the group" required />
-            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" placeholder ="Maximum number of members" required />
+            <input type="number" class="form-control" ng-model="group.maxNbr" value="{{group.maxNbr}}" min="2" placeholder ="Maximum number of members" required />
         </div>
         <div class ="form-group">
             <button class="btn btn-default" ng-click="group.createGroup()">Create</button>
-            <button ng-controller="NavigationCtrl" ng-click="navigate('/courses')" class="btn btn-default">Cancel</button>
+            <button ng-controller="NavigationCtrl" ng-click="navigate('/course/' + {{course.id.value}})" class="btn btn-default">Back</button>
         </div>
     </form>
     <br>

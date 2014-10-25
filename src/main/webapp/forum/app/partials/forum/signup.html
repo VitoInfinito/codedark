@@ -11,16 +11,17 @@ and open the template in the editor.
 
     <form role="form">
         <div class="form-group">
-            <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="First name" required/>
-            <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="Last name" required/> 
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control input-sign" ng-model="user.ssnbr" placeholder="YYMMDDXXXX" required/>
-            <input type="email" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
+            <input type="text" class="form-control input-sign" ng-model="user.id" placeholder="Choose a username!" required/>
             <input type="password" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
         </div>
         <div class="form-group">
-                        <input type="text" class="form-control input-sign" ng-model="user.admin" placeholder="Admin code"/>
+            <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="First name" required/>
+            <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="Last name" required/>
+            <input type="email" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
+            
+        </div>
+        <div class="form-group">
+                        <input type="text" class="form-control input-sign" ng-model="user.admin" placeholder="If you have an admin code insert it here"/>
         </div>
         
         <button class="btn btn-default" ng-click="user.signUp()">Submit</button>

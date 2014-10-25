@@ -63,7 +63,10 @@ dbService.factory('DBProxy', ['$http',
                 return $http.put(url + "/group/" + id, object);
             },
             joinGroup: function(ccode, gName, user){
-                return $http.put(url + "/join/" + ccode + "/"+ gName + "/" + user);
+                return $http.put(url + "/join?ccode=" + ccode + "&gName="+ gName + "&user=" + user);
+            },
+            leaveGroup: function(ccode, gName, user){
+                return $http.put(url + "/leave/" + ccode + "/"+ gName + "/" + user);
             },
             updateUser: function(object){
                 return $http.put(url + "/user/", object);
@@ -98,11 +101,11 @@ dbService.factory('DBProxy', ['$http',
             countUsers: function() {
                 return $http.get(url + "/countUsers");
             },
-            login: function(ssnbr, pwd) {
-                return $http.get(url + "/login?ssnbr=" + ssnbr + "&pwd=" + pwd);
+            login: function(id, pwd) {
+                return $http.get(url + "/login?id=" + id + "&pwd=" + pwd);
             },
-            isAdmin: function(ssnbr) {
-                return $http.get(url + "/isadmin?ssnbr=" + ssnbr);
+            isAdmin: function(id) {
+                return $http.get(url + "/isadmin?id=" + id);
             }
         };
     }]);

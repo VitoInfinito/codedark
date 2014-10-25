@@ -13,7 +13,7 @@ import cds.persistence.IDAO;
  * @author 
  */
 @Local
-public interface IGroupUserList extends IDAO<GroupUser, Long> {
+public interface IGroupUserList extends IDAO<GroupUser, String> {
     
-    public GroupUser getBySsnbr(Long ssnbr);
+    public GroupUser getById(String uName);
 }

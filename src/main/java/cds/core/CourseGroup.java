@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  */
 @Entity
-public class CourseGroup extends AbstractEntity {
+public class CourseGroup extends AbstractEntity<Long> {
    
     @OneToMany
     private List<GroupUser> members;
@@ -28,16 +28,14 @@ public class CourseGroup extends AbstractEntity {
     private Course course;
     @Column(nullable = false)
     private String gName;
-    
     private int maxNbr;
     
     public CourseGroup(){}
     
     public CourseGroup(Course c, String n, GroupUser user, int max){
-        super();
         course = c;
         gName = n;
-        members = new ArrayList<GroupUser>();
+        members = new ArrayList<>();
         owner = user;
         maxNbr = max;
         members.add(owner);
@@ -82,7 +80,11 @@ public class CourseGroup extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "CourseGroup{" + "members=" + members.toString() + ", owner=" + owner.toString() + ", course=" + course.toString() + ", gName=" + gName + '}';
+        return "CourseGroup{ " + "members=" 
+                + members.toString() + ", owner=" 
+                + owner.toString() + ", course=" 
+                + course.toString() + ", gName=" 
+                + gName + '}';
     }
 
     public void setMembers(List<GroupUser> members) {

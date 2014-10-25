@@ -30,8 +30,8 @@ and open the template in the editor.
     <table class="table">
         <tr class="selectableCourse" 
             ng-repeat="course in courses" 
-            ng-click="$parent.course.select(course.ccode)" >
-            <td>{{course.ccode}}</td>
+            ng-click="$parent.course.select(course.id.value)" >
+            <td>{{course.id.value}}</td>
             <td>{{course.name}}</td>
         </tr>
         

@@ -9,31 +9,28 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * We do good comments
- * 
- * K is type of id (primary key)
- * 
- * @author 
+ * K is type of id (primary key) 
  * @param <K> type for key (later primary key)
  */
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable  {
+public abstract class AbstractEntity<K> implements Serializable  {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; 
+    private K id; 
    
     protected AbstractEntity(){
     }
     
-    protected AbstractEntity(Long id){
+    protected AbstractEntity(K id){
         this.id = id;
     }
     
-    public Long getId(){
+    public K getId(){
         return id;
     }
     
-    public void setId(Long id) {
+    public void setId(K id) {
         this.id = id;
     }
 

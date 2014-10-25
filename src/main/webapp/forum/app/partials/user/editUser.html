@@ -8,7 +8,7 @@ and open the template in the editor.
     
     <div class="top">
         <h2>Edit User</h2>
-        ID: {{user.id}}
+        ID: {{user.id.value}}
     </div>
     <br>
     <form role="form">
@@ -17,7 +17,7 @@ and open the template in the editor.
             <input type="text" class="form-control input-sign" ng-model="user.lname" required/> 
         </div>
         <div class="form-group">
-            <input type="text" class="form-control input-sign" ng-model="user.ssnbr" required/>
+            <input type="text" class="form-control input-sign" ng-model="user.id.value" disabled/>
             <input type="email" class="form-control input-sign" ng-model="user.email" required/>
             <input type="text" class="form-control input-sign" ng-model="user.pwd" required/>
         </div>
