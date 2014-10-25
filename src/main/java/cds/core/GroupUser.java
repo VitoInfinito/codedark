@@ -43,13 +43,14 @@ public class GroupUser extends AbstractEntity<String>{
         this.fname = fname;
         this.lname = lname;
         belongingTo = new ArrayList<String>();
-//        if(isAdmin) {
-//          belongingTo.add("admin");
-//        }
     }
     
     public void addUserBelongingToGroup(String group) {
         belongingTo.add(group);
+    }
+    
+    public void remUserBelongingToGroup(String group) {
+        belongingTo.remove(group);
     }
 
     public String getEmail() {

@@ -358,6 +358,34 @@ public class ForumResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
+    
+    @PUT
+    @Path(value="admin/add/{id}")
+    public Response addAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In add admin");
+        GroupUser user = userList.find(id);
+        
+        if(!user.getBelongingTo().contains("admin")){
+                user.addUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+            
+        return Response.ok(user).build();
+    }
+    
+    @PUT
+    @Path(value="admin/rem/{id}")
+    public Response removeAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In remove admin");
+        GroupUser user = userList.find(id);
+        
+        if(user.getBelongingTo().contains("admin")){
+                user.remUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+        
+        return Response.ok(user).build();
+    }
  
     @POST
     @Path(value = "group")

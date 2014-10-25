@@ -71,6 +71,12 @@ dbService.factory('DBProxy', ['$http',
             updateUser: function(object){
                 return $http.put(url + "/user/", object);
             },
+            addAdmin: function(id){
+                return $http.put(url + "/admin/add/" + id);
+            },
+            removeAdmin: function(id){
+                return $http.put(url + "/admin/rem/" + id);
+            },
             createCourse: function(object) {
                 return $http.post(url + "/course", object);
             },

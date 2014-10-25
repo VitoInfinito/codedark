@@ -533,7 +533,23 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                     $scope.user.admin = "";
                 }
                 $scope.user.admin = $scope.user.isAdmin;
-                console.log($scope.user.admin);
+                
+                if( $('.isAdmin').prop('checked') ){
+                    DBProxy.addAdmin($scope.user.id.value)
+                            .success(function(user){
+                                console.log("add admin: " + user.belongingTo);
+                            }).error(function(){
+                                console.log("ERROR in addAdmin: ");
+                            });
+                }else{
+                    DBProxy.remAdmin($scope.user.id.value)
+                            .success(function(user){
+                                console.log("removed admin: " + user.belongingTo);
+                            }).error(function(){
+                                console.log("ERROR in addAdmin: ");
+                            });
+                }
+                
                 DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');
@@ -631,8 +647,10 @@ controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
             },
             update: function () {
                 console.log("Update!");
+                
                 DBProxy.updateGroup($scope.group.id.value,$scope.group).success(function () {
                     console.log("Successfuly update: " + $scope.group);
+                    
                 }).error(function () {
                     console.log("Error when updating: " + $scope.group);
                 });
