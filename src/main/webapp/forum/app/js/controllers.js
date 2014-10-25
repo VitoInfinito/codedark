@@ -328,6 +328,7 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                             $location.path('/index');
                         }).error(function (response) {
                     console.log("login failed");
+                    $scope.user.status = 'Login failed, wrong username or password. Forgot password? Contact admin.';
                 });
             },
             signUp: function () {
@@ -336,6 +337,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                         .success(function () {
                             console.log("New user: " + $scope.user);
                             $scope.user.login();
+                        }).error(function(){
+                            console.log("signup fail");
                         });
             }
 
@@ -350,7 +353,6 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 .success(function () {   
                 }).error(function () {
             $location.path("/course");
-            //alert("Access Denied");
 
         });
 
