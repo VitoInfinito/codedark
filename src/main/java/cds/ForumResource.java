@@ -334,8 +334,8 @@ public class ForumResource {
     public Response updateUser(JsonObject j){
         log.log(Level.INFO, "in updateUser");
         try{
-            Long ssnbr = (long) j.getInt("ssnbr");
-            String username = j.getString("id");
+            
+            String username = j.getJsonObject("id").getString("value");
             String email = j.getString("email");
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
@@ -346,7 +346,10 @@ public class ForumResource {
             //Long id = userList.getBySsnbr(ssnbr).getId();
 
             
-            GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname, admin.equals("admin"));
+            GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
+            if(admin.equals("admin")){
+                updatedUser.addUserBelongingToGroup(admin);
+            }  
             userList.update(updatedUser);
             
             return Response.ok(updatedUser).build();
@@ -361,7 +364,7 @@ public class ForumResource {
         log.log(Level.INFO, "INUTI CREATEGROUP");
         Course c = courseList.find(j.getString("course"));
         String name = j.getString("name");
-        GroupUser owner = userList.find(j.getString("owner"));
+        GroupUser owner = userList.find(j.getString("user"));
         int max = j.getInt("maxNbr");
         
         //Check if group already exists
@@ -421,8 +424,12 @@ public class ForumResource {
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
         String lname = j.getString("lname");
+        String admin = j.getString("admin");
         
-        GroupUser newUser = new GroupUser(username, email, pwd, fname, lname, j.getString("admin").equals("admin"));
+        GroupUser newUser = new GroupUser(username, email, pwd, fname, lname);
+        if(admin.equals("admin")){
+            newUser.addUserBelongingToGroup(admin);
+        }
              
         try{
             userList.create(newUser);  
@@ -572,10 +579,10 @@ public class ForumResource {
     }
     
     @GET
-    @Path(value= "groups/{ssnbr}")
+    @Path(value= "groups/{user}")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findUserGroups(@PathParam("id") String id){
-        List<CourseGroup> groups = groupList.getByUser(id);
+    public Response findUserGroups(@PathParam("user") String uName){
+        List<CourseGroup> groups = groupList.getByUser(uName);
         
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups){
         };

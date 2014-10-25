@@ -25,27 +25,27 @@ public class GroupUser extends AbstractEntity<String>{
     public GroupUser(){}
     
     public GroupUser(String username, String email, String pwd, 
-            String fname, String lname, boolean isAdmin) {
+            String fname, String lname) {
         super(username);
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
         belongingTo = new ArrayList<String>();
-        if(isAdmin) {
-          belongingTo.add("admin");
-        }
+//        if(isAdmin) {
+//          belongingTo.add("admin");
+//        }
     }
     
-    public GroupUser(String email, String pwd, String fname, String lname, boolean isAdmin) {
+    public GroupUser(String email, String pwd, String fname, String lname) {
         this.email = email;
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
         belongingTo = new ArrayList<String>();
-        if(isAdmin) {
-          belongingTo.add("admin");
-        }
+//        if(isAdmin) {
+//          belongingTo.add("admin");
+//        }
     }
     
     public void addUserBelongingToGroup(String group) {

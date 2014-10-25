@@ -439,11 +439,11 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
         
-        $scope.ssnbr = getCookie("_userssnbr");
+        $scope.uName = getCookie("_userssnbr");
 
         findUser();
         function findUser() {
-            DBProxy.findUser($scope.ssnbr)
+            DBProxy.findUser($scope.uName)
                     .success(function (user) {
                         $scope.user = user;
                     }).error(function () {
@@ -453,7 +453,8 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
         
         getUserGroups();
         function getUserGroups() {
-            DBProxy.findUserGroups($scope.ssnbr)
+            
+            DBProxy.findUserGroups($scope.uName)
                     .success(function (groups) {
                         $scope.groups = groups;
                     }).error(function () {
@@ -469,25 +470,39 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
                 $scope.members = group.members;
             },
             update: function() {
-                console.log("före login");
+                
                 $scope.user.admin = "gd";
-                DBProxy.login($scope.user.ssnbr, $scope.user.oldPwd)
-                        .success(function(){
-                            $scope.user.pwd = $scope.user.newPwd;
-                            DBProxy.updateUser($scope.user)
-                                .success(function(user){
-                                    $scope.user = user;
-                                    $location.path('/user');
-                                }).error(function(){
-                                    console.log("updateUser: error");
-                                });
-                        }).error(function(){
-                            alert("Wrong password!");
-                            //kvar på samma sida och felmeddelande
+                DBProxy.isAdmin($scope.uName)
+                    .success(function () {
+                        $scope.user.admin = "admin";
+                        changeThings();
+                    }).error(function () {
+                        console.log("is not admin!!!");
+                        changeThings();
                 });
-            }
+                console.log($scope.user.admin);
+            }    
+            
             
         };
+        
+        function changeThings(){    
+            DBProxy.login($scope.uName, $scope.user.oldPwd)
+                .success(function(){
+                    $scope.user.pwd = $scope.user.newPwd;
+                    DBProxy.updateUser($scope.user)
+                        .success(function(user){
+                            $scope.user = user;
+                            $location.path('/user');
+                        }).error(function(){
+                            console.log("updateUser: error");
+                        });
+                }).error(function(){
+                    alert("Wrong password!");
+                    //kvar på samma sida och felmeddelande
+                });
+                
+        }
 
 
     }]);
@@ -581,7 +596,7 @@ controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
                     $scope.group = group;
                     console.log('Editing ' + $scope.group.gName);
                 }).error(function () {
-            console.log('Unable to get group')
+            console.log('Unable to get group');
         });
         $scope.groupEdit = {
             kick: function (member) {

@@ -5,7 +5,7 @@
  */
 package cds.core;
 
-import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
@@ -76,7 +76,7 @@ public class TestPersistence {
     
     @Test
     public void testPersistAUser() {
-        GroupUser u = new GroupUser("a" ,"aaa@a.a", "pwd", "fnmae", "lname", false);
+        GroupUser u = new GroupUser("a" ,"aaa@a.a", "pwd", "fnmae", "lname");
         forum.getUserList().create(u);
         GroupUser u1 = forum.getUserList().find(u.getId());
         assertTrue(u.equals(u1));
@@ -94,7 +94,7 @@ public class TestPersistence {
     public void testPersistAGroup(){
         Course c = new Course("DAT076", "Web-applikationer");
         forum.getCourseList().create(c);
-        GroupUser user = new GroupUser("t", "a@a.se", "1", "test", "er", true);
+        GroupUser user = new GroupUser("t", "a@a.se", "1", "test", "er");
         forum.getUserList().create(user);
         CourseGroup g = new CourseGroup(c, "Code Dark", user, 2);
         forum.getGroupList().create(g);
@@ -135,7 +135,7 @@ public class TestPersistence {
     public void testGroupGetByName(){
         Course c = new Course("DAT998", "Testkursen2");
         forum.getCourseList().create(c);
-        GroupUser user = new GroupUser("t", "a@a.se", "1", "test", "er", true);
+        GroupUser user = new GroupUser("t", "a@a.se", "1", "test", "er");
         forum.getUserList().create(user);
         CourseGroup u = new CourseGroup(c, "Testgruppen", user, 2);
         log.log(Level.WARNING, u+"");

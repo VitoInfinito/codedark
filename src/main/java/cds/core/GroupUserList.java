@@ -35,7 +35,7 @@ public class GroupUserList extends AbstractDAO<GroupUser, String> implements IGr
     @Override
     public GroupUser getById(String uName) {
        for(GroupUser u : findAll()) {
-            if (u.getId() == uName) {
+            if (u.getId().equals(uName)) {
                 return u;
             }
         }
