@@ -43,7 +43,7 @@ and open the template in the editor.
                             <li>{{member.fname}} {{member.lname}}</li>
                         </ul>
                     </table> 
-                    <button ng-hide="$parent.group.hasJoined" ng-click="$parent.group.join($event, group)">Join</button>
+                    <button ng-hide="$parent.group.hasJoined || $parent.group.isFull(group)" ng-click="$parent.group.join($event, group)">Join</button>
                     <button ng-show="$parent.group.hasJoined" ng-click="$parent.group.leave($event, group)">Leave</button>
                 </div>
             </td>

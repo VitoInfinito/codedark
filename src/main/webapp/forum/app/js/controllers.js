@@ -58,6 +58,16 @@ controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
                 }
                 
             },
+            isFull: function(group){
+                
+                if (typeof $scope.group !== 'undefined') {
+                    
+                    return group.members.length === group.maxNbr ;
+                } else {
+                    return true;
+                }
+                
+            },
             join: function (e, group) {
                 console.log('Joining ' + group.gName);
                 e.stopPropagation();
@@ -137,7 +147,7 @@ controllers.controller('GroupAddController', ['$scope', '$location', 'DBProxy',
             createGroup: function () {
                 $scope.group.user = getCookie("_userssnbr");
                 $scope.group.course = $scope.course.id.value;
-                var cc = $scope.group.course;
+
                 DBProxy.createGroup($scope.group)
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
