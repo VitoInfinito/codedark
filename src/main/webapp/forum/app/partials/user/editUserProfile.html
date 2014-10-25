@@ -4,16 +4,20 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-        <!--- make it possible to add a personal presentation or upload picture
-        change password and stuff
-        editUser should be for admin if someone forgets password.--->
-    </body>
-</html>
+<div id="input">
+    <div class="top">
+        <h2>Edit Information</h2>
+    </div>
+    <br>
+    <form role="form">
+        <div class="form-group">
+            <input type="text" class="form-control input-sign" ng-model="user.fname"/>
+            <input type="text" class="form-control input-sign" ng-model="user.lname"/>
+            <input type="email" class="form-control input-sign" ng-model="user.email"/>
+            <input type="password" class="form-control input-sign" ng-model="user.oldPwd" placeholder="Old password">
+            <input type="password" class="form-control input-sign" ng-model="user.newPwd" placeholder="New password">
+            <button class="btn btn-default" ng-click="group.update()">Save</button>
+        </div>    
+    </form>
+
+</div>

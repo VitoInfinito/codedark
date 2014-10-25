@@ -38,8 +38,8 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-controllers.controller('GroupController', ['$scope', '$routeParams', '$location', 'DBProxy',
-    function ($scope, $location, $routeParams, DBProxy) {
+controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
 
 
 
@@ -100,8 +100,8 @@ controllers.controller('GroupController', ['$scope', '$routeParams', '$location'
 
     }]);
 
-controllers.controller('GroupAddController', ['$scope', '$routeParams', '$location', 'DBProxy',
-    function ($scope, $location, $routeParams, DBProxy) {
+controllers.controller('GroupAddController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
 
         var wlh = window.location.hash;
         DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
@@ -119,11 +119,7 @@ controllers.controller('GroupAddController', ['$scope', '$routeParams', '$locati
                             console.log("Group created" + $scope.group.course);
                             console.log($location.path("/index"));
                             $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
-//                            console.log($location.path());
-                            // console.log($location.path());
-                            // $location.path('/index').replace();
-                            // $scope.$apply();
-                            //console.log($location.path());
+                                $location.path('/index');
 
                         }).error(function () {
                     console.log("errorsomething");
@@ -416,8 +412,9 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
 
     }]);
 
-controllers.controller('UserProfileController', ['$scope', '$routeParams', '$location', 'DBProxy',
-    function ($scope, $location, $routeParams, DBProxy) {
+controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy',
+    function ($scope, $location, DBProxy) {
+        
         $scope.ssnbr = getCookie("_userssnbr");
         
         findUser();
@@ -429,7 +426,6 @@ controllers.controller('UserProfileController', ['$scope', '$routeParams', '$loc
                 console.log("findUser userprofilecontr: error");
             });
         }
-      //  DBProxy.findUser($scope.user.ssnbr);
        
         getUserGroups();
         function getUserGroups() {
@@ -441,13 +437,34 @@ controllers.controller('UserProfileController', ['$scope', '$routeParams', '$loc
             });
         }
         
+
+        
         $scope.group = {
             toggle: function (group) {
                 console.log("in toggle group - profile");
                 console.log("gName of clicked group: " + group.gName);
                 $('#toggleable' + group.gName).collapse('toggle');
                 $scope.members = group.members;
+            },
+            update: function() {
+                console.log("före login");
+                $scope.user.admin = "gd";
+                DBProxy.login($scope.user.ssnbr, $scope.user.oldPwd)
+                        .success(function(){
+                            $scope.user.pwd = $scope.user.newPwd;
+                            DBProxy.updateUser($scope.user)
+                                .success(function(user){
+                                    $scope.user = user;
+                                    $location.path('/user');
+                                }).error(function(){
+                                    console.log("updateUser: error");
+                                });
+                        }).error(function(){
+                            alert("Wrong password!");
+                            //kvar på samma sida och felmeddelande
+                });
             }
+            
         };
         
         

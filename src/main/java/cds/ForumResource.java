@@ -319,12 +319,18 @@ public class ForumResource {
     @Path(value = "user")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateUser(JsonObject j){
+        log.log(Level.INFO, "in updateUser");
         try{
             Long ssnbr = (long) j.getInt("ssnbr");
-            String email = j.getString("email");
+            log.log(Level.INFO, "" +j.getInt("ssnbr"));
             String pwd = j.getString("pwd");
+            log.log(Level.INFO, pwd);
+            String email = j.getString("email");
+            log.log(Level.INFO, email);
             String fname = j.getString("fname");
+            log.log(Level.INFO, fname);
             String lname = j.getString("lname");
+            log.log(Level.INFO, lname);
             log.log(Level.INFO, j.getString("admin"));
             String admin = j.getString("admin");
             //log.log(Level.INFO, ""+j.getInt("id"));
