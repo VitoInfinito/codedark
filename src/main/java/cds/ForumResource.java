@@ -279,6 +279,14 @@ public class ForumResource {
     @Path(value = "course/{id}")
     public Response deleteCourse(@PathParam(value= "id") final String id){
         try {
+            
+            Course c = courseList.find(id);
+            for(CourseGroup group: groupList.findAll()){
+                if(group.getCourse().equals(c)){
+                    groupList.delete(group.getId());
+                }
+            }
+            
             courseList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
@@ -303,14 +311,12 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateGroup(JsonObject j, @PathParam(value= "id") Long id){
         try {
-            String name = j.getString("gName");
             Course c = groupList.find(id).getCourse();
             CourseGroup cg1 = groupList.find(id);
             List<GroupUser> list = cg1.getMembers();
             log.log(Level.INFO, "Updating: " + cg1);
-            CourseGroup cg = new CourseGroup(id, c, name, list, cg1.getOwner());
+            CourseGroup cg = new CourseGroup(id, c, j.getString("gName"), list, cg1.getOwner(), j.getInt("maxNbr"));
             groupList.update(cg);
-            // Convert old to HTTP response
             return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -628,12 +634,16 @@ public class ForumResource {
     @Path(value = "isadmin")
     public Response isAdmin(@QueryParam("id") String id) {
         GroupUser u = userList.find(id);
-        if(u.getBelongingTo().contains("admin")) {
-            log.log(Level.INFO, "Found admin: " + u.toString());
-            return Response.ok().build();
+        if(u != null) {
+            if(u.getBelongingTo().contains("admin")) {
+                log.log(Level.INFO, "Found admin: " + u.toString());
+                return Response.status(Response.Status.OK).entity("User is admin").build();
+            }else{
+                return Response.status(Response.Status.OK).entity("User not admin").build();
+            }
         }
         
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
     
 
