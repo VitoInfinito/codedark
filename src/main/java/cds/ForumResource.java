@@ -143,15 +143,27 @@ public class ForumResource {
             @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
         log.log(Level.INFO, "INUTI LEAVEGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
-
-        log.log(Level.INFO, "Username: " + user);
+        
+        
         GroupUser gu = userList.find(user);
-        log.log(Level.INFO, "User: " + gu);
+        boolean isOwner = false;
+        if(gu.equals(cg.getOwner())){
+            isOwner = true;
+        }
+        
         List<GroupUser> members = cg.getMembers();
-        log.log(Level.INFO, "Members: " + members);
-        cg.getMembers().remove(gu);
+        members.remove(gu);
+        
         groupList.update(cg);
-        log.log(Level.INFO, "Members: " + members);
+        if(members.isEmpty()){
+            deleteGroup(cg.getId());
+            isOwner = false;
+        }
+        if(isOwner){
+            cg.setOwner(members.get(0));
+            groupList.update(cg);
+            
+        }
         
         try{
             return Response.ok(cg).build();
