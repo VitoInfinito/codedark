@@ -340,8 +340,9 @@ public class ForumResource {
             String pwd = j.getString("pwd");
             String fname = j.getString("fname");
             String lname = j.getString("lname");
-            log.log(Level.INFO, j.getString("admin"));
+            
             String admin = j.getString("admin");
+            log.log(Level.INFO, admin);
             //log.log(Level.INFO, ""+j.getInt("id"));
             //Long id = userList.getBySsnbr(ssnbr).getId();
 
