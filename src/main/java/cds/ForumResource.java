@@ -634,12 +634,16 @@ public class ForumResource {
     @Path(value = "isadmin")
     public Response isAdmin(@QueryParam("id") String id) {
         GroupUser u = userList.find(id);
-        if(u.getBelongingTo().contains("admin")) {
-            log.log(Level.INFO, "Found admin: " + u.toString());
-            return Response.ok().build();
+        if(u != null) {
+            if(u.getBelongingTo().contains("admin")) {
+                log.log(Level.INFO, "Found admin: " + u.toString());
+                return Response.status(Response.Status.OK).entity("User is admin").build();
+            }else{
+                return Response.status(Response.Status.OK).entity("User not admin").build();
+            }
         }
         
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        return Response.status(Response.Status.NOT_FOUND).build();
     }
     
 

@@ -235,13 +235,16 @@ controllers.controller('MenuController', ['$scope', '$location', '$routeParams',
         var admin = false;
         var checkIfAdmin = function () {
             DBProxy.isAdmin(getCookie("_userssnbr"))
-                    .success(function () {
-                        console.log("Admin found!");
-                        admin = true;
+                    .success(function (response) {
+                        if(response === "User is admin") {
+                            console.log("Admin found!");
+                            admin = true;
+                        }else {
+                            console.log("Access Denied!");
+                            admin = false;
+                        }
                     }).error(function () {
-
-                console.log("Access Denied!");
-
+                        console.log("Error when trying to locate admin");
             });
         };
 
@@ -347,12 +350,16 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         $scope.count = 0;
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
-                .success(function () {   
+                .success(function (response) {
+                    if(response === "User is admin") {
+                            console.log("Admin found!");
+                        }else {
+                            console.log("Access Denied!");
+                            $location.path("/course");
+                        }
                 }).error(function () {
-            $location.path("/course");
-            //alert("Access Denied");
-
-        });
+                    console.log("Error when trying to find admin");
+                });
 
 
         $scope.scraper = {
@@ -534,14 +541,15 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
                 
                 $scope.user.admin = "gd";
                 DBProxy.isAdmin($scope.uName)
-                    .success(function () {
-                        $scope.user.admin = "admin";
+                    .success(function (response) {
+                        if(response === "User is admin") {
+                            $scope.user.admin = "admin";
+                            changeThings();
+                        }
                         changeThings();
-                    }).error(function () {
-                        console.log("is not admin!!!");
-                        changeThings();
+                }).error(function () {
+                    console.log("Error when trying to find admin");
                 });
-                console.log($scope.user.admin);
             },
             leave: function (group) {
                 console.log('Leaving ' + group.gName);
@@ -616,12 +624,21 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
             },
             isAdmin: function() {
                 DBProxy.isAdmin(getCookie("_userssnbr"))
-                .success(function () {
-                    console.log("Admin!");
+                .success(function (response) {
+                    if(response === "User is admin") {
+                        console.log("Admin!");
+                    }else {
+                        console.log("Access Denied!");
+                        $location.path("/course");
+                    }
+                    
                 }).error(function () {
-                    $location.path("/course");
-                    console.log("Access Denied!");
+                    console.log("Error when trying to find admin");
                 });
+                
+                
+                
+                
             },
             delete: function() {
                 console.log("in delete user");
@@ -686,13 +703,16 @@ controllers.controller('EditCourseController', ['$scope', '$location', '$routePa
                 });
 
         DBProxy.isAdmin(getCookie("_userssnbr"))
-                .success(function () {
-                    console.log("Admin!");
+                .success(function (response) {
+                    if(response === "User is admin") {
+                        console.log("Admin found!");
+                    }else {
+                        console.log("Access Denied!");
+                        $location.path("/course");
+                    }
                 }).error(function () {
-            $location.path("/course");
-            console.log("Access Denied!");
-
-        });
+                    console.log("Error when trying to find user");
+                });
     }]);
 
 controllers.controller('EditGroupController', ['$scope', '$location', '$routeParams', 'DBProxy',
