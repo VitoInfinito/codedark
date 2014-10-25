@@ -620,6 +620,22 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
                     $location.path("/course");
                     console.log("Access Denied!");
                 });
+            },
+            delete: function() {
+                console.log("in delete user");
+                DBProxy.deleteUser($scope.user.id.value)
+                        .success(function(){
+                            console.log("User deleted");
+                        }).error(function(){
+                            console.log("ERROR IN DELETE USER");
+                        });    
+            },
+            showDeleteModal: function() {
+                console.log("in show delete modal");
+                $("#dialog").html("Confirm Dialog Box");
+
+                // TODO: Fix modal before delete!
+                $("#dialog").dialog('open');
             }
         };
 

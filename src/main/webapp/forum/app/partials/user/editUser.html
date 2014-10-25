@@ -21,10 +21,14 @@ and open the template in the editor.
             <input type="email" class="form-control input-sign" ng-model="user.email" required/>
             <input type="text" class="form-control input-sign" ng-model="user.pwd" required/>
         </div>
-        
-        <input type="checkbox" class="isAdmin" ng-model="user.isAdmin" ng-true-value="admin" ng-false-value="notAdmin" value="{{user.admin}}">Admin<br><br>
-        
-        <button class="btn btn-default" ng-click="userEdit.update()">Update</button>
+        <div class="form-group">
+            <input type="checkbox" class="isAdmin" ng-model="user.isAdmin" ng-true-value="admin" ng-false-value="notAdmin" value="{{user.admin}}">Admin<br><br>
+            <button class="btn btn-default" ng-click="userEdit.update()">Update</button>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-default" ng-click="userEdit.delete()">Delete user</button>
+            <div id="dialog"></div>
+        </div>
     </form>
     
     
