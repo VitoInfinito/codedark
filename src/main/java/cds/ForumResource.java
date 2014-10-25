@@ -123,6 +123,7 @@ public class ForumResource {
         log.log(Level.INFO, "Members: " + members.toString());
         
         cg.getMembers().add(gu);
+        groupList.update(cg);
         log.log(Level.INFO, "Members: " + members.toString());
         
         try{
@@ -136,10 +137,10 @@ public class ForumResource {
     
     
     @PUT
-    @Path(value = "leave/{ccode}/{gName}/{user}")
+    @Path(value = "leave")
     @Produces(value={MediaType.APPLICATION_JSON})
-    public Response leaveGroup(@PathParam(value= "ccode") String ccode, 
-            @PathParam(value= "gName") String gName, @PathParam(value= "user") String user){
+    public Response leaveGroup(@QueryParam(value= "ccode") String ccode, 
+            @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
         log.log(Level.INFO, "INUTI LEAVEGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
 
@@ -149,6 +150,7 @@ public class ForumResource {
         List<GroupUser> members = cg.getMembers();
         log.log(Level.INFO, "Members: " + members);
         cg.getMembers().remove(gu);
+        groupList.update(cg);
         log.log(Level.INFO, "Members: " + members);
         
         try{
@@ -608,7 +610,7 @@ public class ForumResource {
             return Response.ok().build();
         }
         
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.status(Response.Status.UNAUTHORIZED).build();
     }
     
 

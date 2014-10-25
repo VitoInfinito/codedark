@@ -43,38 +43,57 @@ controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
         
         $scope.pageSize = '5';
         $scope.currentPage = 0;
-
+        
         $scope.group = {
             toggle: function (group) {
                 console.log("gName of clicked group: " + group.gName);
-                $('#toggleable' + group.id.value).collapse('toggle');
+                $('.toggleable').hide();
+                $('#toggleable' + group.id.value).show();
                 $scope.members = group.members;
-                console.log("");
+                $scope.group.hasJoined = false;
+                for(var i in group.members) {
+                    if(group.members[i].id.value === getCookie('_userssnbr')) {
+                        $scope.group.hasJoined = true;
+                    }
+                }
+                
             },
             join: function (e, group) {
-                console.log('Join! ' + group.gName);
+                console.log('Joining ' + group.gName);
                 e.stopPropagation();
 
                 //NEEDS FIXING - DOESN'T KEEP UPDATE & LENGTHPROBLEM
                 var user = getCookie("_userssnbr");
                 DBProxy.joinGroup(group.course.id.value, group.gName, user)
-                        .success(function (group) {
-                           console.log("New members: " + group.members);
-                           console.log("Old members: " + $scope.members);
-                           $scope.members = group.members;
-                           updateMemberNbr($scope.members);
+                        .success(function (foundGroup) {
+                           getRangeGroups(foundGroup);
                         });
             },
-            updateMemberNbr: function(members){
-                $parent.group.members.length = members.length;
-            }
+            leave: function (e, group) {
+                console.log('Leaving ' + group.gName);
+                e.stopPropagation();
+
+                //NEEDS FIXING - DOESN'T KEEP UPDATE & LENGTHPROBLEM
+                var user = getCookie("_userssnbr");
+                DBProxy.leaveGroup(group.course.id.value, group.gName, user)
+                        .success(function (foundGroup) {
+                           getRangeGroups(foundGroup);
+                        });
+            },
+            hasJoined: false
         };
         
-        var getRangeGroups = function() {
+        var getRangeGroups = function(toggleGroup) {
             var fst = $scope.currentPage * $scope.pageSize;
             DBProxy.findRangeGroups($scope.course.id.value, fst, $scope.pageSize)
                     .success(function (groups) {
                         $scope.groups = groups;
+                
+                        //Still not working, trying to open the group that was selected
+                        if(typeof toggleGroup !== 'undefined') {
+                           $scope.group.toggle(toggleGroup); 
+                        }
+                        
                         console.log("groups: " + groups);
                     }).error(function () {
                 console.log("findRangeGroups: error");
@@ -210,7 +229,7 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
         var checkIfAdmin = function () {
             DBProxy.isAdmin(getCookie("_userssnbr"))
                     .success(function () {
-                        console.log("Admin!");
+                        console.log("Admin found!");
                         admin = true;
                     }).error(function () {
 
