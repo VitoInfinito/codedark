@@ -40,7 +40,7 @@ and open the template in the editor.
                         ng-click="$parent.group.toggle(group)">
                         <td>{{group.gName}}</td>
                         <td>{{group.course.id.value}}</td>
-                        <td>?/{{group.maxNbr}}
+                        <td>{{group.members.length}}/{{group.maxNbr}}
                             <div id="toggleable{{group.gName}}" hidden>
                                 <table class="table">
                                     <tr ng-repeat="member in members">
@@ -67,9 +67,11 @@ and open the template in the editor.
             <div class="fomr-group">
                 <button ng-controller="NavigationCtrl" ng-click="navigate('/editUserProfile')" class="btn btn-default">Change Information</button>
             </div>
+            <div class="col-md-6 adminTableWrapper">
+            <h3> User description</h3>
+            </div>
         </div>
-        <div class="col-md-6 adminTableWrapper">
-        </div>
+        
         
     </div>
     
