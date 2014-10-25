@@ -149,7 +149,8 @@ controllers.controller('GroupAddController', ['$scope', '$location', '$routePara
                         .success(function () {
                             console.log("Group created" + $scope.group.course);
                             $scope.group.status = 'Group ' + $scope.group.name + ' created effectively.';
-                                $location.path('/index');
+                            
+                            $location.path('/course/' + $scope.group.course);
 
                         }).error(function () {
                     console.log("errorsomething");
@@ -456,7 +457,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
             },
             createNewGroup: function () {
                 var newGroup = {
-                    owner: $scope.group.owner.id.value,
+                    user: $scope.group.owner.id.value,
                     name: $scope.group.name,
                     course: $scope.group.course,
                     maxNbr: $scope.group.maxNbr
@@ -465,6 +466,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 DBProxy.createGroup(newGroup)
                         .success(function () {
                             $scope.group.status = "Group " + $scope.group.name + " created successfuly";
+                            getGroups();
                         }).error(function () {
                     $scope.group.status = "Error when creating " + $scope.group.name;
                 });
@@ -605,7 +607,7 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
                 console.log("about to updateUser in contr");
                 DBProxy.updateUser($scope.user)
                         .success(function () {
-                            alert('Updated!');
+                            
                             console.log('Updated ' + $scope.user.id);
                             $location.path('/hemligasidan');
                         }).error(function () {
@@ -659,7 +661,7 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
             update: function () {
                 DBProxy.updateCourse($scope.course)
                         .success(function () {
-                            alert('Updated!');
+                            
                             console.log('Updated ' + $scope.course.id.value);
                             $location.path('/hemligasidan');
                         }).error(function () {
@@ -719,6 +721,7 @@ controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
                 
                 DBProxy.updateGroup($scope.group.id.value,$scope.group).success(function () {
                     console.log("Successfuly update: " + $scope.group);
+                    $location.path('/hemligasidan');
                     
                 }).error(function () {
                     console.log("Error when updating: " + $scope.group);
