@@ -478,6 +478,15 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
             search: function () {
                 clearTimeout(searchUserTimeout);
                 searchUserTimeout = setTimeout(getUsers, delay);
+            }, 
+            signUp: function(user){
+                DBProxy.createUser($scope.user)
+                        .success(function (userCreated) {
+                            console.log("New user: " + JSON.stringify(userCreated));
+                            $scope.user.status = "User " + userCreated.id.value + "created effectively";
+                        }).error(function(){
+                            console.log("ERROR in createUser from admin");
+                        });
             }
         };
 

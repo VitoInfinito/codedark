@@ -447,24 +447,25 @@ public class ForumResource {
     @Path(value = "user")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
-        log.log(Level.INFO, j.getString("id"));
+        log.log(Level.INFO, j.getJsonObject("id").getString("value"));
         log.log(Level.INFO, j.getString("email"));
         log.log(Level.INFO, j.getString("pwd"));
         log.log(Level.INFO, j.getString("fname"));
         log.log(Level.INFO, j.getString("lname"));
         
-        String username = j.getString("id");
+        String username = j.getJsonObject("id").getString("value");
         String email = j.getString("email");
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
         String lname = j.getString("lname");
         
         GroupUser newUser = new GroupUser(username, email, pwd, fname, lname);
-                     
+        log.log(Level.INFO, newUser.toString());
+        
         try{
             userList.create(newUser);  
-            URI uri = uriInfo.getAbsolutePathBuilder().path(newUser.getId()).build(newUser);
-            return Response.created(uri).build();
+//            URI uri = uriInfo.getAbsolutePathBuilder().path(newUser.getId()).build(newUser);
+            return Response.ok(userList.find(newUser.getId())).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }

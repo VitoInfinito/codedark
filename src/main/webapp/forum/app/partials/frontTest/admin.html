@@ -10,32 +10,54 @@ and open the template in the editor.
     </div>
     <div class="row">
         <hr>
-        <div class="col-md-6">
-             <h3>Add new course</h3>
+        <div class="col-md-4">
+             <h3>Add new Course</h3>
              <form role="form">
-             <div class="form-group">
-                <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" />
-                <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
-            </div>
-
-            <button cllist ass="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
-            <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape All Courses</button>
+                <div class="form-group">
+                   <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" />
+                   <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
+               </div>
+               <div class="form-group">
+                   <button class="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
+                   <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape All Courses</button>
+               </div>
             </form>
             <br>
             <!--TODO: Change to class -->
             <span ng-bind="course.status" style="color:green"></span>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <h3>Add new User</h3>
+            <form role="form">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sign" ng-model="user.id.value" placeholder="Choose a username!" required/>
+                    <input type="password" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="First name" required/>
+                    <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="Last name" required/>
+                    <input type="email" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" ng-click="user.signUp()">Create User</button>
+                </div>
+            </form>
+            <br>
+            <!--TODO: Change to class -->
+            <span ng-bind="user.status" style="color:green"></span>
+        </div>
+        <div class="col-md-4">
             <h3>Add new Group</h3>
              <form role="form">
-             <div class="form-group">
-                <input type="text" class="form-control" ng-model="group.owner.id.value" placeholder="Owner UserName" />
-                <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" />
-                <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" />
-                <input type="text" class="form-control" ng-model="group.course" placeholder="Course" />
-            </div>
-
-            <button class="btn btn-default" ng-click="group.createNewGroup()">Create Group</button>
+                <div class="form-group">
+                   <input type="text" class="form-control" ng-model="group.owner.id.value" placeholder="Owner UserName" />
+                   <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" />
+                   <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" />
+                   <input type="text" class="form-control" ng-model="group.course" placeholder="Course code" />
+               </div>
+               <div class="form-group">
+                   <button class="btn btn-default" ng-click="group.createNewGroup()">Create Group</button>
+               </div>
             </form>
             <br>
             <!--TODO: Change to class -->
