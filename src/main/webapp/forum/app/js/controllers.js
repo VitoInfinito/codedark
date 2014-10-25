@@ -525,14 +525,16 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
 
         console.log("inside userEdit");
         
-
         $scope.userEdit = {
             
             update: function () {
+                console.log("just entered update in useredit");
+                
                 if (typeof $scope.user.admin === 'undefined') {
                     $scope.user.admin = "";
                 }
-                $scope.user.admin = $scope.user.isAdmin;
+                
+                console.log("filled admin with empty string");
                 
                 if( $('.isAdmin').prop('checked') ){
                     DBProxy.addAdmin($scope.user.id.value)
@@ -541,8 +543,8 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                             }).error(function(){
                                 console.log("ERROR in addAdmin: ");
                             });
-                }else{
-                    DBProxy.remAdmin($scope.user.id.value)
+                }else if( !$('.isAdmin').prop('checked') ){
+                    DBProxy.removeAdmin($scope.user.id.value)
                             .success(function(user){
                                 console.log("removed admin: " + user.belongingTo);
                             }).error(function(){
@@ -550,6 +552,7 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                             });
                 }
                 
+                console.log("about to updateUser in contr");
                 DBProxy.updateUser($scope.user)
                         .success(function () {
                             alert('Updated!');

@@ -341,16 +341,7 @@ public class ForumResource {
             String fname = j.getString("fname");
             String lname = j.getString("lname");
             
-            String admin = j.getString("admin");
-            log.log(Level.INFO, admin);
-            //log.log(Level.INFO, ""+j.getInt("id"));
-            //Long id = userList.getBySsnbr(ssnbr).getId();
-
-            
             GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
-            if(admin.equals("admin")){
-                updatedUser.addUserBelongingToGroup(admin);
-            }  
             userList.update(updatedUser);
             
             return Response.ok(updatedUser).build();
