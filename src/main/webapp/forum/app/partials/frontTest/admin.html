@@ -52,9 +52,14 @@ and open the template in the editor.
             <table class="table">
                 <thead><h3>List of all users</h3></thead>
                 <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search User"/>
+                <thead>
+                <td>Name</td><td>Username</td><td>Admin</td>
+                </thead>
                 <tbody>
                     <tr ng-repeat="user in users" >
-                        <td>{{user.fname}} {{user.lname}} {{user.id.value}} {{user.isAdmin}}</td>
+                        <td>{{user.fname}} {{user.lname}}</td>
+                        <td>{{user.id.value}}</td>
+                        <td>{{user.isAdmin}}</td>
                         <td><a href="#/hemligasidan/editUser/{{user.id.value}}">Edit User</a></td>
                     </tr>
                 </tbody>
@@ -69,10 +74,14 @@ and open the template in the editor.
             <div class="adminTableWrapper">
                 <!-- <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>-->
                 <table class="table">
+                    <thead>
+                        <td>Course code</td><td>Name</td>
+                    </thead>
                     <tbody>
                         <tr ng-repeat="course in courses" >
-                            <td>{{course.id.value}} {{course.name}}</td>
-                            <td><a href="#/hemligasidan/editCourse/{{course.id.value}}">Edit</a></td>
+                            <td>{{course.id.value}}</td>
+                            <td>{{course.name}}</td>
+                            <td><a href="#/hemligasidan/editCourse/{{course.id.value}}">Edit Course</a></td>
                         </tr>
                     </tbody>
 
@@ -92,10 +101,16 @@ and open the template in the editor.
             <input type="text" class="form-control input-sign" ng-change="group.search()" ng-value="" ng-model="group.searchfield" placeholder="Search Group"/>
             <div class="adminTableWrapper">
                 <table class="table">
+                    <thead>
+                        <td>Group number</td><td>Group name</td><td>Course</td><td>Owner</td>
+                    </thead>
                     <tbody>
                         <tr ng-repeat="group in groups" >
-                            <td>{{group.id.value}} {{group.gName}} {{group.owner.fname}}</td>
-                            <td><a href="#/hemligasidan/editGroup/{{group.id.value}}">Edit</a></td>
+                            <td>{{group.id.value}}</td> 
+                            <td>{{group.gName}}</td> 
+                            <td>{{group.course.id.value}}</td>
+                            <td>{{group.owner.fname}}</td>
+                            <td><a href="#/hemligasidan/editGroup/{{group.id.value}}">Edit Group</a></td>
                         </tr>
                     </tbody>
 
@@ -103,9 +118,5 @@ and open the template in the editor.
             </div>
         </div>
 
-        <!-- ADD NEW COURSE-->
-        <div class="col-md-6">
-
-        </div>
     </div>
 </div>

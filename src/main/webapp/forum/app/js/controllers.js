@@ -349,7 +349,9 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 
                         $scope.users.forEach( function(user){
                             if( $.inArray('admin', user.belongingTo) !== -1 ){
-                                user.isAdmin = "admin";
+                                user.isAdmin = "yes";
+                            }else{
+                                user.isAdmin = "no";
                             }
                         });
                 
