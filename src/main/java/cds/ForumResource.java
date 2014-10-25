@@ -279,6 +279,14 @@ public class ForumResource {
     @Path(value = "course/{id}")
     public Response deleteCourse(@PathParam(value= "id") final String id){
         try {
+            
+            Course c = courseList.find(id);
+            for(CourseGroup group: groupList.findAll()){
+                if(group.getCourse().equals(c)){
+                    groupList.delete(group.getId());
+                }
+            }
+            
             courseList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
