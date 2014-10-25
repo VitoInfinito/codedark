@@ -472,7 +472,6 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
         
         getUserGroups();
         function getUserGroups() {
-            
             DBProxy.findUserGroups($scope.uName)
                     .success(function (groups) {
                         $scope.groups = groups;
@@ -483,10 +482,16 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
         
         $scope.group = {
             toggle: function (group) {
-                console.log("in toggle group - profile");
-                console.log("gName of clicked group: " + group.gName);
-                $('#toggleable' + group.gName).collapse('toggle');
+                console.log("Clicked on group " + group.gName);
+                $('.toggleable').hide();
+                $('#toggleable' + group.id.value).show();
                 $scope.members = group.members;
+                $scope.group.hasJoined = false;
+                for(var i in group.members) {
+                    if(group.members[i].id.value === getCookie('_userssnbr')) {
+                        $scope.group.hasJoined = true;
+                    }
+                }
             },
             update: function() {
                 
@@ -500,7 +505,14 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
                         changeThings();
                 });
                 console.log($scope.user.admin);
-            }    
+            },
+            leave: function (group) {
+                console.log('Leaving ' + group.gName);
+                DBProxy.leaveGroup(group.course.id.value, group.gName, $scope.user.id.value)
+                        .success(function (foundGroup) {
+                           getUserGroups();
+                        });
+            }
             
             
         };
@@ -533,7 +545,6 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
         
 
         $scope.userEdit = {
-            
             update: function () {
                 console.log('Inside user.update() in AdminController');
                 if (typeof $scope.user.admin === 'undefined') {

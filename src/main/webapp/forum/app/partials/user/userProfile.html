@@ -25,34 +25,38 @@ and open the template in the editor.
             pretty picture
             <br>
         </div>
-        <div class="col-md-6 adminTableWrapper">
-            <table class="table">
-                <thead><h3>List of groups</h3></thead>
-                <thead>
-                    <td>Group</td>
-                    <td>Course</td>
-                    <td>Members</td>
-                </thead>
-                <tbody>
-                    <tr class ="selectableCourse" 
-                        id="collapsible"
-                        ng-repeat="group in groups" 
-                        ng-click="$parent.group.toggle(group)">
-                        <td>{{group.gName}}</td>
-                        <td>{{group.course.id.value}}</td>
-                        <td>{{group.members.length}}/{{group.maxNbr}}
-                            <div id="toggleable{{group.gName}}" hidden>
-                                <table class="table">
-                                    <tr ng-repeat="member in members">
-                                    <td>{{member.fname}} {{member.lname}}</td>
-                                    </tr>
-                                </table>  
-                           </div>
-                        </td>
-                    </tr>
-                </tbody>
+        <div class="col-md-6">
+            <h3>List of groups</h3>
+            <div class="adminTableWrapper">
+                <table class="table">
+                    <thead>
+                        <td>Group</td>
+                        <td>Course</td>
+                        <td>Members</td>
+                    </thead>
+                    <tbody>
+                        <tr class ="selectable-row" 
+                            id="collapsible"
+                            ng-repeat="group in groups" 
+                            ng-click="$parent.group.toggle(group)">
+                            <td>{{group.gName}}</td>
+                            <td>{{group.course.id.value}}</td>
+                            <td>{{group.members.length}}/{{group.maxNbr}}
+                                <div id="toggleable{{group.id.value}}" class="toggleable" hidden>
+                                    <table class="table">
+                                        <tr ng-repeat="member in members">
+                                        <td class="memberList">{{member.fname}} {{member.lname}}</td>
+                                        </tr>
+                                    </table>  
+                                    <button ng-click="$parent.group.leave(group)">Leave</button>
+                               </div>
+                            </td>
+                        </tr>
+                    </tbody>
 
-            </table>
+
+                </table>
+            </div>
         </div>
         <div class="col-md-6 adminTableWrapper">
             <h3>User Information</h3>
@@ -62,14 +66,14 @@ and open the template in the editor.
                 <br>
                 Email address: {{user.email}}
                 <br>
-            </h5
+            </h5>
             
-            <div class="fomr-group">
+            <div class="form-group">
                 <button ng-controller="NavigationCtrl" ng-click="navigate('/editUserProfile')" class="btn btn-default">Change Information</button>
             </div>
-            <div class="col-md-6 adminTableWrapper">
+        </div>
+        <div class="col-md-6 adminTableWrapper">
             <h3> User description</h3>
-            </div>
         </div>
         
         

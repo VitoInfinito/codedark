@@ -31,10 +31,7 @@ public class GroupUser extends AbstractEntity<String>{
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
-        belongingTo = new ArrayList<String>();
-//        if(isAdmin) {
-//          belongingTo.add("admin");
-//        }
+        belongingTo = new ArrayList<>();
     }
     
     public GroupUser(String email, String pwd, String fname, String lname) {
@@ -42,10 +39,7 @@ public class GroupUser extends AbstractEntity<String>{
         this.pwd = pwd;
         this.fname = fname;
         this.lname = lname;
-        belongingTo = new ArrayList<String>();
-//        if(isAdmin) {
-//          belongingTo.add("admin");
-//        }
+        belongingTo = new ArrayList<>();
     }
     
     public void addUserBelongingToGroup(String group) {
