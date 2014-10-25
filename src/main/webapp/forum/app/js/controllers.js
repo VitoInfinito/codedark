@@ -454,6 +454,11 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
             DBProxy.findUser($scope.uName)
                     .success(function (user) {
                         $scope.user = user;
+                
+                        if( $.inArray('admin', $scope.user.belongingTo) !== -1){
+                            $scope.user.isAdmin = 'Admin';
+                        }
+                        
                     }).error(function () {
                 console.log("findUser userprofilecontr: error");
             });
