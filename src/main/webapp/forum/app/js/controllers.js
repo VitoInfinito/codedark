@@ -38,8 +38,8 @@ controllers.controller('NavigationCtrl', ['$scope', '$location',
         };
     }]);
 
-controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
+controllers.controller('GroupController', ['$scope', '$location', '$routeParams', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
         
         $scope.pageSize = '5';
         $scope.currentPage = 0;
@@ -99,8 +99,8 @@ controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
                 console.log("findRangeGroups: error");
             });
         };
-
-        DBProxy.findCourse(window.location.hash.substring(9))
+        
+        DBProxy.findCourse($routeParams.cc)
                 .success(function (course) {
                     $scope.course = course;
                     getRangeGroups();
@@ -123,12 +123,9 @@ controllers.controller('GroupController', ['$scope', '$location', 'DBProxy',
         
     }]);
 
-controllers.controller('GroupAddController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
-
-
-        var wlh = window.location.hash;
-        DBProxy.findCourse(wlh.substring(9, wlh.length - 9))
+controllers.controller('GroupAddController', ['$scope', '$location', '$routeParams','DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
+        DBProxy.findCourse($routeParams.id)
                 .success(function (course) {
                     $scope.course = course;
                 });
@@ -223,8 +220,8 @@ controllers.controller('TestController', ['$scope', '$location', 'DBProxy',
         };
     }]);
 
-controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
+controllers.controller('MenuController', ['$scope', '$location', '$routeParams', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
         var admin = false;
         var checkIfAdmin = function () {
             DBProxy.isAdmin(getCookie("_userssnbr"))
@@ -259,23 +256,39 @@ controllers.controller('MenuController', ['$scope', '$location', 'DBProxy',
             },
             getBreadcrumb: function () {
                 var cbc = $location.url();
+                var breadCrumb = "";
+                var bcr = "";
                 if (cbc === "/course") {
-                    return "";
-                } else if (cbc.substring(0, 8) === "course/") {
-                    if (endsWith(cbc, createGroupRef)) {
-                        return cbc.substring(8, cbc.length - createGroupRef.length);
+                    breadCrumb = "";
+                }else if (cbc.substring(0, 8) === "/course/") {
+                    if (endsWith(cbc, "/newgroup")) {
+                        breadCrumb = cbc.substring(8, cbc.length - 9);
+                        bcr = "course/" + cbc.substring(8, cbc.length - 9);
                     } else {
-                        return cbc.substring(8);
+                        breadCrumb = cbc.substring(8);
                     }
-                } else {
-                    return cbc.substring(1);
+                }else if (cbc.substring(0,16) === "/editUserProfile" || 
+                        cbc.substring(0,5) === "/user") {
+                    breadCrumb = "Profile";
+                    bcr = "user";
+                }else if (cbc.substring(0,13) === "/hemligasidan") {
+                    breadCrumb = "Admin";
+                    if(cbc.substring(0,18) === "/hemligasidan/edit") {
+                        bcr = "hemligasidan";
+                    }
+                }else {
+                    breadCrumb = cbc.substring(1);
                 }
+                
+                $scope.menu.getBreadcrumbRef = (bcr !== "") ? bcr : cbc.substring(1);
+                return breadCrumb.charAt(0).toUpperCase() + breadCrumb.slice(1);;
             },
             showBreadcrumb: function () {
                 return $location.url() !== "/course";
-            }
+            },
+            getBreadcrumbRef: ""
         };
-        var createGroupRef = "/newgroup";
+
         var endsWith = function (str, suffix) {
             return str.indexOf(suffix, str.length - suffix.length) !== -1;
         };
@@ -538,12 +551,8 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
 
     }]);
 
-controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
-    function ($scope, $location, DBProxy) {
-
-        console.log("inside userEdit");
-        
-
+controllers.controller('EditUserController', ['$scope', '$location', '$routeParams', 'DBProxy',
+    function ($scope, $location, $routeParams, DBProxy) {
         $scope.userEdit = {
             update: function () {
                 console.log('Inside user.update() in AdminController');
@@ -575,33 +584,18 @@ controllers.controller('EditUserController', ['$scope', '$location', 'DBProxy',
                 });
             }
         };
-        var wlh = window.location.hash;
-        DBProxy.findUser(wlh.substring(24))
+
+        DBProxy.findUser($routeParams.username)
                 .success(function (user) {
                     $scope.user = user;
                     console.log('Editing ' + $scope.user.id);
                 });
 
-//        DBProxy.isAdmin(getCookie("_userssnbr"))
-//                .success(function () {
-//                    console.log("Admin!");
-//                    $scope.user.isAdmin = true;
-//                }).error(function () {
-//            $location.path("/course");
-//            console.log("Access Denied!");
-//
-//        });
             $scope.userEdit.isAdmin();
     }]);
 
 controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
-        $scope.test3 = function () {
-
-            console.log($scope.course);
-        };
-
-        console.log(1);
         $scope.courseEdit = {
             update: function () {
                 console.log('Inside course.update() in AdminController');
@@ -619,9 +613,7 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
             }
         };
 
-        //TODO: solve this by using pathquery instead
-        var wlh = window.location.hash;
-        DBProxy.findCourse(wlh.substring(26))
+        DBProxy.findCourse($location.url().substring(25))
                 .success(function (course) {
                     $scope.course = course;
                     console.log('Editing ' + $scope.course.id.value);
@@ -638,9 +630,9 @@ controllers.controller('EditCourseController', ['$scope', '$location', 'DBProxy'
     }]);
 controllers.controller('EditGroupController', ['$scope', '$location', 'DBProxy',
     function ($scope, $location, DBProxy) {
-        var wlh = window.location.hash;
-        console.log("id: "+wlh.substring(25));
-        DBProxy.findGroup(wlh.substring(25))
+        var wlh = $location.url();
+        console.log("id: "+wlh.substring(24));
+        DBProxy.findGroup(wlh.substring(24))
                 .success(function (group) {
                     $scope.group = group;
                     console.log('Editing ' + $scope.group.gName);
