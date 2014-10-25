@@ -447,20 +447,15 @@ public class ForumResource {
         log.log(Level.INFO, j.getString("pwd"));
         log.log(Level.INFO, j.getString("fname"));
         log.log(Level.INFO, j.getString("lname"));
-        log.log(Level.INFO, j.getString("admin"));
         
         String username = j.getString("id");
         String email = j.getString("email");
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
         String lname = j.getString("lname");
-        String admin = j.getString("admin");
         
         GroupUser newUser = new GroupUser(username, email, pwd, fname, lname);
-        if(admin.equals("admin")){
-            newUser.addUserBelongingToGroup(admin);
-        }
-             
+                     
         try{
             userList.create(newUser);  
             URI uri = uriInfo.getAbsolutePathBuilder().path(newUser.getId()).build(newUser);
