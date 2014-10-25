@@ -170,7 +170,7 @@ public class ForumResource {
             return Response.ok(user).build();
         } else {
             log.log(Level.INFO, "Did not find user");
-            return Response.noContent().build();
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     
     }
@@ -391,11 +391,7 @@ public class ForumResource {
         }
 //        return Response.ok().build();
     }
-    
-    public Response leaveGroup(){
-        return null;
-    }
-    
+
     @POST
     @Path(value = "course")
     public Response createCourse(JsonObject j){
