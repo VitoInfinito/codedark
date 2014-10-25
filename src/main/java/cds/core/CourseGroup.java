@@ -41,20 +41,22 @@ public class CourseGroup extends AbstractEntity<Long> {
         members.add(owner);
     }
     
-    public CourseGroup(Long id, Course c, String n, List<GroupUser> memberList, GroupUser user){
+    public CourseGroup(Long id, Course c, String n, List<GroupUser> memberList, GroupUser user, int max){
         super(id);
         course = c;
         gName = n;
         owner = user;
         members = memberList;
+        maxNbr = max;
     }
     
-    public CourseGroup(Long id, Course c, String n, GroupUser user){
+    public CourseGroup(Long id, Course c, String n, GroupUser user, int max){
         super(id);
         gName = n;
         course = c;
         members = new ArrayList<GroupUser>();
         owner = user;
+        maxNbr = max;
         members.add(owner);
     }
     
