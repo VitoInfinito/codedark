@@ -45,6 +45,10 @@ public class GroupUser extends AbstractEntity<String>{
     public void addUserBelongingToGroup(String group) {
         belongingTo.add(group);
     }
+    
+    public void remUserBelongingToGroup(String group) {
+        belongingTo.remove(group);
+    }
 
     public String getEmail() {
         return email;

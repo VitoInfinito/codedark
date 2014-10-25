@@ -143,15 +143,27 @@ public class ForumResource {
             @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
         log.log(Level.INFO, "INUTI LEAVEGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
-
-        log.log(Level.INFO, "Username: " + user);
+        
+        
         GroupUser gu = userList.find(user);
-        log.log(Level.INFO, "User: " + gu);
+        boolean isOwner = false;
+        if(gu.equals(cg.getOwner())){
+            isOwner = true;
+        }
+        
         List<GroupUser> members = cg.getMembers();
-        log.log(Level.INFO, "Members: " + members);
-        cg.getMembers().remove(gu);
+        members.remove(gu);
+        
         groupList.update(cg);
-        log.log(Level.INFO, "Members: " + members);
+        if(members.isEmpty()){
+            deleteGroup(cg.getId());
+            isOwner = false;
+        }
+        if(isOwner){
+            cg.setOwner(members.get(0));
+            groupList.update(cg);
+            
+        }
         
         try{
             return Response.ok(cg).build();
@@ -343,22 +355,41 @@ public class ForumResource {
             String fname = j.getString("fname");
             String lname = j.getString("lname");
             
-            String admin = j.getString("admin");
-            log.log(Level.INFO, admin);
-            //log.log(Level.INFO, ""+j.getInt("id"));
-            //Long id = userList.getBySsnbr(ssnbr).getId();
-
-            
             GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
-            if(admin.equals("admin")){
-                updatedUser.addUserBelongingToGroup(admin);
-            }  
             userList.update(updatedUser);
             
             return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    @PUT
+    @Path(value="admin/add/{id}")
+    public Response addAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In add admin");
+        GroupUser user = userList.find(id);
+        
+        if(!user.getBelongingTo().contains("admin")){
+                user.addUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+            
+        return Response.ok(user).build();
+    }
+    
+    @PUT
+    @Path(value="admin/rem/{id}")
+    public Response removeAdmin(@PathParam(value= "id") String id){
+        log.log(Level.INFO, "In remove admin");
+        GroupUser user = userList.find(id);
+        
+        if(user.getBelongingTo().contains("admin")){
+                user.remUserBelongingToGroup("admin");
+        }  
+        userList.update(user);
+        
+        return Response.ok(user).build();
     }
  
     @POST
