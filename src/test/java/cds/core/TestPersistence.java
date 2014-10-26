@@ -43,7 +43,7 @@ public class TestPersistence {
     
     private final static Logger log = Logger.getAnonymousLogger();
     //True enables all instances of log
-    private final static boolean D = true;
+    private final static boolean D = false;
     
     @PersistenceContext(unitName = "jpa_forum_test_pu")
     @Produces

@@ -445,13 +445,13 @@ public class ForumResource {
     @Path(value = "user")
     @Consumes(value = {MediaType.APPLICATION_JSON})
     public Response createUser(JsonObject j){
-        log.log(Level.INFO, j.getJsonObject("id").getString("value"));
+        log.log(Level.INFO, j.getString("id"));
         log.log(Level.INFO, j.getString("email"));
         log.log(Level.INFO, j.getString("pwd"));
         log.log(Level.INFO, j.getString("fname"));
         log.log(Level.INFO, j.getString("lname"));
         
-        String username = j.getJsonObject("id").getString("value");
+        String username = j.getString("id");
         String email = j.getString("email");
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
@@ -646,26 +646,6 @@ public class ForumResource {
         
         return Response.status(Response.Status.NOT_FOUND).build();
     }
-    
-
-    private static <T extends IDAO> Response findRange(int fst, int count, T list){
-        Collection<T> groups = new ArrayList<>();
-        Iterator<T> it = list.findRange(fst, count).iterator();
-        while(it.hasNext()) {
-            T g = it.next();
-            groups.add(g);
-        }
-        
-        GenericEntity<Collection<T>> ge = new GenericEntity<Collection<T>>(groups) {
-        };
-        return Response.ok(ge).build();
-    }
-    
-    
-
-    
-    
-
 }
 
     

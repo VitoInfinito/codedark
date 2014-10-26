@@ -1,5 +1,5 @@
 function scrape(){
-        console.log("Initiated scraping");
+        if(debugMode) console.log("Initiated scraping");
 	function Course() {
 		courseCode: ;
 		courseName: ;
@@ -35,7 +35,7 @@ function scrape(){
 			}
 		});
 	}
-    console.log(fetchedCourses);
+    if(debugMode) console.log(fetchedCourses);
     return fetchedCourses;
         
 }
