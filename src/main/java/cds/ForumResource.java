@@ -104,7 +104,43 @@ public class ForumResource {
         }
     }
     
-    
+    @PUT
+    @Path(value = "join/random")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response joinRandomGroup(@QueryParam(value= "ccode") String ccode, @QueryParam(value= "user") String user){
+        Random r = new Random();
+        List<CourseGroup> cgl = groupList.getByCourse(ccode);
+        List<CourseGroup> rcgl = new ArrayList<>();
+        GroupUser gu = userList.find(user);
+        for(CourseGroup cg : cgl) {
+            if(cg.getMembers().size() <= cg.getmaxNbr() && !cg.getMembers().contains(gu)) {
+                rcgl.add(cg);
+            }
+        }
+        CourseGroup rcg;
+        try{
+            if(rcgl.size() > 0) {
+                rcg = rcgl.get(r.nextInt(rcgl.size()));
+                rcg.getMembers().add(gu);
+                groupList.update(rcg);
+                return Response.ok(rcg).build();
+            }else {
+                String alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+                StringBuilder sb;
+                do{
+                    sb = new StringBuilder();
+                    for(int i=0; i<12; i++) {
+                        sb.append(alphabet.charAt(r.nextInt(alphabet.length())));
+                    }
+                }while(groupList.getByNameAndCourse(sb.toString(), ccode) != null);
+                rcg = new CourseGroup(courseList.getById(ccode), sb.toString(), gu, 5);
+                groupList.create(rcg);
+                return Response.ok(rcg).build();
+            }
+        }catch(Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
     @PUT
     @Path(value = "leave")
