@@ -447,7 +447,7 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                         .success(function () {
                             $scope.course.status = 'Course ' + $scope.course.ccode + ' created effectively.';
                             console.log('Created course effectively ' + $scope.course.ccode);
-
+                            $location.reload();
                         }).error(function () {
                     $scope.course.status = 'ERROR! Course ' + $scope.course.ccode + ' not created.';
                     console.log('Could not create course ' + $scope.course.ccode);
@@ -492,11 +492,12 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 clearTimeout(searchUserTimeout);
                 searchUserTimeout = setTimeout(getUsers, delay);
             }, 
-            signUp: function(user){
+            createNewUser: function(user){
                 DBProxy.createUser($scope.user)
                         .success(function (userCreated) {
                             console.log("New user: " + JSON.stringify(userCreated));
                             $scope.user.status = "User " + userCreated.id.value + "created effectively";
+                            $route.reload();
                         }).error(function(){
                             console.log("ERROR in createUser from admin");
                         });
