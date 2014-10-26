@@ -5,8 +5,6 @@
  */
 package cds.core;
 
-
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
@@ -29,8 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *
- * @author
+ * @author codedark
  */
 @RunWith(Arquillian.class)
 public class TestPersistence {
@@ -73,11 +70,6 @@ public class TestPersistence {
         utx.commit();
     }
     
-    @Test
-    public void testTester() {
-        //Will always fail to check if the testing is working.
-        //assertTrue(1 == 2);
-    }
     // --- GROUPTESTS --- //
     @Test
     public void testGroupFindAllGroups(){
