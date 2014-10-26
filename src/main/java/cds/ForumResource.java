@@ -345,9 +345,12 @@ public class ForumResource {
         String lname = j.getString("lname");
         log.log(Level.INFO, "Updating user {0}", username);
         try{
+            List<String> belongingTo = userList.find(username).getBelongingTo();
             GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
+            for(String s : belongingTo) {
+                updatedUser.addUserBelongingToGroup(s);
+            }
             userList.update(updatedUser);
-            
             return Response.ok(updatedUser).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
