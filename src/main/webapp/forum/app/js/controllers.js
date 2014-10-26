@@ -92,7 +92,6 @@ controllers.controller('GroupController', ['$scope', '$location', '$routeParams'
             },
             joinRandom: function() {
                 var user = getCookie("_userssnbr");
-                console.log("so far");
                 DBProxy.joinRandomGroup($scope.course.id.value, user)
                         .success(function (foundGroup) {
                            getRangeGroups();
