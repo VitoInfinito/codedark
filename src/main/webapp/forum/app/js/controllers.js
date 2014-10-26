@@ -1,7 +1,7 @@
 'use strict';
 
 
-var debugMode = true;
+var debugMode = false;
 
 var setCookie = function (cname, cvalue, exdays) {
     var d = new Date();
@@ -262,10 +262,21 @@ controllers.controller('MenuController', ['$scope', '$location', '$routeParams',
                         if(debugMode) console.log("Error when trying to locate admin");
             });
         };
+        
+        var checkIfActualUser = function () {
+            DBProxy.findUser(getCookie("_userssnbr"))
+                    .success(function () {
+                        if(debugMode) console.log("Successfully found user");
+                    }).error(function () {
+                        if(debugMode) console.log("Error when trying to locate user");
+                        $scope.menu.logout();
+            });
+        };
 
         $scope.menu = {
             isAdmin: function () {
                 if (newlyLoggedIn) {
+                    checkIfActualUser();
                     checkIfAdmin();
                     newlyLoggedIn = false;
                 }
