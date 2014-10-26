@@ -8,8 +8,10 @@ import java.util.List;
 
 
 /**
- *
- * @author
+ * Entity describing a User
+ * 
+ * 
+ * @author codedark
  */
 @Entity
 public class GroupUser extends AbstractEntity<String>{

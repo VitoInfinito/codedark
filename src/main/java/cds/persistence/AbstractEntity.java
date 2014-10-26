@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.persistence.MappedSuperclass;
 
 /**
- * We do good comments
+ * Handles IDs for all Entities
  * K is type of id (primary key) 
  * @param <K> type for key (later primary key)
  */
