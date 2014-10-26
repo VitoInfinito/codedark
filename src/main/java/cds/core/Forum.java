@@ -9,8 +9,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
- *
- * @author HForsvall
+ * <code>Forum</code> is a collected place for handling all injections of project beans. 
+ * 
+ * @author codedark
  */
 @ApplicationScoped // TODO: Kanske ska vara session
 public class Forum implements IForum{

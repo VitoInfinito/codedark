@@ -28,10 +28,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * REST Web Service
+ *  Handles all data communication with frontend.
  *
  *
- * @author 
+ * @author codedark
  */
 @Path("forum")
 public class ForumResource {

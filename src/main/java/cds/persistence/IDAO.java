@@ -4,7 +4,7 @@ package cds.persistence;
 import java.util.List;
 
 /**
- * Blabla comments
+ * Generic class for interaction with database
  *
  * @author 
  * @param <T> type of elements in container
