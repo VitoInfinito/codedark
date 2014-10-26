@@ -10,9 +10,6 @@ and open the template in the editor.
         <h2>Groups in <span ng-bind="course.name"></span></h2>
     </div>
     
-    <a class="navbar-brand navbar-right" href="#/course/{{course.id.value}}/newgroup">Create New Group</a>
-    
-    
     <div class="btn-group">
         <button class="btn btn-default" ng-disabled="currentPage===0" 
             ng-click="currentPage = currentPage - 1">
@@ -22,11 +19,13 @@ and open the template in the editor.
             ng-click="currentPage = currentPage + 1">
             Next
         </button>
-        
     </div>
     <div class="btn-group">
         <button class="btn btn-default" ng-click="group.joinRandom()">
             Join Random Group
+        </button>
+        <button ng-controller="NavigationCtrl" ng-click="navigate('/course/'+course.id.value+'/newgroup')" class="btn btn-default">
+            Create new group
         </button>
     </div>
     

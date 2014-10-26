@@ -275,7 +275,7 @@ controllers.controller('MenuController', ['$scope', '$location', '$routeParams',
 
         $scope.menu = {
             isAdmin: function () {
-                if (newlyLoggedIn) {
+                if (newlyLoggedIn && getCookie("_userssnbr") !== "" && getCookie("_username") !== "") {
                     checkIfActualUser();
                     checkIfAdmin();
                     newlyLoggedIn = false;
