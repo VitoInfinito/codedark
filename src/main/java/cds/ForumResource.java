@@ -2,8 +2,6 @@ package cds;
 
 
 import cds.core.*;
-import cds.persistence.AbstractEntity;
-import cds.persistence.IDAO;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,11 +10,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
-import javax.enterprise.inject.Default;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,7 +21,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import static javax.ws.rs.client.Entity.json;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -39,29 +33,17 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author 
  */
-@Path("forum") // Leading trailing slash doesn't matter, see web.xml
+@Path("forum")
 public class ForumResource {
       
-   // private final IForum forum = Forum.newInstance();
     @EJB private ICourseList courseList;
     @EJB private IGroupUserList userList;
     @EJB private ICourseGroupList groupList;
     
     private final static Logger log = Logger.getAnonymousLogger();
     
-    @PersistenceContext(unitName = "jpa_forum_pu")
-    @Default
-    EntityManager em;
-    
     @Context
     private UriInfo uriInfo;
-    
-    @GET
-    @Path(value = "testGet")
-    public Response testGet(){
-        
-        return Response.ok("hi").build();
-    }
     
     @GET
     @Path(value = "allGroups")
@@ -72,7 +54,6 @@ public class ForumResource {
         while (it.hasNext()) {
             groups.add(it.next());
         }
-        
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
         return Response.ok(ge).build();
@@ -87,11 +68,11 @@ public class ForumResource {
         while (it.hasNext()) {
             users.add(it.next());
         }
-        
         GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(users) {
         };
         return Response.ok(ge).build();
     }
+    
     @GET
     @Path(value = "allCourses")
     @Produces(value = {MediaType.APPLICATION_JSON})
@@ -101,7 +82,6 @@ public class ForumResource {
         while (it.hasNext()) {
             courses.add(it.next());
         }
-        
         GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
@@ -112,48 +92,28 @@ public class ForumResource {
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response joinGroup(@QueryParam(value= "ccode") String ccode, 
             @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
-        log.log(Level.INFO, "INUTI JOINGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
-
-        log.log(Level.INFO, "Username: " + user);
         GroupUser gu = userList.find(user);
-        log.log(Level.INFO, "User: " + gu);
-        
-        List<GroupUser> members = cg.getMembers();
-        log.log(Level.INFO, "Members: " + members.toString());
-        
         cg.getMembers().add(gu);
         groupList.update(cg);
-        log.log(Level.INFO, "Members: " + members.toString());
-        
         try{
             return Response.ok(cg).build();
         }catch(Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
        
-    }   
-    
-    
+    }
     
     @PUT
     @Path(value = "leave")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response leaveGroup(@QueryParam(value= "ccode") String ccode, 
             @QueryParam(value= "gName") String gName, @QueryParam(value= "user") String user){
-        log.log(Level.INFO, "INUTI LEAVEGROUP i ForumResource");
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
-        
-        
         GroupUser gu = userList.find(user);
-        boolean isOwner = false;
-        if(gu.equals(cg.getOwner())){
-            isOwner = true;
-        }
-        
+        boolean isOwner = gu.equals(cg.getOwner());
         List<GroupUser> members = cg.getMembers();
         members.remove(gu);
-        
         groupList.update(cg);
         if(members.isEmpty()){
             deleteGroup(cg.getId());
@@ -162,9 +122,7 @@ public class ForumResource {
         if(isOwner){
             cg.setOwner(members.get(0));
             groupList.update(cg);
-            
         }
-        
         try{
             return Response.ok(cg).build();
         }catch(Exception e){
@@ -176,14 +134,11 @@ public class ForumResource {
     @Path(value = "user/{id}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findUser(@PathParam(value= "id") String id){
-        log.log(Level.INFO, "User: " + userList.find(id));
+        log.log(Level.INFO, "Attempting to find user {0}", id);
         GroupUser user = userList.find(id);
-
         if (user != null) {
-            log.log(Level.INFO, "Found user: " + user.getFname() + " " + user.getLname());
             return Response.ok(user).build();
         } else {
-            log.log(Level.INFO, "Did not find user");
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     
@@ -205,22 +160,20 @@ public class ForumResource {
     @Path(value = "course/{ccode}")
     @Produces(value={MediaType.APPLICATION_JSON})
     public Response findCourse(@PathParam(value= "ccode") String ccode) {
-        log.log(Level.INFO, "JAG ÄR I FINDCOURSE");
-        log.log(Level.INFO, ccode);
+        log.log(Level.INFO, "Attempting to find course {0}", ccode);
         Course c = courseList.getById(ccode);
         if (c != null) {
             return Response.ok(c).build();
         } else {
             return Response.noContent().build();
         }
-    } 
+    }
 
     @GET
     @Path(value = "countGroups/{ccode}")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countGroups(@PathParam(value= "ccode") String ccode) {
         Course c = courseList.getById(ccode);
-        
         int count = 0;
         for(CourseGroup cg: groupList.findAll()){
             if(cg.getCourse().equals(c)){
@@ -245,7 +198,6 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response countSearchedCourses(@QueryParam(value = "searchfield") String search){
         int c = 0;
-        log.log(Level.INFO, "Got in");
         for(Course course : courseList.findAll()) {
             if(course.getId().toLowerCase().contains(search) || course.getName().toLowerCase().contains(search)) {
                 c++;
@@ -271,7 +223,7 @@ public class ForumResource {
             groupList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
     
@@ -279,18 +231,16 @@ public class ForumResource {
     @Path(value = "course/{id}")
     public Response deleteCourse(@PathParam(value= "id") final String id){
         try {
-            
             Course c = courseList.find(id);
             for(CourseGroup group: groupList.findAll()){
                 if(group.getCourse().equals(c)){
                     groupList.delete(group.getId());
                 }
             }
-            
             courseList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
     
@@ -298,10 +248,15 @@ public class ForumResource {
     @Path(value = "user/{id}")
     public Response deleteUser(@PathParam(value= "id") final String id){
         try {
+            List<CourseGroup> cgl = groupList.getByUser(id);
+            GroupUser gu = userList.find(id);
+            for(CourseGroup cg : cgl) {
+                leaveGroup(cg.getCourse().getId(), cg.getgName(), id);
+            }
             userList.delete(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
@@ -310,16 +265,16 @@ public class ForumResource {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateGroup(JsonObject j, @PathParam(value= "id") Long id){
+        Course c = groupList.find(id).getCourse();
+        CourseGroup cg1 = groupList.find(id);
+        List<GroupUser> list = cg1.getMembers();
+        log.log(Level.INFO, "Updating group {0}", cg1.getgName());
         try {
-            Course c = groupList.find(id).getCourse();
-            CourseGroup cg1 = groupList.find(id);
-            List<GroupUser> list = cg1.getMembers();
-            log.log(Level.INFO, "Updating: " + cg1);
             CourseGroup cg = new CourseGroup(id, c, j.getString("gName"), list, cg1.getOwner(), j.getInt("maxNbr"));
             groupList.update(cg);
             return Response.ok(cg).build();
         } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
     
@@ -327,37 +282,29 @@ public class ForumResource {
     @Path(value = "courseEdit")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateCourse(JsonObject j){
+        String name = j.getString("name");
+        String id = j.getJsonObject("id").getString("value");
+        log.log(Level.INFO, "Updating course {0}", name);
         try{
-            log.log(Level.INFO, "Updating course" + j);
-            String name = j.getString("name");
-            log.log(Level.INFO, "JSON: " + j.toString());
-            
-            String id = j.getJsonObject("id").getString("value");
-            
-            log.log(Level.INFO, "Updating id: " + id);
             Course updatedCourse = new Course(id, name);
-            log.log(Level.INFO, "updatedCourse: " + updatedCourse);
             courseList.update(updatedCourse);
-        
             return Response.ok(updatedCourse).build();
         }catch (IllegalArgumentException e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-        
     }
+    
     @PUT
     @Path(value = "user")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response updateUser(JsonObject j){
-        log.log(Level.INFO, "in updateUser");
+        String username = j.getJsonObject("id").getString("value");
+        String email = j.getString("email");
+        String pwd = j.getString("pwd");
+        String fname = j.getString("fname");
+        String lname = j.getString("lname");
+        log.log(Level.INFO, "Updating user {0}", username);
         try{
-            
-            String username = j.getJsonObject("id").getString("value");
-            String email = j.getString("email");
-            String pwd = j.getString("pwd");
-            String fname = j.getString("fname");
-            String lname = j.getString("lname");
-            
             GroupUser updatedUser = new GroupUser(username, email, pwd, fname, lname);
             userList.update(updatedUser);
             
@@ -370,54 +317,40 @@ public class ForumResource {
     @PUT
     @Path(value="admin/add/{id}")
     public Response addAdmin(@PathParam(value= "id") String id){
-        log.log(Level.INFO, "In add admin");
+        log.log(Level.INFO, "Adding admin {0}", id);
         GroupUser user = userList.find(id);
-        
         if(!user.getBelongingTo().contains("admin")){
                 user.addUserBelongingToGroup("admin");
         }  
-        userList.update(user);
-            
+        userList.update(user); 
         return Response.ok(user).build();
     }
     
     @PUT
     @Path(value="admin/rem/{id}")
     public Response removeAdmin(@PathParam(value= "id") String id){
-        log.log(Level.INFO, "In remove admin");
+        log.log(Level.INFO, "Removing admin {0}", id);
         GroupUser user = userList.find(id);
-        
         if(user.getBelongingTo().contains("admin")){
-                user.remUserBelongingToGroup("admin");
+            user.remUserBelongingToGroup("admin");
         }  
         userList.update(user);
-        
         return Response.ok(user).build();
     }
  
     @POST
     @Path(value = "group")
     public Response createGroup(JsonObject j){
-        log.log(Level.INFO, "INUTI CREATEGROUP");
+        log.log(Level.INFO, "Attempting to create a new group");
         Course c = courseList.find(j.getString("course"));
         String name = j.getString("name");
         GroupUser owner = userList.find(j.getString("user"));
         int max = j.getInt("maxNbr");
-        
         //Check if group already exists
-        log.log(Level.INFO, "Ska va null: "+groupList.getByNameAndCourse(name, c.getId()));
         if(groupList.getByNameAndCourse(name, c.getId()) != null){
             return Response.status(Response.Status.CONFLICT).build();
         }
-        
         CourseGroup cg = new CourseGroup(c, name, owner, max);
-//        log.log(Level.INFO, cg.toString());
-          log.log(Level.INFO, cg.getCourse().toString());
-          log.log(Level.INFO, cg.getgName());
-          log.log(Level.INFO, cg.getOwner().toString());
-          log.log(Level.INFO, cg.getMembers().toString());
-
-        
         try {  
             groupList.create(cg);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(cg.getId())).build(cg);
@@ -425,7 +358,6 @@ public class ForumResource {
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-//        return Response.ok().build();
     }
 
     @POST
@@ -444,25 +376,15 @@ public class ForumResource {
     @POST
     @Path(value = "user")
     @Consumes(value = {MediaType.APPLICATION_JSON})
-    public Response createUser(JsonObject j){
-        log.log(Level.INFO, j.getString("id"));
-        log.log(Level.INFO, j.getString("email"));
-        log.log(Level.INFO, j.getString("pwd"));
-        log.log(Level.INFO, j.getString("fname"));
-        log.log(Level.INFO, j.getString("lname"));
-        
+    public Response createUser(JsonObject j){        
         String username = j.getString("id");
         String email = j.getString("email");
         String pwd = j.getString("pwd");
         String fname = j.getString("fname"); 
         String lname = j.getString("lname");
-        
         GroupUser newUser = new GroupUser(username, email, pwd, fname, lname);
-        log.log(Level.INFO, newUser.toString());
-        
         try{
-            userList.create(newUser);  
-//            URI uri = uriInfo.getAbsolutePathBuilder().path(newUser.getId()).build(newUser);
+            userList.create(newUser);
             return Response.ok(userList.find(newUser.getId())).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -474,7 +396,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInCoursesWithRange(@QueryParam(value = "searchfield") String search, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
         search = search.toLowerCase();
-        log.log(Level.INFO, "Searching courses with search: " + search);
+        log.log(Level.INFO, "Searching courses with range and search: {0}", search);
         Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         int counter = 0;
@@ -486,7 +408,6 @@ public class ForumResource {
                 count--;
             }
         }
-        
         GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
@@ -497,7 +418,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInCourses(@QueryParam(value = "searchfield") String search) {
         search = search.toLowerCase();
-        log.log(Level.INFO, "Searching courses with search: " + search);
+        log.log(Level.INFO, "Searching courses with search: {0}", search);
         Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findAll().iterator();
         while(it.hasNext()) {
@@ -506,7 +427,6 @@ public class ForumResource {
                 courses.add(c);
             }
         }
-        
         GenericEntity<Collection<Course>> ge = new GenericEntity<Collection<Course>>(courses) {
         };
         return Response.ok(ge).build();
@@ -517,17 +437,16 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInUsers(@QueryParam(value = "searchfield") String search) {
         search = search.toLowerCase();
-        log.log(Level.INFO, "Searching users with search: " + search);
+        log.log(Level.INFO, "Searching users with search: {0}", search);
         Collection<GroupUser> users = new ArrayList<>();
         Iterator<GroupUser> it = userList.findAll().iterator();
         while(it.hasNext()) {
             GroupUser u = it.next();
             String lAndFName = u.getFname() + " " + u.getLname();
-            if(lAndFName.toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getId().toString().contains(search)) {
+            if(lAndFName.toLowerCase().contains(search) || u.getEmail().toLowerCase().contains(search) || u.getId().contains(search)) {
                 users.add(u);
             }
         }
-        
         GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(users) {
         };
         return Response.ok(ge).build();
@@ -538,7 +457,7 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response searchInGroups(@QueryParam(value = "searchfield") String search) {
         search = search.toLowerCase();
-        log.log(Level.INFO, "Searching users with search: " + search);
+        log.log(Level.INFO, "Searching users with search: {0}", search);
         Collection<CourseGroup> groups = new ArrayList<>();
         Iterator<CourseGroup> it = groupList.findAll().iterator();
         while(it.hasNext()) {
@@ -547,7 +466,6 @@ public class ForumResource {
                 groups.add(g);
             }
         }
-        
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
         return Response.ok(ge).build();
@@ -555,31 +473,24 @@ public class ForumResource {
     @GET
     @Path(value = "groups/{ccode}/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        log.log(Level.INFO, "INUTI FINDRANGEGROUPS i ForumResource");
-        
+    public Response findRangeGroups(@PathParam(value= "ccode") String ccode, @QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {        
         Collection<CourseGroup> groups = new ArrayList<>();
         List<CourseGroup> oldGroups = groupList.getByCourse(ccode);
-        
         int i = fst;
-        
         while(i >= fst && i < fst+count && i < groupList.getByCourse(ccode).size()){
             groups.add(oldGroups.get(i));
             i++;
         }
-
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups) {
         };
-        log.log(Level.INFO, "1");
         return Response.ok(ge).build();
-//          return Response.ok().build();
     }
     
     @GET
     @Path(value = "courses/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findCourseRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
-        log.log(Level.INFO, "Entered findCourseRange with values: " + fst + " " + count);
+        log.log(Level.INFO, "Entered findCourseRange with values: {0} {1}", new Object[]{fst, count});
         Collection<Course> courses = new ArrayList<>();
         Iterator<Course> it = courseList.findRange(fst, count).iterator();
         while(it.hasNext()) {
@@ -595,13 +506,13 @@ public class ForumResource {
     @Path(value = "users/range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserRange(@QueryParam(value = "fst") int fst, @QueryParam(value = "count") int count) {
+        log.log(Level.INFO, "Entered findUserRange with values: {0} {1}", new Object[]{fst, count});
         Collection<GroupUser> user = new ArrayList<>();
         Iterator<GroupUser> it = userList.findRange(fst, count).iterator();
         while(it.hasNext()) {
             GroupUser gu = it.next();
             user.add(gu);
         }
-        
         GenericEntity<Collection<GroupUser>> ge = new GenericEntity<Collection<GroupUser>>(user) {
         };
         return Response.ok(ge).build();
@@ -612,7 +523,6 @@ public class ForumResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findUserGroups(@PathParam("user") String uName){
         List<CourseGroup> groups = groupList.getByUser(uName);
-        
         GenericEntity<Collection<CourseGroup>> ge = new GenericEntity<Collection<CourseGroup>>(groups){
         };
         return Response.ok(ge).build();
@@ -622,9 +532,8 @@ public class ForumResource {
     @Path(value = "login")
     public Response login(@QueryParam("id") String id, @QueryParam("pwd") String pwd) {
         GroupUser u = userList.find(id);
-        
         if(u != null && u.getPwd().equals(pwd)) {
-            log.log(Level.INFO, "Found user: " + u.toString());
+            log.log(Level.INFO, "Found user: {0}", u.toString());
             return Response.ok().build();
         }
         
@@ -637,7 +546,7 @@ public class ForumResource {
         GroupUser u = userList.find(id);
         if(u != null) {
             if(u.getBelongingTo().contains("admin")) {
-                log.log(Level.INFO, "Found admin: " + u.toString());
+                log.log(Level.INFO, "Found admin: {0}", u.toString());
                 return Response.status(Response.Status.OK).entity("User is admin").build();
             }else{
                 return Response.status(Response.Status.OK).entity("User not admin").build();
