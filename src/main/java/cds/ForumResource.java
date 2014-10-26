@@ -2,11 +2,14 @@ package cds;
 
 
 import cds.core.*;
+import java.math.BigInteger;
 import java.net.URI;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -95,13 +98,47 @@ public class ForumResource {
         CourseGroup cg = groupList.getByNameAndCourse(gName, ccode);
         GroupUser gu = userList.find(user);
         cg.getMembers().add(gu);
-        groupList.update(cg);
         try{
+            groupList.update(cg);
             return Response.ok(cg).build();
         }catch(Exception e){
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-       
+    }
+    
+    @PUT
+    @Path(value = "join/random")
+    @Produces(value={MediaType.APPLICATION_JSON})
+    public Response joinRandomGroup(@QueryParam(value= "ccode") String ccode, @QueryParam(value= "user") String user){
+        Random r = new Random();
+        List<CourseGroup> cgl = groupList.getByCourse(ccode);
+        List<CourseGroup> rcgl = new ArrayList<>();
+        GroupUser gu = userList.find(user);
+        for(CourseGroup cg : cgl) {
+            if(cg.getMembers().size() <= cg.getmaxNbr() && !cg.getMembers().contains(gu)) {
+                rcgl.add(cg);
+            }
+        }
+        CourseGroup rcg;
+        try{
+            if(rcgl.size() > 0) {
+                rcg = rcgl.get(r.nextInt(rcgl.size()));
+                rcg.getMembers().add(gu);
+                groupList.update(rcg);
+                return Response.ok(rcg).build();
+            }else {
+                String alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
+                StringBuilder sb = new StringBuilder();
+                for(int i=0; i<12; i++) {
+                    sb.append(alphabet.charAt(r.nextInt(alphabet.length())));
+                }
+                rcg = new CourseGroup(courseList.getById(ccode), sb.toString(), gu, 5);
+                groupList.create(rcg);
+                return Response.ok(rcg).build();
+            }
+        }catch(Exception e){
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     @PUT

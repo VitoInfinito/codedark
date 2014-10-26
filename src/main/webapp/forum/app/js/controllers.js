@@ -61,9 +61,7 @@ controllers.controller('GroupController', ['$scope', '$location', '$routeParams'
                 
             },
             isFull: function(group){
-                
-                if (typeof $scope.group !== 'undefined') {
-                    
+                if (typeof $scope.group !== 'undefined') {                    
                     return group.members.length === group.maxNbr ;
                 } else {
                     return true;
@@ -90,6 +88,14 @@ controllers.controller('GroupController', ['$scope', '$location', '$routeParams'
                 DBProxy.leaveGroup(group.course.id.value, group.gName, user)
                         .success(function (foundGroup) {
                            getRangeGroups(foundGroup);
+                        });
+            },
+            joinRandom: function() {
+                var user = getCookie("_userssnbr");
+                console.log("so far");
+                DBProxy.joinRandomGroup($scope.course.id.value, user)
+                        .success(function () {
+                           getRangeGroups();
                         });
             },
             hasJoined: false
