@@ -363,7 +363,9 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
             signUp: function () {
                 if($scope.user.pwd.length < 5){
                     $scope.user.signupstatus = "Password must be at least 5 characters";
-                }else if(typeof $scope.user !== 'undefined'){
+                }else if(typeof $scope.user.id !== 'undefined' && typeof $scope.user.fname !== 'undefined'
+                        && typeof $scope.user.lname !== 'undefined' && typeof $scope.user.email !== 'undefined' 
+                        && typeof $scope.user.pwd !== 'undefined'){
                     if(debugMode) console.log($scope.user);
                     DBProxy.createUser($scope.user)
                         .success(function () {
