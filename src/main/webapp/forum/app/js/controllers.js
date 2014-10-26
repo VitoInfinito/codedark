@@ -77,28 +77,35 @@ controllers.controller('GroupController', ['$scope', '$location', '$routeParams'
                 DBProxy.joinGroup(group.course.id.value, group.gName, user)
                         .success(function (foundGroup) {
                            getRangeGroups(foundGroup);
+                           setStatusfield("You have joined group " + foundGroup.gName, "green");
                         });
             },
             leave: function (e, group) {
                 if(debugMode) console.log('Leaving ' + group.gName);
                 e.stopPropagation();
-
-                //NEEDS FIXING - DOESN'T KEEP UPDATE & LENGTHPROBLEM
                 var user = getCookie("_userssnbr");
                 DBProxy.leaveGroup(group.course.id.value, group.gName, user)
                         .success(function (foundGroup) {
                            getRangeGroups(foundGroup);
+                           setStatusfield("You have left group " + foundGroup.gName, "green");
                         });
             },
             joinRandom: function() {
                 var user = getCookie("_userssnbr");
                 console.log("so far");
                 DBProxy.joinRandomGroup($scope.course.id.value, user)
-                        .success(function () {
+                        .success(function (foundGroup) {
                            getRangeGroups();
+                           setStatusfield("You have randomly joined group " + foundGroup.gName, "green");
                         });
             },
-            hasJoined: false
+            hasJoined: false,
+            status: ""
+        };
+        
+        var setStatusfield = function(text, color) {
+            $scope.group.status = text;
+            $("#statusfield").css("color", color);
         };
         
         var getRangeGroups = function(toggleGroup) {

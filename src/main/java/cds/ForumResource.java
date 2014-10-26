@@ -128,10 +128,13 @@ public class ForumResource {
                 return Response.ok(rcg).build();
             }else {
                 String alphabet = "0123456789abcdefghijklmnopqrstuvwxyz";
-                StringBuilder sb = new StringBuilder();
-                for(int i=0; i<12; i++) {
-                    sb.append(alphabet.charAt(r.nextInt(alphabet.length())));
-                }
+                StringBuilder sb;
+                do{
+                    sb = new StringBuilder();
+                    for(int i=0; i<12; i++) {
+                        sb.append(alphabet.charAt(r.nextInt(alphabet.length())));
+                    }
+                }while(groupList.getByNameAndCourse(sb.toString(), ccode) != null);
                 rcg = new CourseGroup(courseList.getById(ccode), sb.toString(), gu, 5);
                 groupList.create(rcg);
                 return Response.ok(rcg).build();
