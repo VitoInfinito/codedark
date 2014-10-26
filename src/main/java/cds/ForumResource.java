@@ -502,7 +502,8 @@ public class ForumResource {
         Iterator<CourseGroup> it = groupList.findAll().iterator();
         while(it.hasNext()) {
             CourseGroup g = it.next();
-            if(g.getgName().toLowerCase().contains(search) || g.getCourse().getId().toLowerCase().contains(search) || g.getCourse().getName().toLowerCase().contains(search)) {
+            if(g.getgName().toLowerCase().contains(search) || g.getCourse().getId().toLowerCase().contains(search) || 
+                    g.getCourse().getName().toLowerCase().contains(search) || g.getOwner().getId().toLowerCase().contains(search)) {
                 groups.add(g);
             }
         }
