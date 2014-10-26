@@ -19,10 +19,6 @@ forum.config(['$routeProvider',
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
                 }).
-                when('/test', {
-                    templateUrl: 'partials/frontTest/test.html',
-                    controller: 'TestController'
-                }).
                 when('/login', {
                     templateUrl: 'partials/forum/login.html',
                     controller: 'LoginController'

@@ -431,10 +431,11 @@ public class ForumResource {
     @POST
     @Path(value = "course")
     public Response createCourse(JsonObject j){
-        Course c = new Course(j.getString("cc"), j.getString("name"));
         try{
+            Course c = new Course(j.getString("cc"), j.getString("name"));
+        
             courseList.create(c);
-        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(c.getId())).build(c);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();

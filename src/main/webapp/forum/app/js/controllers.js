@@ -333,18 +333,23 @@ controllers.controller('LoginController', ['$scope', '$location', 'DBProxy',
                             $location.path('/index');
                         }).error(function (response) {
                     console.log("login failed");
-                    $scope.user.status = 'Login failed, wrong username or password. Forgot password? Contact admin.';
+                    $scope.user.loginstatus = 'Login failed, wrong username or password. Forgot password? Contact admin.';
                 });
             },
             signUp: function () {
-                console.log($scope.user);
-                DBProxy.createUser($scope.user)
+                if($scope.user.pwd.length < 5){
+                    $scope.user.signupstatus = "Password must be at least 5 characters";
+                }else if(typeof $scope.user !== 'undefined'){
+                    console.log($scope.user);
+                    DBProxy.createUser($scope.user)
                         .success(function () {
                             console.log("New user: " + $scope.user);
                             $scope.user.login();
-                        }).error(function(){
+                        }).error(function(response){
+                            $scope.user.signupstatus = "The username is already taken";
                             console.log("signup fail");
                         });
+                    }
             }
 
         };
@@ -438,21 +443,27 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
         $scope.course = {
             searchfield: "",
             createNewCourse: function () {
-                var newCourse = {
-                    cc: $scope.course.ccode,
-                    name: $scope.course.name
-                };
-
-                DBProxy.createCourse(newCourse)
+                if($scope.course.ccode.length !== 6){
+                    $scope.course.status = "Course code must be 6 characters";
+                    $("#statusfield").css("color", "red");
+                }else if(typeof $scope.course.name !== 'undefined'){
+                    var newCourse = {
+                        cc: $scope.course.ccode,
+                        name: $scope.course.name
+                    };
+                
+                    DBProxy.createCourse(newCourse)
                         .success(function () {
                             $scope.course.status = 'Course ' + $scope.course.ccode + ' created effectively.';
+                            $("#statusfield").css("color", "green");
                             console.log('Created course effectively ' + $scope.course.ccode);
 
                         }).error(function () {
-                    $scope.course.status = 'ERROR! Course ' + $scope.course.ccode + ' not created.';
-                    console.log('Could not create course ' + $scope.course.ccode);
-                });
-
+                            $scope.course.status = 'Course ' + $scope.course.ccode + ' not created, it already exists.';
+                            $("#statusfield").css("color", "red");
+                            console.log('Could not create course ' + $scope.course.ccode);
+                        });
+                }
             },
             search: function () {
                 clearTimeout(searchCourseTimeout);
@@ -469,20 +480,26 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 searchGroupTimeout = setTimeout(getGroups, delay);
             },
             createNewGroup: function () {
-                var newGroup = {
-                    user: $scope.group.owner.id.value,
-                    name: $scope.group.name,
-                    course: $scope.group.course,
-                    maxNbr: $scope.group.maxNbr
-                };
-
-                DBProxy.createGroup(newGroup)
+                
+                console.log($scope.group);
+                if(typeof $scope.group.owner.id !== 'undefined' && typeof $scope.group.name !== 'undefined' 
+                        && typeof $scope.group.course !== 'undefined' && typeof $scope.group.maxNbr !== undefined){
+                    var newGroup = {
+                        user: $scope.group.owner.id,
+                        name: $scope.group.name,
+                        course: $scope.group.course,
+                        maxNbr: $scope.group.maxNbr
+                    };
+                    DBProxy.createGroup(newGroup)
                         .success(function () {
                             $scope.group.status = "Group " + $scope.group.name + " created successfuly";
+                            $("#groupstatus").css("color", "green");
                             getGroups();
                         }).error(function () {
-                    $scope.group.status = "Error when creating " + $scope.group.name;
-                });
+                            $scope.group.status = "Error! Course or user doesn't exist. ";
+                            $("#groupstatus").css("color", "red");
+                    });
+                }
             }
         };
 
@@ -492,14 +509,23 @@ controllers.controller('AdminController', ['$scope', '$location', 'DBProxy',
                 clearTimeout(searchUserTimeout);
                 searchUserTimeout = setTimeout(getUsers, delay);
             }, 
-            signUp: function(user){
-                DBProxy.createUser($scope.user)
+            signUp: function(){
+                console.log($scope.user);
+                if($scope.user.pwd.length < 5){
+                    $scope.user.status = "Password must be at least 5 characters";
+                    $("#userstatus").css("color", "red");
+                
+                }else if(typeof $scope.user.lname !== 'undefined' && typeof $scope.user.fname !== 'undefined'
+                        && typeof $scope.user.email !== 'undefined' && typeof $scope.user.id !== 'undefined'){
+                    DBProxy.createUser($scope.user)
                         .success(function (userCreated) {
                             console.log("New user: " + JSON.stringify(userCreated));
-                            $scope.user.status = "User " + userCreated.id.value + "created effectively";
+                            $scope.user.status = "User " + userCreated.id.value + " created effectively";
+                            $("#userstatus").css("color", "green");
                         }).error(function(){
                             console.log("ERROR in createUser from admin");
                         });
+                }        
             }
         };
 
@@ -577,21 +603,30 @@ controllers.controller('UserProfileController', ['$scope', '$location', 'DBProxy
             
         };
         
-        function changeThings(){    
-            DBProxy.login($scope.uName, $scope.user.oldPwd)
-                .success(function(){
-                    $scope.user.pwd = $scope.user.newPwd;
-                    DBProxy.updateUser($scope.user)
-                        .success(function(user){
-                            $scope.user = user;
-                            $location.path('/user');
-                        }).error(function(){
-                            console.log("updateUser: error");
-                        });
-                }).error(function(){
-                    alert("Wrong password!");
+        function changeThings(){
+            if($scope.user.newPwd.length < 5){
+                $scope.group.status = "Password must be at least 5 characters";
+                $("#editstatus").css("color", "red");
+                
+            }else if(typeof $scope.user.newPwd !== 'undefined' && typeof $scope.user.oldPwd !== 'undefined' &&
+                    typeof $scope.user.fname !== 'undefined' && typeof $scope.user.lname !== 'undefined' &&
+                    typeof $scope.user.email !== 'undefined'){
+                DBProxy.login($scope.uName, $scope.user.oldPwd)
+                    .success(function(){
+                        $scope.user.pwd = $scope.user.newPwd;
+                        DBProxy.updateUser($scope.user)
+                            .success(function(user){
+                                $scope.user = user;
+                                $location.path('/user');
+                            }).error(function(){
+                                console.log("updateUser: error");
+                            });
+                    }).error(function(){
+                        $scope.group.status = "Wrong password";
+                        $("#editstatus").css("color", "red");
                     //kvar på samma sida och felmeddelande
                 });
+            }
                 
         }
 
@@ -628,14 +663,20 @@ controllers.controller('EditUserController', ['$scope', '$location', '$routePara
                 }
                 
                 console.log("about to updateUser in contr");
-                DBProxy.updateUser($scope.user)
+                if(typeof $scope.user.email !== 'undefined' && typeof $scope.user.fname !== 'undefined'
+                        && typeof $scope.user.lname !== 'undefined' && typeof $scope.user.pwd !== 'undefined'){
+                    DBProxy.updateUser($scope.user)
                         .success(function () {
                             
                             console.log('Updated ' + $scope.user.id);
                             $location.path('/hemligasidan');
                         }).error(function () {
-                    console.log("updateUser: error");
-                });
+                        console.log("updateUser: error");
+                    });
+                }else{
+                    $scope.userEdit.status = "Error, check input fields";
+                    $("#adminedituser").css("color", "red");
+                }
             },
             isAdmin: function() {
                 DBProxy.isAdmin(getCookie("_userssnbr"))

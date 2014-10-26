@@ -14,8 +14,8 @@ and open the template in the editor.
              <h3>Add new Course</h3>
              <form role="form">
                 <div class="form-group">
-                   <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" />
-                   <input type="text" class="form-control" ng-model="course.name" placeholder="Name" />
+                   <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" required/>
+                   <input type="text" class="form-control" ng-model="course.name" placeholder="Name" required/>
                </div>
                <div class="form-group">
                    <button class="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
@@ -24,13 +24,13 @@ and open the template in the editor.
             </form>
             <br>
             <!--TODO: Change to class -->
-            <span ng-bind="course.status" style="color:green"></span>
+            <span id="statusfield" ng-bind="course.status"></span>
         </div>
         <div class="col-md-4">
             <h3>Add new User</h3>
             <form role="form">
                 <div class="form-group">
-                    <input type="text" class="form-control input-sign" ng-model="user.id.value" placeholder="Choose a username!" required/>
+                    <input type="text" class="form-control input-sign" ng-model="user.id" placeholder="Choose a username!" required/>
                     <input type="password" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
                 </div>
                 <div class="form-group">
@@ -44,16 +44,16 @@ and open the template in the editor.
             </form>
             <br>
             <!--TODO: Change to class -->
-            <span ng-bind="user.status" style="color:green"></span>
+            <span id="userstatus" ng-bind="user.status"></span>
         </div>
         <div class="col-md-4">
             <h3>Add new Group</h3>
              <form role="form">
                 <div class="form-group">
-                   <input type="text" class="form-control" ng-model="group.owner.id.value" placeholder="Owner UserName" />
-                   <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" />
-                   <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" />
-                   <input type="text" class="form-control" ng-model="group.course" placeholder="Course code" />
+                   <input type="text" class="form-control" ng-model="group.owner.id" placeholder="Owner UserName" required/>
+                   <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" required/>
+                   <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" required/>
+                   <input type="text" class="form-control" ng-model="group.course" placeholder="Course code" required/>
                </div>
                <div class="form-group">
                    <button class="btn btn-default" ng-click="group.createNewGroup()">Create Group</button>
@@ -61,7 +61,7 @@ and open the template in the editor.
             </form>
             <br>
             <!--TODO: Change to class -->
-            <span ng-bind="group.status" style="color:green"></span>
+            <span id="groupstatus" ng-bind="group.status"></span>
         </div>
         <hr>
     </div>
