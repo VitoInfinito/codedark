@@ -12,13 +12,47 @@ and open the template in the editor.
     </div>
     <br>
     
-    <div class="row">
-        <div class="col-md-6 adminTableWrapper">
-            <h3>{{user.fname}} {{user.lname}}</h3>
-            <!-- Sorry for inline: fix!-->
-            <img id="profilePic" src="img/terrorulf.jpg" height="190" width="152"></div>
+    <div class="col-md-6 adminTableWrapper">
+        <h3>{{user.fname}} {{user.lname}}</h3>
+        <img id="profilePic" src="img/terrorulf.jpg" height="190" width="152">
+    </div>
+
+    
+    
+    <div class="col-md-6">
+        <h3>List of groups</h3>
+        <div class="adminTableWrapper">
+            <table class="table">
+                <thead>
+                    <td>Group</td>
+                    <td>Course</td>
+                    <td>Members</td>
+                </thead>
+                <tbody>
+                    <tr class ="selectable-row" 
+                        id="collapsible"
+                        ng-repeat="group in groups" 
+                        ng-click="$parent.group.toggle(group)">
+                        <td>{{group.gName}}</td>
+                        <td>{{group.course.id.value}}</td>
+                        <td>{{group.members.length}}/{{group.maxNbr}}
+                            <div id="toggleable{{group.id.value}}" class="toggleable" hidden>
+                                <table class="table">
+                                    <tr ng-repeat="member in members">
+                                    <td class="memberList">{{member.fname}} {{member.lname}}</td>
+                                    </tr>
+                                </table>  
+                                <button ng-click="$parent.group.leave(group)">Leave</button>
+                           </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
         
-            <div class="user-info">
+    <div class="col-md-6">
+        <div class="user-info">
             <h3>User Information</h3>
             <h4 ng-bind="user.isAdmin"></h4>
             <h5>First name: {{user.fname}}
@@ -28,53 +62,15 @@ and open the template in the editor.
                 Email address: {{user.email}}
                 <br>
             </h5>
-            
+
             <div class="form-group">
                 <button ng-controller="NavigationCtrl" ng-click="navigate('/editUserProfile')" class="btn btn-default">Change Information</button>
             </div>
         </div>
-    
-    
+    </div>   
+    <div class="col-md-6 adminTableWrapper">
+        <h3> User description</h3>
     </div>
+        
+        
     
-    <div class="col-md-6">
-            <h3>List of groups</h3>
-            <div class="adminTableWrapper">
-                <table class="table">
-                    <thead>
-                        <td>Group</td>
-                        <td>Course</td>
-                        <td>Members</td>
-                    </thead>
-                    <tbody>
-                        <tr class ="selectable-row" 
-                            id="collapsible"
-                            ng-repeat="group in groups" 
-                            ng-click="$parent.group.toggle(group)">
-                            <td>{{group.gName}}</td>
-                            <td>{{group.course.id.value}}</td>
-                            <td>{{group.members.length}}/{{group.maxNbr}}
-                                <div id="toggleable{{group.id.value}}" class="toggleable" hidden>
-                                    <table class="table">
-                                        <tr ng-repeat="member in members">
-                                        <td class="memberList">{{member.fname}} {{member.lname}}</td>
-                                        </tr>
-                                    </table>  
-                                    <button ng-click="$parent.group.leave(group)">Leave</button>
-                               </div>
-                            </td>
-                        </tr>
-                    </tbody>
-
-
-                </table>
-            </div>
-       </div>
-    
-        
-        <div class="col-md-6 adminTableWrapper">
-            <h3> User description</h3>
-        </div>
-        
-        
-    </div>
