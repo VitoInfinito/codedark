@@ -15,7 +15,9 @@ import cds.persistence.AbstractEntity;
 import java.util.ArrayList;
 
 /**
- *
+ *  Entity describing a Group within in a course containing users.
+ * 
+ * @author codedark
  */
 @Entity
 public class CourseGroup extends AbstractEntity<Long> {

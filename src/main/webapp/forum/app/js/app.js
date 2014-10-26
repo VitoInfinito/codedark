@@ -40,7 +40,7 @@ forum.config(['$routeProvider',
                     controller: 'UserProfileController'
                 }).
                 when('/hemligasidan', {
-                    templateUrl: 'partials/frontTest/admin.html',
+                    templateUrl: 'partials/admin/admin.html',
                     controller: 'AdminController'
                 }).
                 when('/hemligasidan/newcourse', {

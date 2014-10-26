@@ -10,17 +10,22 @@ and open the template in the editor.
         <h2>Groups in <span ng-bind="course.name"></span></h2>
     </div>
     
-    <a class="navbar-brand navbar-right" href="#/course/{{course.id.value}}/newgroup">Create New Group</a>
-    
-    
     <div class="btn-group">
         <button class="btn btn-default" ng-disabled="currentPage===0" 
             ng-click="currentPage = currentPage - 1">
             Previous
         </button>
-        <button class="btn btn-group" ng-disabled="currentPage >= count/pageSize-1"
+        <button class="btn btn-default" ng-disabled="currentPage >= count/pageSize-1"
             ng-click="currentPage = currentPage + 1">
             Next
+        </button>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" ng-click="group.joinRandom()">
+            Join Random Group
+        </button>
+        <button ng-controller="NavigationCtrl" ng-click="navigate('/course/'+course.id.value+'/newgroup')" class="btn btn-default">
+            Create new group
         </button>
     </div>
     
@@ -43,14 +48,16 @@ and open the template in the editor.
                             <li>{{member.fname}} {{member.lname}}</li>
                         </ul>
                     </table> 
-                    <button ng-hide="$parent.group.hasJoined || $parent.group.isFull(group)" ng-click="$parent.group.join($event, group)">Join</button>
-                    <button ng-show="$parent.group.hasJoined" ng-click="$parent.group.leave($event, group)">Leave</button>
+                    <button class="btn btn-default" ng-hide="$parent.group.hasJoined || $parent.group.isFull(group)" ng-click="$parent.group.join($event, group)">Join</button>
+                    <button class="btn btn-default" ng-show="$parent.group.hasJoined" ng-click="$parent.group.leave($event, group)">Leave</button>
                 </div>
             </td>
 
         </tr>
         
     </table>
+    
+    <span id="statusfield" ng-bind="group.status"></span>
 
    
 </div>

@@ -6,7 +6,7 @@ import javax.ws.rs.core.Application;
 
 /**
  * Technical class needed by JAX-RS
- * @author hajo
+ * @author codedark
  */
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {

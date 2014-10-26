@@ -11,8 +11,12 @@ import javax.persistence.*;
 import cds.persistence.AbstractEntity;
 
 /**
- *
- * @author sofiaedstrom
+<<<<<<< HEAD
+ 
+=======
+ * Entity describing a University Course
+ * @author codedark
+>>>>>>> f06ed5321a6d9ab250b769121c21815497eb2295
  */
 @Entity
 public class Course extends AbstractEntity<String>{

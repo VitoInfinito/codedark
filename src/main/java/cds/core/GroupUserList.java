@@ -12,8 +12,9 @@ import javax.persistence.PersistenceContext;
 import cds.persistence.AbstractDAO;
 
 /**
- *
- * @author
+ * Handles all GroupUser objects and enables more efficient ways of gathering them.
+ * 
+ * @author codedark
  */
 @Stateless
 public class GroupUserList extends AbstractDAO<GroupUser, String> implements IGroupUserList{

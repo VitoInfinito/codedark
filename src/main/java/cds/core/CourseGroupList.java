@@ -15,7 +15,9 @@ import javax.persistence.PersistenceContext;
 import cds.persistence.AbstractDAO;
 
 /**
- *
+ * Handles all CourseGroup objects and enables more efficient ways of gathering them.
+ * 
+ * @author codedark
  */
 @Stateless
 public class CourseGroupList extends AbstractDAO<CourseGroup, Long> implements ICourseGroupList {
