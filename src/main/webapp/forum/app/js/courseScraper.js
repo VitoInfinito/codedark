@@ -1,3 +1,8 @@
+/*
+ * Collects all courses available at Chalmers and adds them to the database.
+ */
+
+
 function scrape(){
         if(debugMode) console.log("Initiated scraping");
 	function Course() {

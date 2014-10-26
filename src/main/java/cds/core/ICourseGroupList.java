@@ -5,10 +5,9 @@ import javax.ejb.Local;
 import cds.persistence.IDAO;
 
 /**
- 
- * A wrapper for the shop. We should only have
- * one shop (better use CDI more later)
- * @author 
+ * Enables us to Use backend operations
+ * 
+ * @author codedark
  */
  
 

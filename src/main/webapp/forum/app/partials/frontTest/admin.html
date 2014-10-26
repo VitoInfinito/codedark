@@ -115,7 +115,7 @@ and open the template in the editor.
     <hr>
     
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h3>List of all Groups</h3>
             <input type="text" class="form-control input-sign" ng-change="group.search()" ng-value="" ng-model="group.searchfield" placeholder="Search Group"/>
             <div class="adminTableWrapper">
@@ -128,7 +128,7 @@ and open the template in the editor.
                             <td>{{group.id.value}}</td> 
                             <td>{{group.gName}}</td> 
                             <td>{{group.course.id.value}}</td>
-                            <td>{{group.owner.fname}}</td>
+                            <td>{{group.owner.id.value}}</td>
                             <td><a href="#/hemligasidan/editGroup/{{group.id.value}}">Edit Group</a></td>
                         </tr>
                     </tbody>

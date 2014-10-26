@@ -9,8 +9,9 @@ import javax.ejb.Local;
 import cds.persistence.IDAO;
 
 /**
- *
- * @author 
+ * Enables us to Use backend operations
+ * 
+ * @author codedark
  */
 @Local
 public interface IGroupUserList extends IDAO<GroupUser, String> {
