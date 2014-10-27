@@ -5,17 +5,16 @@ import javax.ejb.Local;
 import cds.persistence.IDAO;
 
 /**
- 
- * A wrapper for the shop. We should only have
- * one shop (better use CDI more later)
- * @author 
+ * Enables us to Use backend operations
+ * 
+ * @author codedark
  */
  
 
 //Possibly use and rework
 @Local
 public interface ICourseGroupList extends IDAO<CourseGroup, Long> {
-    public CourseGroup getByName(String name);
-    
-    public List<CourseGroup> getByCourse(Course course);
+    public List<CourseGroup> getByCourse(String ccode);
+    public CourseGroup getByNameAndCourse(String name, String course);
+    public List<CourseGroup> getByUser(String uName);
 }

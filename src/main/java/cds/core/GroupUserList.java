@@ -12,11 +12,12 @@ import javax.persistence.PersistenceContext;
 import cds.persistence.AbstractDAO;
 
 /**
- *
- * @author
+ * Handles all GroupUser objects and enables more efficient ways of gathering them.
+ * 
+ * @author codedark
  */
 @Stateless
-public class GroupUserList extends AbstractDAO<GroupUser, Long> implements IGroupUserList{
+public class GroupUserList extends AbstractDAO<GroupUser, String> implements IGroupUserList{
 
     
     @PersistenceContext
@@ -33,9 +34,9 @@ public class GroupUserList extends AbstractDAO<GroupUser, Long> implements IGrou
     }
 
     @Override
-    public GroupUser getBySsnbr(Long ssnbr) {
+    public GroupUser getById(String uName) {
        for(GroupUser u : findAll()) {
-            if (u.getSsnbr() == ssnbr) {
+            if (u.getId().equals(uName)) {
                 return u;
             }
         }

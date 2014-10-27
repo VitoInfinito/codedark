@@ -9,19 +9,15 @@ var forum = angular.module('Forum', [
 
 
 forum.config(['$routeProvider',
-    function($routeProvider) {  
+    function($routeProvider) { 
         $routeProvider.
-                when('/forum', {
-                    templateUrl: 'partials/forum/forum.html',
-                    controller: 'ForumController'
+                when('/course', {
+                    templateUrl: 'partials/course/courses.html',
+                    controller: 'CourseController'
                 }).
-                when('/group', {
+                when('/course/:cc', {
                     templateUrl: 'partials/group/group.html',
                     controller: 'GroupController'
-                }).
-                when('/test', {
-                    templateUrl: 'partials/frontTest/test.html',
-                    controller: 'TestController'
                 }).
                 when('/login', {
                     templateUrl: 'partials/forum/login.html',
@@ -29,11 +25,43 @@ forum.config(['$routeProvider',
                 }).
                 when('/signup', {
                     templateUrl: 'partials/forum/signup.html',
-                    controller: 'SignupController'
+                    controller: 'LoginController'
                 }).
-                
+                when('/course/:id/newgroup', {
+                    templateUrl: 'partials/group/addGroup.html',
+                    controller: 'GroupAddController'
+                }).
+                when('/user', {
+                    templateUrl: 'partials/user/userProfile.html',
+                    controller: 'UserProfileController'
+                }).
+                when('/editUserProfile', {
+                    templateUrl: 'partials/user/editUserProfile.html',
+                    controller: 'UserProfileController'
+                }).
+                when('/hemligasidan', {
+                    templateUrl: 'partials/admin/admin.html',
+                    controller: 'AdminController'
+                }).
+                when('/hemligasidan/newcourse', {
+                    templateUrl: 'partials/courses/addCourse.html',
+                    controller: 'AdminController'
+                }).
+                when('/hemligasidan/editUser/:username', {
+                    templateUrl: 'partials/user/editUser.html',
+                    controller: 'EditUserController'
+                }).
+                when('/hemligasidan/editCourse/:cc', {
+                    templateUrl: 'partials/course/editCourse.html',
+                    controller: 'EditCourseController'
+                }).
+                when('/hemligasidan/editGroup/:id', {
+                    templateUrl: 'partials/group/editGroup.html',
+                    controller: 'EditGroupController'
+                }).
+                        
                 otherwise({
-                    redirectTo: '/index.html'
+                    redirectTo: '/course'
                 });
 
     }]);

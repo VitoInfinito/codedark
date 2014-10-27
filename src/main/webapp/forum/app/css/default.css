@@ -11,19 +11,6 @@ body {
     width : 50em;*/
 }
 
-/*
-a#breadcrumb-home {
-    display:none;
-}
-
-div#breadcrumb-indicator {
-    display:none;
-}
-
-a#breadcrumb {
-    display:none;
-}*/
-
 #input{
     margin-right: auto;
     margin-left: auto;
@@ -33,9 +20,6 @@ a#breadcrumb {
 
 
 header {
-    /*background-image:  url(../img/banner.jpg);
-    background-repeat: repeat;
-    background-position: center;*/
     background-color: #FAF689;
     width:100%;
     height:3em;
@@ -48,6 +32,12 @@ header h1{
     font-family: arial;
     text-align: center;
     vertical-align: middle;
+    color: white;
+    text-shadow:
+        -0.8px -0.8px 0 #000,  
+        0.5px -0.8px 0 #000,
+        -0.8px 0.8px 0 #000,
+        0.8px 0.8px 0 #000;
 }
 
 header h2{  
@@ -55,6 +45,7 @@ header h2{
     font-family: arial;
     text-align: center;
     vertical-align: middle;
+    color: white;
 }
 
 footer {
@@ -77,5 +68,36 @@ footer {
     padding:15px 15px;
     font-size:18px;
     line-height:20px;
-    color:#777;
+    color:#000;
+    font-style: italic;
 }
+
+.selectable-row:hover {
+    background-color:#f8f8f8;
+    cursor:pointer;
+}
+
+.adminTableWrapper {
+    height: 300px !important;
+    overflow: auto;
+}
+
+.memberList {
+    border-top-color: transparent !important;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+thead td {
+    font-weight: bold;
+}
+
+img#profilePic {
+/*   width:455px;
+   height:570px;*/
+}
+
+

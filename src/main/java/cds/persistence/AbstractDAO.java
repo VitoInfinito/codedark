@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 /**
- * BLALBLALBA TEXT
+ * Implementation of database interactions
  *
  * T is type for items in container K is type of id (primary key)
  *

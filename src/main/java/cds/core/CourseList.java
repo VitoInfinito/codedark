@@ -16,11 +16,12 @@ import javax.persistence.PersistenceContext;
 import cds.persistence.AbstractDAO;
 
 /**
- *
- * @author codeshark
+ * Handles all Course objects and enables more efficient ways of gathering them.
+ * 
+ * @author codedark
  */
 @Stateless
-public class CourseList extends AbstractDAO<Course, Long> implements ICourseList{
+public class CourseList extends AbstractDAO<Course, String> implements ICourseList{
 
     
     
@@ -41,9 +42,9 @@ public class CourseList extends AbstractDAO<Course, Long> implements ICourseList
     }
     
     @Override
-    public Course getByCC(String cc) {
+    public Course getById(String cc) {
         for(Course c: findAll()){
-            if(c.getCCode().equals(cc)){
+            if(c.getId().equals(cc)){
                 return c;
             }
         }

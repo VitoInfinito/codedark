@@ -6,45 +6,24 @@ and open the template in the editor.
 -->
 <div id="input">
     
-<!--    @Column(nullable = false)
-    private long ssnbr;
-    private String fname;
-
-    private String lname;
-    private String email;
-    @Column(nullable = false)
-    private String pwd;-->
-          
+        
     <h2> Sign up</h2>
 
     <form role="form">
         <div class="form-group">
-            <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="first name" />
-            <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="last name" /> 
+            <input type="text" class="form-control input-sign" ng-model="user.id" placeholder="Choose a username!" required/>
+            <input type="password" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control input-sign" ng-model="user.ssnbr" placeholder="YYMMDD-XXXX" />
-            <input type="text" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" />
-            <input type="text" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password" />
+            <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="First name" required/>
+            <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="Last name" required/>
+            <input type="email" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
+            
         </div>
-        
-        <button class="btn btn-default" ng-click="createUser()">Submit</button>
+        <button class="btn btn-default" ng-click="user.signUp()">Submit</button>
+        <br>
+        <br>
+        <span ng-bind="user.signupstatus" style="color:red"></span>
     </form>
-
-<!--    <h2>New Product</h2>
-    
-    <form role="form">
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control" ng-model="product.name" value="{{product.name}}" />
-        </div>
-        <div class="form-group">
-            <label>Price</label>
-            <input type="number" class="form-control" ng-model="product.price" value="{{product.price}}" />
-        </div>
-        
-        <button class="btn btn-default" ng-click="create()">Submit</button>
-        <button ng-controller="NavigationCtrl" ng-click="navigate('/products')" class="btn btn-default">Cancel</button>
-    </form>-->
     
 </div>

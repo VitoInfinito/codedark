@@ -4,15 +4,13 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div>
-    <p>forum</p>
-    
+<div id="input">
     <div class="top">
         <h2>Courses</h2>
+        <br>
 
-        <button class="btn btn-default" ng-click="navigate('/course-new')" ng-controller="NavigationCtrl">
-            Add course
-        </button>
+        <!--a class="navbar-brand navbar-right" href="#/addCourse">Add course</a-->
+        
         <div class="btn-group">
 
             <button class="btn btn-default" ng-disabled="currentPage === 0" 
@@ -27,20 +25,17 @@ and open the template in the editor.
             </button>
         </div>
     </div>
-    
+    <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
+    <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>
     <table class="table">
-        <thead>
-            <td>Course</td><td>Members</td><td>Course</td>
-        </thead>
-    
-<!--        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
-            <td>{{group.id}}</td>
-            <td>{{group.name}}</td>
-            <td>{{group.nbrOfMembers}}</td>
-            <td><a href="#/group/{{group.id}}">Edit</a></td>
-            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
-        </tr>-->
+        <tr class="selectable-row" 
+            ng-repeat="course in courses" 
+            ng-click="$parent.course.select(course.id.value)" >
+            <td>{{course.id.value}}</td>
+            <td>{{course.name}}</td>
+        </tr>
         
     </table>
+    <div ng-show="course.isCourseListEmpty()">There does not seem to be any courses that matches your search...</div>
    
 </div>

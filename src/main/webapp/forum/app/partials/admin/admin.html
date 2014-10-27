@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div id="input" style="margin-bottom: 20px">
+    <div class="top">
+        <h1 style="text-align: center">Almighty Admin</h1>
+    </div>
+    <div class="row">
+        <hr>
+        <div class="col-md-4">
+             <h3>Add new Course</h3>
+             <form role="form">
+                <div class="form-group">
+                   <input type="text" class="form-control" ng-model="course.ccode" placeholder="Course Code" required/>
+                   <input type="text" class="form-control" ng-model="course.name" placeholder="Name" required/>
+               </div>
+               <div class="form-group">
+                   <button class="btn btn-default" ng-click="course.createNewCourse()">Create Course</button>
+                   <button class="btn btn-default" ng-click="scraper.courseScraper()">Scrape All Courses</button>
+               </div>
+            </form>
+            <br>
+            <!--TODO: Change to class -->
+            <span id="statusfield" ng-bind="course.status"></span>
+        </div>
+        <div class="col-md-4">
+            <h3>Add new User</h3>
+            <form role="form">
+                <div class="form-group">
+                    <input type="text" class="form-control input-sign" ng-model="user.id" placeholder="Choose a username!" required/>
+                    <input type="password" class="form-control input-sign" ng-model="user.pwd" placeholder="choose a password (at least 5 characters)" required/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control input-sign" ng-model="user.fname" placeholder="First name" required/>
+                    <input type="text" class="form-control input-sign" ng-model="user.lname" placeholder="Last name" required/>
+                    <input type="email" class="form-control input-sign" ng-model="user.email" placeholder="email@domain.com" required/>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-default" ng-click="user.createNewUser()">Create User</button>
+                </div>
+            </form>
+            <br>
+            <!--TODO: Change to class -->
+            <span id="userstatus" ng-bind="user.status"></span>
+        </div>
+        <div class="col-md-4">
+            <h3>Add new Group</h3>
+             <form role="form">
+                <div class="form-group">
+                   <input type="text" class="form-control" ng-model="group.owner.id" placeholder="Owner UserName" required/>
+                   <input type="text" class="form-control" ng-model="group.name" placeholder="Group Name" required/>
+                   <input type="number" class="form-control" ng-model="group.maxNbr" min="2" placeholder="Max number of members" required/>
+                   <input type="text" class="form-control" ng-model="group.course" placeholder="Course code" required/>
+               </div>
+               <div class="form-group">
+                   <button class="btn btn-default" ng-click="group.createNewGroup()">Create Group</button>
+               </div>
+            </form>
+            <br>
+            <!--TODO: Change to class -->
+            <span id="groupstatus" ng-bind="group.status"></span>
+        </div>
+        <hr>
+    </div>
+    
+    <!-- LIST OF ALL USERS-->
+    <div class="row">
+        <hr>
+        <div class="col-md-6 adminTableWrapper">
+            
+            <table class="table">
+                <thead><h3>List of all users</h3></thead>
+                <input type="text" class="form-control input-sign" ng-change="user.search()" ng-value="" ng-model="user.searchfield" placeholder="Search User"/>
+                <thead>
+                <td>Name</td><td>Username</td><td>Admin</td>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users" >
+                        <td>{{user.fname}} {{user.lname}}</td>
+                        <td>{{user.id.value}}</td>
+                        <td>{{user.isAdmin}}</td>
+                        <td><a href="#/hemligasidan/editUser/{{user.id.value}}">Edit User</a></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+        
+        <!-- LIST OF ALL Courses -->
+        <div class="col-md-6">
+            <h3>List of all Courses</h3>
+            <input type="text" class="form-control input-sign" ng-change="course.search()" ng-value="" ng-model="course.searchfield" placeholder="Search Course"/>
+            <div class="adminTableWrapper">
+                <!-- <div ng-hide="course.isCourseListEmpty()">Showing {{currentPageSize}} results out of a total {{count}}.</div>-->
+                <table class="table">
+                    <thead>
+                        <td>Course code</td><td>Name</td>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="course in courses" >
+                            <td>{{course.id.value}}</td>
+                            <td>{{course.name}}</td>
+                            <td><a href="#/hemligasidan/editCourse/{{course.id.value}}">Edit Course</a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <h3>List of all Groups</h3>
+            <input type="text" class="form-control input-sign" ng-change="group.search()" ng-value="" ng-model="group.searchfield" placeholder="Search Group"/>
+            <div class="adminTableWrapper">
+                <table class="table">
+                    <thead>
+                        <td>Group number</td><td>Group name</td><td>Course</td><td>Owner</td>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="group in groups" >
+                            <td>{{group.id.value}}</td> 
+                            <td>{{group.gName}}</td> 
+                            <td>{{group.course.id.value}}</td>
+                            <td>{{group.owner.id.value}}</td>
+                            <td><a href="#/hemligasidan/editGroup/{{group.id.value}}">Edit Group</a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

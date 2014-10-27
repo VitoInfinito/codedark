@@ -4,27 +4,60 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<div>
+<div id="input">
     
     <div class="top">
-        <h2>{{group.name}}</h2>
-        For course: {{group.course}}
-        <button class="btn btn-default">Join</button>
+        <h2>Groups in <span ng-bind="course.name"></span></h2>
+    </div>
+    
+    <div class="btn-group">
+        <button class="btn btn-default" ng-disabled="currentPage===0" 
+            ng-click="currentPage = currentPage - 1">
+            Previous
+        </button>
+        <button class="btn btn-default" ng-disabled="currentPage >= count/pageSize-1"
+            ng-click="currentPage = currentPage + 1">
+            Next
+        </button>
+    </div>
+    <div class="btn-group">
+        <button class="btn btn-default" ng-click="group.joinRandom()">
+            Join Random Group
+        </button>
+        <button ng-controller="NavigationCtrl" ng-click="navigate('/course/'+course.id.value+'/newgroup')" class="btn btn-default">
+            Create new group
+        </button>
     </div>
     
     <table class="table">
         <thead>
-            <td>Group Number</td><td>Members</td><td>Course</td>
+            <td>Group Number</td><td>Name</td><td>Members</td>
         </thead>
     
-        <tr ng-repeat="group in groups" ng-click="nav(group.id)">
-            <td>{{group.id}}</td>
-            <td>{{group.name}}</td>
-            <td>{{group.nbrOfMembers}}/5</td>
-            <td><a href="#/group/{{group.id}}">Edit</a></td>
-            <td><a href="#/" ng-click="delete(group.id)">Delete</a></td>
+        <tr class="selectable-row" 
+            id="collapsible" 
+            ng-repeat="group in groups" 
+            ng-click="$parent.group.toggle(group)" >
+            <td>{{group.id.value}}</td>
+            <td>{{group.gName}}</td>
+            
+            <td>{{group.members.length}}/{{group.maxNbr}}
+                <div id="toggleable{{group.id.value}}" class="toggleable" hidden>
+                    <table class="table">
+                        <ul ng-repeat="member in members">
+                            <li>{{member.fname}} {{member.lname}}</li>
+                        </ul>
+                    </table> 
+                    <button class="btn btn-default" ng-hide="$parent.group.hasJoined || $parent.group.isFull(group)" ng-click="$parent.group.join($event, group)">Join</button>
+                    <button class="btn btn-default" ng-show="$parent.group.hasJoined" ng-click="$parent.group.leave($event, group)">Leave</button>
+                </div>
+            </td>
+
         </tr>
         
     </table>
+    
+    <span id="statusfield" ng-bind="group.status"></span>
+
    
 </div>

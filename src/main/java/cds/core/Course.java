@@ -11,43 +11,39 @@ import javax.persistence.*;
 import cds.persistence.AbstractEntity;
 
 /**
- *
- * @author sofiaedstrom
+ * Entity describing a University Course
+ * @author codedark
  */
 @Entity
-public class Course extends AbstractEntity{
+public class Course extends AbstractEntity<String>{
     
-    @Column(nullable = false)
-    private String cCode;
     private String name;
-    
     
     public Course(){
         
     }
     
-    public Course(Long id, String cCode, String name){
-        super(id);
-        this.cCode = cCode;
+    public Course(String ccode, String name){
+        super(ccode);
         this.name = name;
     }
     
-    public Course(String cCode, String name){
-        this.cCode = cCode;
+    public Course(String name){
         this.name = name;
-    }
-
-    public String getCCode(){
-        return cCode;
     }
     
     public String getName(){
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     
     @Override
     public String toString(){
-        return "Course{ cCode = " + cCode + ", name = " + name + "}";
+        return "Course{ ccode = " + getId() + ", name = " + name + "}";
     }
     
     @Override
@@ -59,7 +55,7 @@ public class Course extends AbstractEntity{
             return false;
         }
         final Course other = (Course) obj;
-        if (!Objects.equals(this.cCode, other.cCode) || !Objects.equals(this.name, other.name)) {
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         

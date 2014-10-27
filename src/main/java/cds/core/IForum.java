@@ -6,8 +6,9 @@
 package cds.core;
 
 /**
- *
- * @author HForsvall
+ * Enables us to change and expand the backend more easily
+ * 
+ * @author codedark
  */
 public interface IForum {
     public ICourseList getCourseList();
